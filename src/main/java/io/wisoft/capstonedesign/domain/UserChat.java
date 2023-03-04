@@ -3,6 +3,8 @@ package io.wisoft.capstonedesign.domain;
 import jakarta.persistence.*;
 import lombok.Getter;
 
+import static jakarta.persistence.FetchType.*;
+
 @Entity
 @Table(name = "user_chat")
 @Getter
@@ -12,20 +14,27 @@ public class UserChat {
     @Column(name = "id")
     private Long id;
 
-    @ManyToOne
+    @ManyToOne(fetch = LAZY)
     @JoinColumn(name = "user_id")
     private User user;
 
-    public void setUser(User user) { // 연관관계 편의 메소드
+    @ManyToOne(fetch = LAZY)
+    @JoinColumn(name = "chat_id")
+    private Chat chat;
+
+    /**
+     * 연관관계 편의 메소드
+     */
+    public void setUser(User user) {
+
+        if (this.user != null) this.user.getUserChats().remove(this);
         this.user = user;
         user.getUserChats().add(this);
     }
 
-    @ManyToOne
-    @JoinColumn(name = "chat_id")
-    private Chat chat;
+    public void setChat(Chat chat) {
 
-    public void setChat(Chat chat) { // 연관관계 편의 메소드
+        if (this.chat != null) this.chat.getUserChats().remove(this);
         this.chat = chat;
         chat.getUserChats().add(this);
     }

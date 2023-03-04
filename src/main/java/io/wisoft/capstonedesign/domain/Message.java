@@ -5,6 +5,8 @@ import lombok.Getter;
 
 import java.util.Date;
 
+import static jakarta.persistence.FetchType.*;
+
 @Entity
 @Table(name = "message")
 @Getter
@@ -21,20 +23,27 @@ public class Message {
     @Column(name = "body", columnDefinition = "TEXT")
     private String body;
 
-    @ManyToOne
+    @ManyToOne(fetch = LAZY)
     @JoinColumn(name = "sender_id")
     private User sender;
 
-    public void setSender(User sender) { // 연관관계 편의 메소드
+    @ManyToOne(fetch = LAZY)
+    @JoinColumn(name = "chat_id")
+    private Chat chat;
+
+    /**
+     * 연관관계 편의 메소드
+     */
+    public void setSender(User sender) {
+
+        if (this.sender != null) this.sender.getMessages().remove(this);
         this.sender = sender;
         sender.getMessages().add(this);
     }
 
-    @ManyToOne
-    @JoinColumn(name = "chat_id")
-    private Chat chat;
+    public void setChat(Chat chat) {
 
-    public void setChat(Chat chat) { // 연관관계 편의 메소드
+        if (this.chat != null) this.chat.getMessages().remove(this);
         this.chat = chat;
         chat.getMessages().add(this);
     }
