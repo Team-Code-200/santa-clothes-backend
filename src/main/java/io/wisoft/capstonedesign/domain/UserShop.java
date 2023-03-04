@@ -2,20 +2,31 @@ package io.wisoft.capstonedesign.domain;
 
 import jakarta.persistence.*;
 import lombok.Getter;
-import lombok.Setter;
 
 @Entity
 @Table(name = "USER_SHOP")
-@Getter @Setter
+@Getter
 public class UserShop {
 
     @Id @GeneratedValue
     @Column(name = "id")
     private Long id;
 
-    @Column(name = "user_id")
-    private Long userId;
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private User user;
 
-    @Column(name = "shop_id")
-    private Long shopId;
+    public void setUser(User user) { // 연관관계 편의 메소드
+        this.user = user;
+        user.getUserShops().add(this);
+    }
+
+    @ManyToOne
+    @JoinColumn(name = "shop_id")
+    private Shop shop;
+
+    public void setShop(Shop shop) { // 연관관계 편의 메소드
+        this.shop = shop;
+        shop.getUserShops().add(this);
+    }
 }

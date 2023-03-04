@@ -2,11 +2,13 @@ package io.wisoft.capstonedesign.domain;
 
 import jakarta.persistence.*;
 import lombok.Getter;
-import lombok.Setter;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "TAG")
-@Getter @Setter
+@Getter
 public class Tag {
 
     @Id @GeneratedValue
@@ -15,4 +17,10 @@ public class Tag {
 
     @Column(name = "name")
     private String name;
+
+    @OneToMany(mappedBy = "tag")
+    private List<FindTag> findTags = new ArrayList<>();
+
+    @OneToMany(mappedBy = "tag")
+    private List<DonateTag> donateTags = new ArrayList<>();
 }
