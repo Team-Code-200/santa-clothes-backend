@@ -2,20 +2,31 @@ package io.wisoft.capstonedesign.domain;
 
 import jakarta.persistence.*;
 import lombok.Getter;
-import lombok.Setter;
 
 @Entity
 @Table(name = "user_chat")
-@Getter @Setter
+@Getter
 public class UserChat {
 
     @Id @GeneratedValue
     @Column(name = "id")
     private Long id;
 
-    @Column(name = "user_id")
-    private Long userId;
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private User user;
 
-    @Column(name = "chat_id")
-    private Long chatId;
+    public void setUser(User user) { // 연관관계 편의 메소드
+        this.user = user;
+        user.getUserChats().add(this);
+    }
+
+    @ManyToOne
+    @JoinColumn(name = "chat_id")
+    private Chat chat;
+
+    public void setChat(Chat chat) { // 연관관계 편의 메소드
+        this.chat = chat;
+        chat.getUserChats().add(this);
+    }
 }

@@ -2,11 +2,13 @@ package io.wisoft.capstonedesign.domain;
 
 import jakarta.persistence.*;
 import lombok.Getter;
-import lombok.Setter;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "SHOP")
-@Getter @Setter
+@Getter
 public class Shop {
 
     @Id @GeneratedValue
@@ -24,4 +26,7 @@ public class Shop {
 
     @Column(name = "body")
     private String body;
+
+    @OneToMany(mappedBy = "shop")
+    private List<UserShop> userShops = new ArrayList<>();
 }

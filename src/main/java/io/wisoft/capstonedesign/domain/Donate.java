@@ -2,21 +2,19 @@ package io.wisoft.capstonedesign.domain;
 
 import jakarta.persistence.*;
 import lombok.Getter;
-import lombok.Setter;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 @Entity
 @Table(name = "DONATE")
-@Getter @Setter
+@Getter
 public class Donate {
 
     @Id @GeneratedValue
     @Column(name = "id")
     private Long id;
-
-    @Column(name = "user_id")
-    private Long userId;
 
     @Column(name = "title")
     private String title;
@@ -33,4 +31,16 @@ public class Donate {
 
     @Column(name = "view")
     private int view;
+
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private User user;
+
+    public void setUser(User user) { // 연관관계 편의 메소드
+        this.user = user;
+        user.getDonates().add(this);
+    }
+
+    @OneToMany(mappedBy = "donate")
+    private List<DonateTag> donateTags = new ArrayList<>();
 }

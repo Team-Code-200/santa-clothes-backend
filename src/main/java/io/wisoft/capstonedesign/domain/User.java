@@ -4,7 +4,9 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 @Entity
 @Table(name = "USERS")
@@ -37,4 +39,22 @@ public class User {
     @Column(name = "users_role")
     @Enumerated(EnumType.STRING)
     private Role userRole;
+
+    @OneToMany(mappedBy = "user")
+    private List<Donate> donates = new ArrayList<>();
+
+    @OneToMany(mappedBy = "user")
+    private List<Find> finds = new ArrayList<>();
+
+    @OneToMany(mappedBy = "user")
+    private List<Order> orders = new ArrayList<>();
+
+    @OneToMany(mappedBy = "sender")
+    private List<Message> messages = new ArrayList<>();
+
+    @OneToMany(mappedBy = "user")
+    private List<UserShop> userShops = new ArrayList<>();
+
+    @OneToMany(mappedBy = "user")
+    private List<UserChat> userChats = new ArrayList<>();
 }

@@ -2,19 +2,15 @@ package io.wisoft.capstonedesign.domain;
 
 import jakarta.persistence.*;
 import lombok.Getter;
-import lombok.Setter;
 
 @Entity
 @Table(name = "ORDERS")
-@Getter @Setter
+@Getter
 public class Order {
 
     @Id @GeneratedValue
     @Column(name = "id")
     private Long id;
-
-    @Column(name = "user_id")
-    private Long userId;
 
     @Column(name = "name")
     private String name;
@@ -27,4 +23,13 @@ public class Order {
 
     @Column(name = "body", columnDefinition = "TEXT")
     private String body;
+
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private User user;
+
+    public void setUser(User user) { // 연관관계 편의 메소드
+        this.user = user;
+        user.getOrders().add(this);
+    }
 }
