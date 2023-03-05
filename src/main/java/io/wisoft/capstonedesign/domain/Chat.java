@@ -16,7 +16,7 @@ public class Chat {
     @Column(name = "id")
     private Long id;
 
-    @Column(name = "created_at")
+    @Column(name = "created_at", nullable = false)
     @Temporal(TemporalType.TIMESTAMP)
     private Date createdDate;
 

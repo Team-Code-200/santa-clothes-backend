@@ -15,11 +15,11 @@ public class DonateTag {
     private Long id;
 
     @ManyToOne(fetch = LAZY)
-    @JoinColumn(name = "donate_id")
+    @JoinColumn(name = "donate_id", nullable = false)
     private Donate donate;
 
     @ManyToOne(fetch = LAZY)
-    @JoinColumn(name = "tag_id")
+    @JoinColumn(name = "tag_id", nullable = false)
     private Tag tag;
 
     /**
