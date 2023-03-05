@@ -14,13 +14,13 @@ public class Order {
     @Column(name = "id")
     private Long id;
 
-    @Column(name = "name")
+    @Column(name = "name", nullable = false)
     private String name;
 
-    @Column(name = "phone_number")
+    @Column(name = "phone_number", nullable = false)
     private String phoneNumber;
 
-    @Column(name = "address", columnDefinition = "TEXT")
+    @Column(name = "address", nullable = false, columnDefinition = "TEXT")
     private String address;
 
     @Column(name = "body", columnDefinition = "TEXT")

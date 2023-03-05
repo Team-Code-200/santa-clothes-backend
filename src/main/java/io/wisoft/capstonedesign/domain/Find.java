@@ -18,24 +18,24 @@ public class Find {
     @Column(name = "id")
     private Long id;
 
-    @Column(name = "title")
+    @Column(name = "title", nullable = false)
     private String title;
 
-    @Column(name = "created_at")
+    @Column(name = "created_at", nullable = false)
     @Temporal(TemporalType.TIMESTAMP)
     private Date createdDate;
 
-    @Column(name = "body", columnDefinition = "TEXT")
+    @Column(name = "body", nullable = false, columnDefinition = "TEXT")
     private String text;
 
     @Column(name = "image")
     private String image;
 
-    @Column(name = "view")
+    @Column(name = "view", nullable = false, columnDefinition = "INTEGER default 0")
     private int view;
 
     @ManyToOne(fetch = LAZY)
-    @JoinColumn(name = "user_id")
+    @JoinColumn(name = "user_id", nullable = false)
     private User user;
 
     @OneToMany(mappedBy = "find")

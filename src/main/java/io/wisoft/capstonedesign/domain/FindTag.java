@@ -15,11 +15,11 @@ public class FindTag {
     private Long id;
 
     @ManyToOne(fetch = LAZY)
-    @JoinColumn(name = "find_id")
+    @JoinColumn(name = "find_id", nullable = false)
     private Find find;
 
     @ManyToOne(fetch = LAZY)
-    @JoinColumn(name = "tag_id")
+    @JoinColumn(name = "tag_id", nullable = false)
     private Tag tag;
 
     /**
