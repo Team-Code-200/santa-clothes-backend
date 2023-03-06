@@ -2,15 +2,18 @@ package io.wisoft.capstonedesign.domain;
 
 import jakarta.persistence.*;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
 import static jakarta.persistence.FetchType.*;
+import static lombok.AccessLevel.*;
 
 @Entity
 @Table(name = "DONATE")
+@NoArgsConstructor(access = PROTECTED)
 @Getter
 public class Donate {
 
@@ -40,6 +43,27 @@ public class Donate {
 
     @OneToMany(mappedBy = "donate")
     private List<DonateTag> donateTags = new ArrayList<>();
+
+    /**
+     * 정적 생성자 메소드
+     */
+    public static Donate createDonate(
+            String title,
+            Date createdDate,
+            String image,
+            String text,
+            int view,
+            User user
+    ) {
+        Donate donate = new Donate();
+        donate.title = title;
+        donate.createdDate = createdDate;
+        donate.text = text;
+        donate.image = image;
+        donate.view = view;
+        donate.user = user;
+        return donate;
+    }
 
     /**
      * 연관관계 편의 메소드

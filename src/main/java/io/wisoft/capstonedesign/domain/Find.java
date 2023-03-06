@@ -2,15 +2,18 @@ package io.wisoft.capstonedesign.domain;
 
 import jakarta.persistence.*;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
 import static jakarta.persistence.FetchType.*;
+import static lombok.AccessLevel.*;
 
 @Entity
 @Table(name = "FIND")
+@NoArgsConstructor(access = PROTECTED)
 @Getter
 public class Find {
 
@@ -40,6 +43,27 @@ public class Find {
 
     @OneToMany(mappedBy = "find")
     private List<FindTag> findTags = new ArrayList<>();
+
+    /**
+     * 정적 생성자 메소드
+     */
+    public static Find createFind(
+            String title,
+            Date createdDate,
+            String text,
+            String image,
+            int view,
+            User user
+    ) {
+        Find find = new Find();
+        find.title = title;
+        find.createdDate = createdDate;
+        find.text = text;
+        find.image = image;
+        find.view = view;
+        find.user = user;
+        return find;
+    }
 
     /**
      * 연관관계 편의 메소드

@@ -2,11 +2,14 @@ package io.wisoft.capstonedesign.domain;
 
 import jakarta.persistence.*;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 import static jakarta.persistence.FetchType.*;
+import static lombok.AccessLevel.*;
 
 @Entity
 @Table(name = "USER_SHOP")
+@NoArgsConstructor(access = PROTECTED)
 @Getter
 public class UserShop {
 
@@ -21,6 +24,16 @@ public class UserShop {
     @ManyToOne(fetch = LAZY)
     @JoinColumn(name = "shop_id", nullable = false)
     private Shop shop;
+
+    /**
+     * 정적 생성자 메소드
+     */
+    public static UserShop createUserShop(User user, Shop shop) {
+        UserShop userShop = new UserShop();
+        userShop.user = user;
+        userShop.shop = shop;
+        return userShop;
+    }
 
     /**
      * 연관관계 편의 메소드

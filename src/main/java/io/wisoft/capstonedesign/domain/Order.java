@@ -2,11 +2,14 @@ package io.wisoft.capstonedesign.domain;
 
 import jakarta.persistence.*;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 import static jakarta.persistence.FetchType.*;
+import static lombok.AccessLevel.*;
 
 @Entity
 @Table(name = "ORDERS")
+@NoArgsConstructor(access = PROTECTED)
 @Getter
 public class Order {
 
@@ -29,6 +32,25 @@ public class Order {
     @ManyToOne(fetch = LAZY)
     @JoinColumn(name = "user_id")
     private User user;
+
+    /**
+     * 정적 생성자 메소드
+     */
+    public static Order createOrder(
+            String name,
+            String phoneNumber,
+            String address,
+            String body,
+            User user
+    ) {
+        Order order = new Order();
+        order.name = name;
+        order.phoneNumber = phoneNumber;
+        order.address = address;
+        order.body = body;
+        order.user = user;
+        return order;
+    }
 
     /**
      * 연관관계 편의 메소드
