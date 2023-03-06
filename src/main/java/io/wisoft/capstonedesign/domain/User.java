@@ -2,16 +2,20 @@ package io.wisoft.capstonedesign.domain;
 
 import jakarta.persistence.*;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import static lombok.AccessLevel.*;
+
 @Entity
 @Table(name = "USERS", uniqueConstraints = {@UniqueConstraint(
         name = "OAUTH_EMAIL_UNIQUE",
         columnNames = {"oauth_id", "email"})})
+@NoArgsConstructor(access = PROTECTED)
 @Getter @Setter
 public class User {
 
@@ -59,4 +63,27 @@ public class User {
 
     @OneToMany(mappedBy = "user")
     private List<UserChat> userChats = new ArrayList<>();
+
+    /**
+     * 정적 생성자 메소드
+     */
+    public static User newInstance(
+            String oauthId,
+            String email,
+            String profileImage,
+            int point,
+            String nickname,
+            Date createdDate,
+            Role userRole
+    ) {
+        User user = new User();
+        user.oauthId = oauthId;
+        user.email = email;
+        user.profileImage = profileImage;
+        user.point = point;
+        user.nickname = nickname;
+        user.createdDate = createdDate;
+        user.userRole = userRole;
+        return user;
+    }
 }

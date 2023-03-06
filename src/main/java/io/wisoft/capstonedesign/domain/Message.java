@@ -2,13 +2,16 @@ package io.wisoft.capstonedesign.domain;
 
 import jakarta.persistence.*;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 import java.util.Date;
 
 import static jakarta.persistence.FetchType.*;
+import static lombok.AccessLevel.*;
 
 @Entity
 @Table(name = "message")
+@NoArgsConstructor(access = PROTECTED)
 @Getter
 public class Message {
 
@@ -30,6 +33,23 @@ public class Message {
     @ManyToOne(fetch = LAZY)
     @JoinColumn(name = "chat_id", nullable = false)
     private Chat chat;
+
+    /**
+     * 정적 생성자 메소드
+     */
+    public static Message createMessage(
+            Date createdDate,
+            String body,
+            User sender,
+            Chat chat
+    ) {
+        Message message = new Message();
+        message.createdDate = createdDate;
+        message.body = body;
+        message.sender = sender;
+        message.chat = chat;
+        return message;
+    }
 
     /**
      * 연관관계 편의 메소드
