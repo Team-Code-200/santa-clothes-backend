@@ -31,4 +31,10 @@ public class UserRepository {
                 .setParameter("nickname", nickname)
                 .getResultList();
     }
+
+    public List<User> findByEmail(String email) {
+        return em.createQuery("select u from User u where u.email = :email", User.class)
+                .setParameter("email", email)
+                .getResultList();
+    }
 }

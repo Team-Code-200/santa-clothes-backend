@@ -25,10 +25,10 @@ public class UserService {
     }
 
     /**
-     * 닉네임 중복 검사
+     * 이메일 중복 검사
      */
     private void validateDuplicateUser(User user) {
-        List<User> findUsers = userRepository.findByNickname(user.getNickname());
+        List<User> findUsers = userRepository.findByEmail(user.getEmail());
         if (!findUsers.isEmpty()) throw new IllegalStateException("이미 존재하는 회원입니다.");
     }
 
