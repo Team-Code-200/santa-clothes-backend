@@ -20,6 +20,7 @@ public class UserService {
      */
     @Transactional
     public Long join(User user) {
+        validateDuplicateUser(user);
         userRepository.save(user);
         return user.getId();
     }
