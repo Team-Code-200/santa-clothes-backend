@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -22,7 +23,7 @@ public class Chat {
 
     @Column(name = "created_at", nullable = false)
     @Temporal(TemporalType.TIMESTAMP)
-    private Date createdDate;
+    private LocalDateTime createdDate;
 
     @OneToMany(mappedBy = "chat")
     private List<Message> messages = new ArrayList<>();
@@ -33,7 +34,7 @@ public class Chat {
     /**
      * 정적 생성자 메소드
      */
-    public static Chat createChat(Date createdDate) {
+    public static Chat createChat(LocalDateTime createdDate) {
         Chat chat = new Chat();
         chat.createdDate = createdDate;
         return chat;

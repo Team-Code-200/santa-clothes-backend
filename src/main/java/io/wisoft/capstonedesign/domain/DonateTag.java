@@ -33,8 +33,8 @@ public class DonateTag {
             Tag tag
     ) {
         DonateTag donateTag = new DonateTag();
-        donateTag.donate = donate;
-        donateTag.tag = tag;
+        donateTag.setDonate(donate);
+        donateTag.setTag(tag);
         return donateTag;
     }
 

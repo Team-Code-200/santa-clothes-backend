@@ -33,8 +33,8 @@ public class UserChat {
             Chat chat
     ) {
         UserChat userChat = new UserChat();
-        userChat.user = user;
-        userChat.chat = chat;
+        userChat.setUser(user);
+        userChat.setChat(chat);
         return userChat;
     }
 

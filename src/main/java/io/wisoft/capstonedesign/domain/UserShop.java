@@ -30,8 +30,8 @@ public class UserShop {
      */
     public static UserShop createUserShop(User user, Shop shop) {
         UserShop userShop = new UserShop();
-        userShop.user = user;
-        userShop.shop = shop;
+        userShop.setUser(user);
+        userShop.setShop(shop);
         return userShop;
     }
 

@@ -5,6 +5,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -40,7 +41,7 @@ public class User {
 
     @Column(name = "created_at", nullable = false)
     @Temporal(TemporalType.TIMESTAMP)
-    private Date createdDate;
+    private LocalDateTime createdDate;
 
     @Column(name = "users_role", nullable = false)
     @Enumerated(EnumType.STRING)
@@ -73,7 +74,7 @@ public class User {
             String profileImage,
             int point,
             String nickname,
-            Date createdDate,
+            LocalDateTime createdDate,
             Role userRole
     ) {
         User user = new User();
