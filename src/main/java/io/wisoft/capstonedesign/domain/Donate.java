@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -26,7 +27,7 @@ public class Donate {
 
     @Column(name = "created_at", nullable = false)
     @Temporal(TemporalType.TIMESTAMP)
-    private Date createdDate;
+    private LocalDateTime createdDate;
 
     @Column(name = "body", columnDefinition = "TEXT", nullable = false)
     private String text;
@@ -49,7 +50,7 @@ public class Donate {
      */
     public static Donate createDonate(
             String title,
-            Date createdDate,
+            LocalDateTime createdDate,
             String image,
             String text,
             int view,
@@ -61,7 +62,7 @@ public class Donate {
         donate.text = text;
         donate.image = image;
         donate.view = view;
-        donate.user = user;
+        donate.setUser(user);
         return donate;
     }
 

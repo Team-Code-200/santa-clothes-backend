@@ -33,8 +33,8 @@ public class FindTag {
             Tag tag
     ) {
         FindTag findTag = new FindTag();
-        findTag.find = find;
-        findTag.tag = tag;
+        findTag.setFind(find);
+        findTag.setTag(tag);
         return findTag;
     }
 

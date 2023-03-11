@@ -48,7 +48,7 @@ public class Order {
         order.phoneNumber = phoneNumber;
         order.address = address;
         order.body = body;
-        order.user = user;
+        order.setUser(user);
         return order;
     }
 

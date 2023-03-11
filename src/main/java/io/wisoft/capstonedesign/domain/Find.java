@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -26,7 +27,7 @@ public class Find {
 
     @Column(name = "created_at", nullable = false)
     @Temporal(TemporalType.TIMESTAMP)
-    private Date createdDate;
+    private LocalDateTime createdDate;
 
     @Column(name = "body", nullable = false, columnDefinition = "TEXT")
     private String text;
@@ -49,7 +50,7 @@ public class Find {
      */
     public static Find createFind(
             String title,
-            Date createdDate,
+            LocalDateTime createdDate,
             String text,
             String image,
             int view,
@@ -61,7 +62,7 @@ public class Find {
         find.text = text;
         find.image = image;
         find.view = view;
-        find.user = user;
+        find.setUser(user);
         return find;
     }
 

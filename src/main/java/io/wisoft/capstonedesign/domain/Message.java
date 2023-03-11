@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDateTime;
 import java.util.Date;
 
 import static jakarta.persistence.FetchType.*;
@@ -21,7 +22,7 @@ public class Message {
 
     @Column(name = "created_at", nullable = false)
     @Temporal(TemporalType.TIMESTAMP)
-    private Date createdDate;
+    private LocalDateTime createdDate;
 
     @Column(name = "body", nullable = false, columnDefinition = "TEXT")
     private String body;
@@ -38,7 +39,7 @@ public class Message {
      * 정적 생성자 메소드
      */
     public static Message createMessage(
-            Date createdDate,
+            LocalDateTime createdDate,
             String body,
             User sender,
             Chat chat
@@ -46,8 +47,8 @@ public class Message {
         Message message = new Message();
         message.createdDate = createdDate;
         message.body = body;
-        message.sender = sender;
-        message.chat = chat;
+        message.setSender(sender);
+        message.setChat(chat);
         return message;
     }
 
