@@ -2,6 +2,7 @@ package io.wisoft.capstonedesign.service;
 
 import io.wisoft.capstonedesign.domain.Find;
 import io.wisoft.capstonedesign.domain.Role;
+import io.wisoft.capstonedesign.domain.Tag;
 import io.wisoft.capstonedesign.domain.User;
 import io.wisoft.capstonedesign.repository.FindRepository;
 import io.wisoft.capstonedesign.repository.UserRepository;
@@ -33,7 +34,7 @@ public class FindServiceTest {
 
         // given
         User user = User.newInstance("1", "jinwon@gmail.com", "profile.png", 1000, "jinwon", LocalDateTime.now(), Role.GENERAL);
-        Find find = Find.createFind("패딩 찾아봅니다", LocalDateTime.now(), "안 입는 패딩 기부받아요", "image.png", 0, user);
+        Find find = Find.createFind("패딩 찾아봅니다", LocalDateTime.now(), "안 입는 패딩 기부받아요", "image.png", 0, Tag.TOP, user);
 
         // when
         userService.join(user);
@@ -48,7 +49,7 @@ public class FindServiceTest {
 
         // given
         User user = User.newInstance("1", "jinwon@gmail.com", "profile.png", 1000, "jinwon", LocalDateTime.now(), Role.GENERAL);
-        Find find = Find.createFind("패딩 찾아봅니다", LocalDateTime.now(), "image.png", "안 입는 패딩 기부받아요", 0, user);
+        Find find = Find.createFind("패딩 찾아봅니다", LocalDateTime.now(), "image.png", "안 입는 패딩 기부받아요", 0, Tag.TOP, user);
 
         // when
         userService.join(user);
@@ -64,8 +65,8 @@ public class FindServiceTest {
 
         // given
         User user = User.newInstance("1", "jinwon@gmail.com", "profile.png", 1000, "jinwon", LocalDateTime.now(), Role.GENERAL);
-        Find find1 = Find.createFind("패딩 찾아봅니다", LocalDateTime.now(), "안 입는 패딩 기부받아요", "image1", 0, user);
-        Find find2 = Find.createFind("바지 찾아봅니다", LocalDateTime.now(), "안 입는 바지 기부받아요", "image2", 0, user);
+        Find find1 = Find.createFind("패딩 찾아봅니다", LocalDateTime.now(), "안 입는 패딩 기부받아요", "image1", 0, Tag.TOP, user);
+        Find find2 = Find.createFind("바지 찾아봅니다", LocalDateTime.now(), "안 입는 바지 기부받아요", "image2", 0, Tag.PANTS, user);
 
         // when
         userService.join(user);

@@ -2,6 +2,7 @@ package io.wisoft.capstonedesign.service;
 
 import io.wisoft.capstonedesign.domain.Donate;
 import io.wisoft.capstonedesign.domain.Role;
+import io.wisoft.capstonedesign.domain.Tag;
 import io.wisoft.capstonedesign.domain.User;
 import io.wisoft.capstonedesign.repository.DonateRepository;
 import io.wisoft.capstonedesign.repository.UserRepository;
@@ -33,7 +34,7 @@ public class DonateServiceTest {
 
         // given
         User user = User.newInstance("1", "jinwon@gmail.com", "profile.png", 1000, "jinwon", LocalDateTime.now(), Role.GENERAL);
-        Donate donate = Donate.createDonate("패딩 나눔합니다", LocalDateTime.now(), "image.png", "안 입는 패딩 기부해요", 0, user);
+        Donate donate = Donate.createDonate("패딩 나눔합니다", LocalDateTime.now(), "image.png", "안 입는 패딩 기부해요", 0, Tag.TOP, user);
 
         // when
         userService.join(user);
@@ -48,7 +49,7 @@ public class DonateServiceTest {
 
         // given
         User user = User.newInstance("1", "jinwon@gmail.com", "profile.png", 1000, "jinwon", LocalDateTime.now(), Role.GENERAL);
-        Donate donate = Donate.createDonate("패딩 나눔합니다", LocalDateTime.now(), "image.png", "안 입는 패딩 기부해요", 0, user);
+        Donate donate = Donate.createDonate("패딩 나눔합니다", LocalDateTime.now(), "image.png", "안 입는 패딩 기부해요", 0, Tag.TOP, user);
 
         // when
         userService.join(user);
@@ -64,8 +65,8 @@ public class DonateServiceTest {
 
         // given
         User user = User.newInstance("1", "jinwon@gmail.com", "profile.png", 1000, "jinwon", LocalDateTime.now(), Role.GENERAL);
-        Donate donate1 = Donate.createDonate("패딩 나눔합니다", LocalDateTime.now(), "image1.png", "안 입는 패딩 기부해요", 0, user);
-        Donate donate2 = Donate.createDonate("바지 나눔합니다", LocalDateTime.now(), "image2.png", "안 입는 바지 기부해요", 0, user);
+        Donate donate1 = Donate.createDonate("패딩 나눔합니다", LocalDateTime.now(), "image1.png", "안 입는 패딩 기부해요", 0, Tag.TOP, user);
+        Donate donate2 = Donate.createDonate("바지 나눔합니다", LocalDateTime.now(), "image2.png", "안 입는 바지 기부해요", 0, Tag.PANTS, user);
 
         // when
         userService.join(user);
