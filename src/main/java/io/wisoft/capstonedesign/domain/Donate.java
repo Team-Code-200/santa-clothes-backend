@@ -5,9 +5,6 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
 
 import static jakarta.persistence.FetchType.*;
 import static lombok.AccessLevel.*;
@@ -38,12 +35,13 @@ public class Donate {
     @Column(name = "view", nullable = false, columnDefinition = "INTEGER default 0")
     private int view;
 
+    @Column(name = "tag", nullable = false)
+    @Enumerated(EnumType.STRING)
+    private Tag tag;
+
     @ManyToOne(fetch = LAZY)
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
-
-    @OneToMany(mappedBy = "donate")
-    private List<DonateTag> donateTags = new ArrayList<>();
 
     /**
      * 정적 생성자 메소드
@@ -54,6 +52,7 @@ public class Donate {
             String image,
             String text,
             int view,
+            Tag tag,
             User user
     ) {
         Donate donate = new Donate();
@@ -62,6 +61,7 @@ public class Donate {
         donate.text = text;
         donate.image = image;
         donate.view = view;
+        donate.tag = tag;
         donate.setUser(user);
         return donate;
     }

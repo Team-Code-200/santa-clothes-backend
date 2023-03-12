@@ -5,9 +5,6 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
 
 import static jakarta.persistence.FetchType.*;
 import static lombok.AccessLevel.*;
@@ -38,12 +35,14 @@ public class Find {
     @Column(name = "view", nullable = false, columnDefinition = "INTEGER default 0")
     private int view;
 
+    @Column(name = "tag", nullable = false)
+    @Enumerated(EnumType.STRING)
+    private Tag tag;
+
     @ManyToOne(fetch = LAZY)
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
 
-    @OneToMany(mappedBy = "find")
-    private List<FindTag> findTags = new ArrayList<>();
 
     /**
      * 정적 생성자 메소드
@@ -54,6 +53,7 @@ public class Find {
             String text,
             String image,
             int view,
+            Tag tag,
             User user
     ) {
         Find find = new Find();
@@ -62,6 +62,7 @@ public class Find {
         find.text = text;
         find.image = image;
         find.view = view;
+        find.tag = tag;
         find.setUser(user);
         return find;
     }
