@@ -8,6 +8,7 @@ import org.junit.runner.RunWith;
 import org.opentest4j.AssertionFailedError;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.annotation.Rollback;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -19,6 +20,7 @@ import static org.junit.jupiter.api.Assertions.*;
 @RunWith(SpringRunner.class)
 @SpringBootTest
 @Transactional
+@Rollback(value = false)
 public class UserServiceTest {
 
     @Autowired UserRepository userRepository;
@@ -81,5 +83,19 @@ public class UserServiceTest {
         // then
         assertEquals(3, users.size());
 
+    }
+
+    @Test
+    public void 회원_닉네임_수정() throws Exception {
+
+        // given
+        User user1 = User.newInstance("1", "jinwon@gmail.com", "profile1.png", 1000, "jinwon", LocalDateTime.now(), Role.GENERAL);
+
+        // when
+        Long userId = userService.join(user1);
+        userService.updateNickname(userId, "jinony");
+
+        // then
+        assertEquals("jinony", user1.getNickname());
     }
 }

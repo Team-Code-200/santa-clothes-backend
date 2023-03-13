@@ -46,4 +46,20 @@ public class UserService {
     public User findOne(Long userId) {
         return userRepository.findOne(userId);
     }
+
+    /**
+     * 닉네임 수정
+     */
+    @Transactional
+    public void updateNickname(Long userId, String nickname) {
+        User user = findOne(userId);
+        validateNickname(nickname);
+        user.updateNickname(nickname);
+    }
+
+    private void validateNickname(String nickname) {
+        if (nickname == null) {
+            throw new IllegalStateException("닉네임을 입력해주세요.");
+        }
+    }
 }
