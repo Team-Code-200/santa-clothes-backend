@@ -75,4 +75,16 @@ public class Donate {
         this.user = user;
         user.getDonates().add(this);
     }
+
+    /**
+     * 게시글 제목, 본문 및 태그 수정
+     */
+    public void update(String title, String image, String text, Tag tag) {
+        this.title = title;
+        this.image = image;
+        this.text = text;
+        this.tag = tag;
+        this.createdDate = LocalDateTime.now();
+        view += 1;
+    }
 }

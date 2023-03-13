@@ -1,6 +1,7 @@
 package io.wisoft.capstonedesign.service;
 
 import io.wisoft.capstonedesign.domain.Donate;
+import io.wisoft.capstonedesign.domain.Tag;
 import io.wisoft.capstonedesign.repository.DonateRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -36,5 +37,21 @@ public class DonateService {
      */
     public Donate findOne(Long id) {
         return donateRepository.findOne(id);
+    }
+
+    /**
+     * 게시글 제목, 본문 및 태그 수정
+     */
+    @Transactional
+    public void updateAll(Long donateId, String title, String image, String text, Tag tag) {
+        Donate donate = findOne(donateId);
+        validateDonate(title, image, text, tag);
+        donate.update(title, image, text, tag);
+    }
+
+    private void validateDonate(String title, String image, String text, Tag tag) {
+        if (title == null || image == null || text == null || tag == null) {
+            throw new IllegalStateException("게시글을 모두 작성해주세요.");
+        }
     }
 }
