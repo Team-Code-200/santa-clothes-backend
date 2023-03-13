@@ -11,6 +11,7 @@ import org.junit.runner.RunWith;
 import org.opentest4j.AssertionFailedError;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.annotation.Rollback;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -22,6 +23,7 @@ import static org.junit.jupiter.api.Assertions.*;
 @RunWith(SpringRunner.class)
 @SpringBootTest
 @Transactional
+@Rollback(value = false)
 public class DonateServiceTest {
 
     @Autowired DonateRepository donateRepository;
@@ -77,5 +79,24 @@ public class DonateServiceTest {
         // then
         assertEquals(3, donates.size());
         fail("예외가 발생해야 한다!");
+    }
+
+    @Test
+    public void 게시글_전체_수정() throws Exception {
+
+        // given
+        User user = User.newInstance("1", "jinwon@gmail.com", "profile.png", 1000, "jinwon", LocalDateTime.now(), Role.GENERAL);
+        Donate donate = Donate.createDonate("패딩 나눔합니다", LocalDateTime.now(), "image1.png", "안 입는 패딩 기부해요", 0, Tag.TOP, user);
+
+        // when
+        userService.join(user);
+        Long donateId = donateService.join(donate);
+
+        donateService.updateAll(donateId, "바지 나눔합니다", "image2.png", "안 입는 바지 기부해요", Tag.PANTS);
+        Donate updateDonate = donateService.findOne(donateId);
+
+        // then
+        assertEquals("바지 나눔합니다", updateDonate.getTitle());
+        System.out.println(updateDonate.getView()); // 조회수 확인
     }
 }

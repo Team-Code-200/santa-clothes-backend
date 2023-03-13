@@ -7,7 +7,6 @@ import lombok.Setter;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import static lombok.AccessLevel.*;
@@ -86,5 +85,12 @@ public class User {
         user.createdDate = createdDate;
         user.userRole = userRole;
         return user;
+    }
+
+    /**
+     * 닉네임 수정
+     */
+    public void updateNickname(String nickname) {
+        this.nickname = nickname;
     }
 }
