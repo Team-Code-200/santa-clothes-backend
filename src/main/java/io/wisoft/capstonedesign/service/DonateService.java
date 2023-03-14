@@ -54,4 +54,13 @@ public class DonateService {
             throw new IllegalStateException("게시글을 모두 작성해주세요.");
         }
     }
+
+    /**
+     * 게시글 삭제
+     */
+    @Transactional
+    public void deleteDonate(Long donateId) {
+        Donate donate = donateRepository.findOne(donateId);
+        donateRepository.delete(donate);
+    }
 }

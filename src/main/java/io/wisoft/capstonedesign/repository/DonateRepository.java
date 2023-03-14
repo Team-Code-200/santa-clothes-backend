@@ -31,4 +31,8 @@ public class DonateRepository {
                 .setParameter("user", user)
                 .getResultList();
     }
+
+    public void delete(Donate donate) {
+        em.remove(donate);
+    }
 }
