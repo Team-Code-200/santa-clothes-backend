@@ -96,4 +96,22 @@ public class FindServiceTest {
         assertEquals("바지 찾아봅니다", updateFind.getTitle());
         System.out.println(updateFind.getView()); // 조회수 확인
     }
+
+    @Test(expected = AssertionFailedError.class)
+    public void 게시글_삭제() throws Exception {
+
+        // given
+        User user = User.newInstance("1", "jinwon@gmail.com", "profile1.png", 1000, "jinwon", LocalDateTime.now(), Role.GENERAL);
+        Find find = Find.createFind("패딩 찾아봅니다", LocalDateTime.now(), "image1.png", "안 입는 패딩 기부받아요", 0, Tag.TOP, user);
+
+        // when
+        userService.join(user);
+        Long findId = findService.join(find);
+
+        findService.deleteFind(findId);
+        Find deletedFind = findService.findOne(findId);
+
+        // then
+        assertEquals(find, deletedFind);
+    }
 }

@@ -31,4 +31,8 @@ public class FindRepository {
                 .setParameter("user", user)
                 .getResultList();
     }
+
+    public void delete(Find find) {
+        em.remove(find);
+    }
 }

@@ -62,4 +62,13 @@ public class UserService {
             throw new IllegalStateException("닉네임을 입력해주세요.");
         }
     }
+
+    /**
+     * 회원 삭제
+     */
+    @Transactional
+    public void deleteUser(Long userId) {
+        User user = userRepository.findOne(userId);
+        userRepository.delete(user);
+    }
 }

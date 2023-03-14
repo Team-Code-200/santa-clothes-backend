@@ -99,4 +99,22 @@ public class DonateServiceTest {
         assertEquals("바지 나눔합니다", updateDonate.getTitle());
         System.out.println(updateDonate.getView()); // 조회수 확인
     }
+
+    @Test(expected = AssertionFailedError.class)
+    public void 게시글_삭제() throws Exception {
+
+        // given
+        User user = User.newInstance("1", "jinwon@gmail.com", "profile.png", 1000, "jinwon", LocalDateTime.now(), Role.GENERAL);
+        Donate donate = Donate.createDonate("패딩 나눔합니다", LocalDateTime.now(), "image1.png", "안 입는 패딩 기부해요", 0, Tag.TOP, user);
+
+        // when
+        userService.join(user);
+        Long donateId = donateService.join(donate);
+
+        donateService.deleteDonate(donateId);
+        Donate deletedDonate = donateService.findOne(donateId);
+
+        // then
+        assertEquals(donate, deletedDonate);
+    }
 }
