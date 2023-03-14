@@ -37,4 +37,8 @@ public class UserRepository {
                 .setParameter("email", email)
                 .getResultList();
     }
+
+    public void delete(User user) {
+        em.remove(user);
+    }
 }

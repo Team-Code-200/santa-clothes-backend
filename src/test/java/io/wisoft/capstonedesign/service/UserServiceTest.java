@@ -98,4 +98,19 @@ public class UserServiceTest {
         // then
         assertEquals("jinony", user1.getNickname());
     }
+
+    @Test(expected = AssertionFailedError.class)
+    public void 회원_탈퇴() throws Exception {
+
+        // given
+        User user = User.newInstance("1", "jinwon@gmail.com", "profile1.png", 1000, "jinwon", LocalDateTime.now(), Role.GENERAL);
+
+        // when
+        Long userId = userService.join(user);
+        userService.deleteUser(userId);
+        User deletedUser = userService.findOne(userId);
+
+        // then
+        assertEquals(user, deletedUser);
+    }
 }
