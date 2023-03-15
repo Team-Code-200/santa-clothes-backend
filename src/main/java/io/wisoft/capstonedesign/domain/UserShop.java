@@ -25,13 +25,22 @@ public class UserShop {
     @JoinColumn(name = "shop_id", nullable = false)
     private Shop shop;
 
+    @ManyToOne(fetch = LAZY)
+    @JoinColumn(name = "info_id", nullable = false)
+    private Information information;
+
     /**
      * 정적 생성자 메소드
      */
-    public static UserShop createUserShop(User user, Shop shop) {
+    public static UserShop createUserShop(
+            User user,
+            Shop shop,
+            Information information
+    ) {
         UserShop userShop = new UserShop();
         userShop.setUser(user);
         userShop.setShop(shop);
+        userShop.setInformation(information);
         return userShop;
     }
 
@@ -50,5 +59,12 @@ public class UserShop {
         if (this.shop != null) this.shop.getUserShops().remove(this);
         this.shop = shop;
         shop.getUserShops().add(this);
+    }
+
+    public void setInformation(Information information) {
+
+        if (this.information != null) this.information.getUserShops().remove(this);
+        this.information = information;
+        information.getUserShops().add(this);
     }
 }

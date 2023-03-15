@@ -3,6 +3,7 @@ package io.wisoft.capstonedesign.domain;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import java.time.LocalDateTime;
 
@@ -12,7 +13,7 @@ import static lombok.AccessLevel.*;
 @Entity
 @Table(name = "DONATE")
 @NoArgsConstructor(access = PROTECTED)
-@Getter
+@Getter @Setter
 public class Donate {
 
     @Id @GeneratedValue
@@ -42,6 +43,9 @@ public class Donate {
     @ManyToOne(fetch = LAZY)
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
+
+    @OneToOne(mappedBy = "donate")
+    private DonateOrder donateOrder;
 
     /**
      * 정적 생성자 메소드
