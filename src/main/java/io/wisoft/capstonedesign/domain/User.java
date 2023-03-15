@@ -52,9 +52,6 @@ public class User {
     @OneToMany(mappedBy = "user")
     private List<Find> finds = new ArrayList<>();
 
-    @OneToMany(mappedBy = "user")
-    private List<Order> orders = new ArrayList<>();
-
     @OneToMany(mappedBy = "sender")
     private List<Message> messages = new ArrayList<>();
 
@@ -63,6 +60,15 @@ public class User {
 
     @OneToMany(mappedBy = "user")
     private List<UserChat> userChats = new ArrayList<>();
+
+    @OneToMany(mappedBy = "user")
+    private List<Information> information = new ArrayList<>();
+
+    @OneToMany(mappedBy = "user")
+    private List<FindOrder> findOrders = new ArrayList<>();
+
+    @OneToMany(mappedBy = "user")
+    private List<DonateOrder> donateOrders = new ArrayList<>();
 
     /**
      * 정적 생성자 메소드

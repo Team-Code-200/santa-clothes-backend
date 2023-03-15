@@ -43,6 +43,8 @@ public class Find {
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
 
+    @OneToOne(mappedBy = "find")
+    private FindOrder findOrder;
 
     /**
      * 정적 생성자 메소드

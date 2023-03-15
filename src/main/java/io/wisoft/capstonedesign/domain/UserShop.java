@@ -25,6 +25,10 @@ public class UserShop {
     @JoinColumn(name = "shop_id", nullable = false)
     private Shop shop;
 
+    @ManyToOne(fetch = LAZY)
+    @JoinColumn(name = "info_id", nullable = false)
+    private Information information;
+
     /**
      * 정적 생성자 메소드
      */

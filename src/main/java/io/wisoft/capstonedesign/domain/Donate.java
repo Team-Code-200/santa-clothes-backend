@@ -43,6 +43,9 @@ public class Donate {
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
 
+    @OneToOne(mappedBy = "donate")
+    private DonateOrder donateOrder;
+
     /**
      * 정적 생성자 메소드
      */
