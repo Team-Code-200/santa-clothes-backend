@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Stack;
 
 import static jakarta.persistence.FetchType.*;
 import static lombok.AccessLevel.*;
@@ -41,4 +42,31 @@ public class Information {
 
     @OneToMany(mappedBy = "information")
     private List<UserShop> userShops = new ArrayList<>();
+
+    /**
+     * 정적 생성자 메소드
+     */
+    public static Information createInformation(
+            String username,
+            String address,
+            String phoneNumber,
+            User user
+    ) {
+        Information information = new Information();
+        information.username = username;
+        information.address = address;
+        information.phoneNumber = phoneNumber;
+        information.user = user;
+        return information;
+    }
+
+    /**
+     * 연관관계 편의 메소드
+     */
+    public void setUser(User user) {
+
+        if (this.user != null) this.user.getInformation().remove(this);
+        this.user = user;
+        user.getInformation().add(this);
+    }
 }

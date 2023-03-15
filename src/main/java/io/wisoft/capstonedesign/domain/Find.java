@@ -3,6 +3,7 @@ package io.wisoft.capstonedesign.domain;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import java.time.LocalDateTime;
 
@@ -12,7 +13,7 @@ import static lombok.AccessLevel.*;
 @Entity
 @Table(name = "FIND")
 @NoArgsConstructor(access = PROTECTED)
-@Getter
+@Getter @Setter
 public class Find {
 
     @Id @GeneratedValue

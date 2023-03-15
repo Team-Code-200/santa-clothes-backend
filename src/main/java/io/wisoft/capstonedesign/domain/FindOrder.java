@@ -37,4 +37,47 @@ public class FindOrder {
     @ManyToOne(fetch = LAZY)
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
+
+    /**
+     * 정적 생성자 메소드
+     */
+    public static FindOrder createFindOrder(
+            LocalDateTime sendDate,
+            String text,
+            Information information,
+            Find find,
+            User user
+    ) {
+        FindOrder findOrder = new FindOrder();
+        findOrder.sendDate = sendDate;
+        findOrder.text = text;
+        findOrder.setInformation(information);
+        findOrder.setFind(find);
+        findOrder.setUser(user);
+        return findOrder;
+    }
+
+    /**
+     * 연관관계 편의 메소드
+     */
+    public void setInformation(Information information) {
+
+        if (this.information != null) this.information.getFindOrders().remove(this);
+        this.information = information;
+        information.getFindOrders().add(this);
+    }
+
+    public void setFind(Find find) {
+
+        if (this.find != null) this.find.setFindOrder(null);
+        this.find = find;
+        find.getFindOrder().setFind(find);
+    }
+
+    public void setUser(User user) {
+
+        if (this.user != null) this.user.getFindOrders().remove(this);
+        this.user = user;
+        user.getFindOrders().add(this);
+    }
 }
