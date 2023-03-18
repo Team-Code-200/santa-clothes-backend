@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -31,6 +32,10 @@ public class Shop {
     @Column(name = "body")
     private String body;
 
+    @Column(name = "created_at", nullable = false)
+    @Temporal(TemporalType.TIMESTAMP)
+    private LocalDateTime createdDate;
+
     @OneToMany(mappedBy = "shop")
     private List<UserShop> userShops = new ArrayList<>();
 
@@ -48,6 +53,17 @@ public class Shop {
         shop.price = price;
         shop.image = image;
         shop.body = body;
+        shop.createdDate = LocalDateTime.now();
         return shop;
+    }
+
+    /**
+     * 산타샵 물품 정보 전체 수정
+     */
+    public void update(String title, int price, String image, String body) {
+        this.title = title;
+        this.price = price;
+        this.image = image;
+        this.body = body;
     }
 }

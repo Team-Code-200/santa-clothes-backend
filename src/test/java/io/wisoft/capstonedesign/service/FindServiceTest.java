@@ -33,7 +33,7 @@ public class FindServiceTest {
 
         // given
         User user = User.newInstance("1", "jinwon@gmail.com", "profile.png", 1000, "jinwon", LocalDateTime.now(), Role.GENERAL);
-        Find find = Find.createFind("패딩 찾아봅니다", LocalDateTime.now(), "안 입는 패딩 기부받아요", "image.png", 0, Tag.TOP, user);
+        Find find = Find.createFind("패딩 찾아봅니다", "안 입는 패딩 기부받아요", "image.png", 0, Tag.TOP, user);
 
         // when
         userService.join(user);
@@ -48,7 +48,7 @@ public class FindServiceTest {
 
         // given
         User user = User.newInstance("1", "jinwon@gmail.com", "profile.png", 1000, "jinwon", LocalDateTime.now(), Role.GENERAL);
-        Find find = Find.createFind("패딩 찾아봅니다", LocalDateTime.now(), "image.png", "안 입는 패딩 기부받아요", 0, Tag.TOP, user);
+        Find find = Find.createFind("패딩 찾아봅니다", "image.png", "안 입는 패딩 기부받아요", 0, Tag.TOP, user);
 
         // when
         userService.join(user);
@@ -64,8 +64,8 @@ public class FindServiceTest {
 
         // given
         User user = User.newInstance("1", "jinwon@gmail.com", "profile.png", 1000, "jinwon", LocalDateTime.now(), Role.GENERAL);
-        Find find1 = Find.createFind("패딩 찾아봅니다", LocalDateTime.now(), "안 입는 패딩 기부받아요", "image1", 0, Tag.TOP, user);
-        Find find2 = Find.createFind("바지 찾아봅니다", LocalDateTime.now(), "안 입는 바지 기부받아요", "image2", 0, Tag.PANTS, user);
+        Find find1 = Find.createFind("패딩 찾아봅니다", "안 입는 패딩 기부받아요", "image1", 0, Tag.TOP, user);
+        Find find2 = Find.createFind("바지 찾아봅니다", "안 입는 바지 기부받아요", "image2", 0, Tag.PANTS, user);
 
         // when
         userService.join(user);
@@ -83,7 +83,7 @@ public class FindServiceTest {
 
         // given
         User user = User.newInstance("1", "jinwon@gmail.com", "profile.png", 1000, "jinwon", LocalDateTime.now(), Role.GENERAL);
-        Find find = Find.createFind("패딩 찾아봅니다", LocalDateTime.now(), "image1.png", "안 입는 패딩 기부받아요", 0, Tag.TOP, user);
+        Find find = Find.createFind("패딩 찾아봅니다", "image1.png", "안 입는 패딩 기부받아요", 0, Tag.TOP, user);
 
         // when
         userService.join(user);
@@ -102,7 +102,7 @@ public class FindServiceTest {
 
         // given
         User user = User.newInstance("1", "jinwon@gmail.com", "profile1.png", 1000, "jinwon", LocalDateTime.now(), Role.GENERAL);
-        Find find = Find.createFind("패딩 찾아봅니다", LocalDateTime.now(), "image1.png", "안 입는 패딩 기부받아요", 0, Tag.TOP, user);
+        Find find = Find.createFind("패딩 찾아봅니다", "image1.png", "안 입는 패딩 기부받아요", 0, Tag.TOP, user);
 
         // when
         userService.join(user);

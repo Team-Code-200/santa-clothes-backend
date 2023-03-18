@@ -23,7 +23,7 @@ import static org.junit.jupiter.api.Assertions.*;
 @SpringBootTest
 @Transactional
 @Rollback(value = false)
-public class InformationTest {
+public class InformationServiceTest {
 
     @Autowired InformationRepository informationRepository;
     @Autowired UserRepository userRepository;

@@ -52,7 +52,6 @@ public class Donate {
      */
     public static Donate createDonate(
             String title,
-            LocalDateTime createdDate,
             String image,
             String text,
             int view,
@@ -61,7 +60,7 @@ public class Donate {
     ) {
         Donate donate = new Donate();
         donate.title = title;
-        donate.createdDate = createdDate;
+        donate.createdDate = LocalDateTime.now();
         donate.text = text;
         donate.image = image;
         donate.view = view;
