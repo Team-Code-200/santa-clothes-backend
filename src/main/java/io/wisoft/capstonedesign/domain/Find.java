@@ -52,7 +52,6 @@ public class Find {
      */
     public static Find createFind(
             String title,
-            LocalDateTime createdDate,
             String text,
             String image,
             int view,
@@ -61,7 +60,7 @@ public class Find {
     ) {
         Find find = new Find();
         find.title = title;
-        find.createdDate = createdDate;
+        find.createdDate = LocalDateTime.now();
         find.text = text;
         find.image = image;
         find.view = view;
