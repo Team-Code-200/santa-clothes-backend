@@ -6,7 +6,6 @@ import lombok.NoArgsConstructor;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Stack;
 
 import static jakarta.persistence.FetchType.*;
 import static lombok.AccessLevel.*;
@@ -68,5 +67,14 @@ public class Information {
         if (this.user != null) this.user.getInformation().remove(this);
         this.user = user;
         user.getInformation().add(this);
+    }
+
+    /**
+     * 배송 정보 전체 수정
+     */
+    public void update(String username, String address, String phoneNumber) {
+        this.username = username;
+        this.address = address;
+        this.phoneNumber = phoneNumber;
     }
 }

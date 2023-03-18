@@ -1,6 +1,7 @@
 package io.wisoft.capstonedesign.repository;
 
 import io.wisoft.capstonedesign.domain.Find;
+import io.wisoft.capstonedesign.domain.User;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 import org.springframework.stereotype.Repository;
@@ -26,7 +27,7 @@ public class FindRepository {
                 .getResultList();
     }
 
-    public List<Find> findByUser(String user) {
+    public List<Find> findByUser(User user) {
         return em.createQuery("select f from Find f where f.user = :user", Find.class)
                 .setParameter("user", user)
                 .getResultList();

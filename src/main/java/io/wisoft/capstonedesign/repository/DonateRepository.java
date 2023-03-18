@@ -1,6 +1,7 @@
 package io.wisoft.capstonedesign.repository;
 
 import io.wisoft.capstonedesign.domain.Donate;
+import io.wisoft.capstonedesign.domain.User;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 import org.springframework.stereotype.Repository;
@@ -26,7 +27,7 @@ public class DonateRepository {
                 .getResultList();
     }
 
-    public List<Donate> findByUser(String user) {
+    public List<Donate> findByUser(User user) {
         return em.createQuery("select d from Donate d where d.user = :user", Donate.class)
                 .setParameter("user", user)
                 .getResultList();
