@@ -42,14 +42,13 @@ public class DonateOrder {
      * 정적 생성자 메소드
      */
     public static DonateOrder createDonateOrder(
-            LocalDateTime sendDate,
             String text,
             Information information,
             Donate donate,
             User user
     ) {
         DonateOrder donateOrder = new DonateOrder();
-        donateOrder.sendDate = sendDate;
+        donateOrder.sendDate = LocalDateTime.now();
         donateOrder.text = text;
         donateOrder.setInformation(information);
         donateOrder.setDonate(donate);
@@ -71,7 +70,7 @@ public class DonateOrder {
 
         if (this.donate != null) this.donate.setDonateOrder(null);
         this.donate = donate;
-        donate.getDonateOrder().setDonate(donate);
+        donate.setDonateOrder(this);
     }
 
     public void setUser(User user) {
@@ -79,5 +78,12 @@ public class DonateOrder {
         if (this.user != null) this.user.getDonateOrders().remove(this);
         this.user = user;
         user.getDonateOrders().add(this);
+    }
+
+    /**
+     * 주문 내역 기타 사항 수정
+     */
+    public void update(String text) {
+        this.text = text;
     }
 }

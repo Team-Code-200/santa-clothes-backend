@@ -42,14 +42,13 @@ public class FindOrder {
      * 정적 생성자 메소드
      */
     public static FindOrder createFindOrder(
-            LocalDateTime sendDate,
             String text,
             Information information,
             Find find,
             User user
     ) {
         FindOrder findOrder = new FindOrder();
-        findOrder.sendDate = sendDate;
+        findOrder.sendDate = LocalDateTime.now();
         findOrder.text = text;
         findOrder.setInformation(information);
         findOrder.setFind(find);
@@ -71,7 +70,7 @@ public class FindOrder {
 
         if (this.find != null) this.find.setFindOrder(null);
         this.find = find;
-        find.getFindOrder().setFind(find);
+        find.setFindOrder(this);
     }
 
     public void setUser(User user) {
@@ -79,5 +78,12 @@ public class FindOrder {
         if (this.user != null) this.user.getFindOrders().remove(this);
         this.user = user;
         user.getFindOrders().add(this);
+    }
+
+    /**
+     * 주문 내역 기타 사항 수정
+     */
+    public void update(String text) {
+        this.text = text;
     }
 }
