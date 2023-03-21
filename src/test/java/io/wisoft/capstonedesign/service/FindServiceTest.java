@@ -71,11 +71,51 @@ public class FindServiceTest {
         userService.join(user);
         findService.join(find1);
         findService.join(find2);
-        List<Find> donates = findService.findFinds();
+        List<Find> finds = findService.findFinds();
 
         // then
-        assertEquals(3, donates.size());
+        assertEquals(3, finds.size());
         fail("예외가 발생해야 한다!");
+    }
+
+    @Test
+    public void 전체_게시글_최근순_조회() throws Exception {
+
+        // given
+        User user1 = User.newInstance("1", "jinwon@gmail.com", "profile.png", 1000, "jinwon", LocalDateTime.now(), Role.GENERAL);
+        User user2 = User.newInstance("2", "donggwon@gmail.com", "profile.png", 2000, "donggwon", LocalDateTime.now(), Role.GENERAL);
+        Find find1 = Find.createFind("패딩 찾아봅니다", "안 입는 패딩 기부받아요", "image1", 0, Tag.TOP, user1);
+        Find find2 = Find.createFind("바지 찾아봅니다", "안 입는 바지 기부받아요", "image2", 0, Tag.PANTS, user2);
+
+        // when
+        userService.join(user1);
+        userService.join(user2);
+        findService.join(find1);
+        findService.join(find2);
+        List<Find> findListDESC = findService.findByCreatedDateDESC();
+
+        // then
+        assertEquals(find2, findListDESC.get(0));
+    }
+
+    @Test
+    public void 전체_게시글_태그별_조회() throws Exception {
+
+        // given
+        User user = User.newInstance("1", "jinwon@gmail.com", "profile.png", 1000, "jinwon", LocalDateTime.now(), Role.GENERAL);
+        Find find1 = Find.createFind("패딩 찾아봅니다", "안 입는 패딩 기부받아요", "image1", 0, Tag.TOP, user);
+        Find find2 = Find.createFind("청바지 찾아봅니다", "안 입는 바지 기부받아요", "image2", 0, Tag.PANTS, user);
+        Find find3 = Find.createFind("트레이닝 바지 찾아봅니다", "안 입는 바지 기부받아요", "image3", 0, Tag.PANTS, user);
+
+        // when
+        userService.join(user);
+        findService.join(find1);
+        findService.join(find2);
+        findService.join(find3);
+        List<Find> byTag = findService.findByTag(Tag.PANTS);
+
+        // then
+        assertEquals(2, byTag.size());
     }
 
     @Test

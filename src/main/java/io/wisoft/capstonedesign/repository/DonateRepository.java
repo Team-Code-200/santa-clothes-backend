@@ -1,6 +1,7 @@
 package io.wisoft.capstonedesign.repository;
 
 import io.wisoft.capstonedesign.domain.Donate;
+import io.wisoft.capstonedesign.domain.Tag;
 import io.wisoft.capstonedesign.domain.User;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
@@ -30,6 +31,17 @@ public class DonateRepository {
     public List<Donate> findByUser(User user) {
         return em.createQuery("select d from Donate d where d.user = :user", Donate.class)
                 .setParameter("user", user)
+                .getResultList();
+    }
+
+    public List<Donate> findByCreatedDateDESC() {
+        return em.createQuery("select d from Donate d order by d.createdDate desc", Donate.class)
+                .getResultList();
+    }
+
+    public List<Donate> findByTag(Tag tag) {
+        return em.createQuery("select d from Donate d where d.tag = :tag", Donate.class)
+                .setParameter("tag", tag)
                 .getResultList();
     }
 

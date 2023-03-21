@@ -82,6 +82,46 @@ public class DonateServiceTest {
     }
 
     @Test
+    public void 전체_게시글_최근순_조회() throws Exception {
+
+        // given
+        User user1 = User.newInstance("1", "jinwon@gmail.com", "profile.png", 1000, "jinwon", LocalDateTime.now(), Role.GENERAL);
+        User user2 = User.newInstance("2", "donggwon@gmail.com", "profile.png", 2000, "donggwon", LocalDateTime.now(), Role.GENERAL);
+        Donate donate1 = Donate.createDonate("패딩 나눔합니다", "image1.png", "안 입는 패딩 기부해요", 0, Tag.TOP, user1);
+        Donate donate2 = Donate.createDonate("바지 나눔합니다", "image2.png", "안 입는 바지 기부해요", 0, Tag.PANTS, user2);
+
+        // when
+        userService.join(user1);
+        userService.join(user2);
+        donateService.join(donate1);
+        donateService.join(donate2);
+        List<Donate> donateListDESC = donateService.findByCreatedDateDESC();
+
+        // then
+        assertEquals(donate2, donateListDESC.get(0));
+    }
+
+    @Test
+    public void 전체_게시글_태그별_조회() throws Exception {
+
+        // given
+        User user = User.newInstance("1", "jinwon@gmail.com", "profile.png", 1000, "jinwon", LocalDateTime.now(), Role.GENERAL);
+        Donate donate1 = Donate.createDonate("패딩 나눔합니다", "image1.png", "안 입는 패딩 기부해요", 0, Tag.TOP, user);
+        Donate donate2 = Donate.createDonate("후드티 나눔합니다", "image2.png", "안 입는 후드티 기부해요", 0, Tag.TOP, user);
+        Donate donate3 = Donate.createDonate("바지 나눔합니다", "image3.png", "안 입는 바지 기부해요", 0, Tag.PANTS, user);
+
+        // when
+        userService.join(user);
+        donateService.join(donate1);
+        donateService.join(donate2);
+        donateService.join(donate3);
+        List<Donate> byTag = donateService.findByTag(Tag.TOP);
+
+        // then
+        assertEquals(2, byTag.size());
+    }
+
+    @Test
     public void 게시글_전체_수정() throws Exception {
 
         // given

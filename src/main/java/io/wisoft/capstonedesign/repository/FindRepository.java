@@ -1,6 +1,7 @@
 package io.wisoft.capstonedesign.repository;
 
 import io.wisoft.capstonedesign.domain.Find;
+import io.wisoft.capstonedesign.domain.Tag;
 import io.wisoft.capstonedesign.domain.User;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
@@ -30,6 +31,17 @@ public class FindRepository {
     public List<Find> findByUser(User user) {
         return em.createQuery("select f from Find f where f.user = :user", Find.class)
                 .setParameter("user", user)
+                .getResultList();
+    }
+
+    public List<Find> findByCreatedDateDESC() {
+        return em.createQuery("select f from Find f order by f.createdDate desc", Find.class)
+                .getResultList();
+    }
+
+    public List<Find> findByTag(Tag tag) {
+        return em.createQuery("select f from Find  f where f.tag = :tag", Find.class)
+                .setParameter("tag", tag)
                 .getResultList();
     }
 
