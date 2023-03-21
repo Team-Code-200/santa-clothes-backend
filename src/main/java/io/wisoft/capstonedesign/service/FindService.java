@@ -41,6 +41,20 @@ public class FindService {
     }
 
     /**
+     * 모든 게시글 최근순으로 조회 - 기본값
+     */
+    public List<Find> findByCreatedDateDESC() {
+        return findRepository.findByCreatedDateDESC();
+    }
+
+    /**
+     * 모든 게시글 태그 종류별 조회
+     */
+    public List<Find> findByTag(Tag tag) {
+        return findRepository.findByTag(tag);
+    }
+
+    /**
      * 게시글 제목, 본문 및 태그 수정
      */
     @Transactional
