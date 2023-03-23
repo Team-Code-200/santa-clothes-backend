@@ -1,10 +1,12 @@
 package io.wisoft.capstonedesign.service;
 
-import io.wisoft.capstonedesign.domain.Information;
-import io.wisoft.capstonedesign.domain.Role;
-import io.wisoft.capstonedesign.domain.User;
-import io.wisoft.capstonedesign.repository.InformationRepository;
-import io.wisoft.capstonedesign.repository.UserRepository;
+import io.wisoft.capstonedesign.domain.information.application.InformationService;
+import io.wisoft.capstonedesign.domain.information.persistence.Information;
+import io.wisoft.capstonedesign.global.enumerated.Role;
+import io.wisoft.capstonedesign.domain.user.application.UserService;
+import io.wisoft.capstonedesign.domain.user.persistence.User;
+import io.wisoft.capstonedesign.domain.information.persistence.InformationRepository;
+import io.wisoft.capstonedesign.domain.user.persistence.UserRepository;
 import org.junit.runner.RunWith;
 import org.junit.Test;
 import org.opentest4j.AssertionFailedError;
@@ -14,7 +16,6 @@ import org.springframework.test.annotation.Rollback;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.time.LocalDateTime;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -27,8 +28,10 @@ public class InformationServiceTest {
 
     @Autowired InformationRepository informationRepository;
     @Autowired UserRepository userRepository;
-    @Autowired InformationService informationService;
-    @Autowired UserService userService;
+    @Autowired
+    InformationService informationService;
+    @Autowired
+    UserService userService;
 
     @Test
     public void 배송정보_생성() throws Exception {

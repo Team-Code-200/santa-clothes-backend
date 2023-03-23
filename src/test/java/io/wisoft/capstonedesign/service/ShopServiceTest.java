@@ -1,10 +1,12 @@
 package io.wisoft.capstonedesign.service;
 
-import io.wisoft.capstonedesign.domain.Role;
-import io.wisoft.capstonedesign.domain.Shop;
-import io.wisoft.capstonedesign.domain.User;
-import io.wisoft.capstonedesign.repository.ShopRepository;
-import io.wisoft.capstonedesign.repository.UserRepository;
+import io.wisoft.capstonedesign.global.enumerated.Role;
+import io.wisoft.capstonedesign.domain.shop.application.ShopService;
+import io.wisoft.capstonedesign.domain.shop.persistence.Shop;
+import io.wisoft.capstonedesign.domain.user.application.UserService;
+import io.wisoft.capstonedesign.domain.user.persistence.User;
+import io.wisoft.capstonedesign.domain.shop.persistence.ShopRepository;
+import io.wisoft.capstonedesign.domain.user.persistence.UserRepository;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.opentest4j.AssertionFailedError;
@@ -14,7 +16,6 @@ import org.springframework.test.annotation.Rollback;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.time.LocalDateTime;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -27,8 +28,10 @@ public class ShopServiceTest {
 
     @Autowired ShopRepository shopRepository;
     @Autowired UserRepository userRepository;
-    @Autowired ShopService shopService;
-    @Autowired UserService userService;
+    @Autowired
+    ShopService shopService;
+    @Autowired
+    UserService userService;
 
     @Test
     public void 산타샵_물품_생성() throws Exception {

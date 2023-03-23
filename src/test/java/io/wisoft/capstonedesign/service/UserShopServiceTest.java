@@ -1,10 +1,18 @@
 package io.wisoft.capstonedesign.service;
 
-import io.wisoft.capstonedesign.domain.*;
-import io.wisoft.capstonedesign.repository.InformationRepository;
-import io.wisoft.capstonedesign.repository.ShopRepository;
-import io.wisoft.capstonedesign.repository.UserRepository;
-import io.wisoft.capstonedesign.repository.UserShopRepository;
+import io.wisoft.capstonedesign.global.enumerated.Role;
+import io.wisoft.capstonedesign.domain.information.application.InformationService;
+import io.wisoft.capstonedesign.domain.information.persistence.InformationRepository;
+import io.wisoft.capstonedesign.domain.shop.application.ShopService;
+import io.wisoft.capstonedesign.domain.shop.persistence.ShopRepository;
+import io.wisoft.capstonedesign.domain.shop.persistence.Shop;
+import io.wisoft.capstonedesign.domain.user.application.UserService;
+import io.wisoft.capstonedesign.domain.information.persistence.Information;
+import io.wisoft.capstonedesign.domain.user.persistence.UserRepository;
+import io.wisoft.capstonedesign.domain.usershop.application.UserShopService;
+import io.wisoft.capstonedesign.domain.usershop.persistence.UserShopRepository;
+import io.wisoft.capstonedesign.domain.user.persistence.User;
+import io.wisoft.capstonedesign.domain.usershop.persistence.UserShop;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.opentest4j.AssertionFailedError;
@@ -14,7 +22,6 @@ import org.springframework.test.annotation.Rollback;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.time.LocalDateTime;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -29,10 +36,14 @@ public class UserShopServiceTest {
     @Autowired UserRepository userRepository;
     @Autowired ShopRepository shopRepository;
     @Autowired InformationRepository informationRepository;
-    @Autowired UserShopService userShopService;
-    @Autowired UserService userService;
-    @Autowired ShopService shopService;
-    @Autowired InformationService informationService;
+    @Autowired
+    UserShopService userShopService;
+    @Autowired
+    UserService userService;
+    @Autowired
+    ShopService shopService;
+    @Autowired
+    InformationService informationService;
 
     @Test
     public void 주문내역_생성() throws Exception {
