@@ -35,7 +35,7 @@ public class DonateServiceTest {
     public void 게시글_작성() throws Exception {
 
         // given
-        User user = User.newInstance("1", "jinwon@gmail.com", "profile.png", 1000, "jinwon", LocalDateTime.now(), Role.GENERAL);
+        User user = User.newInstance("1", "jinwon@gmail.com", "profile.png", 1000, "jinwon", Role.GENERAL);
         Donate donate = Donate.createDonate("패딩 나눔합니다", "image.png", "안 입는 패딩 기부해요", 0, Tag.TOP, user);
 
         // when
@@ -50,7 +50,7 @@ public class DonateServiceTest {
     public void 게시글_조회() throws Exception {
 
         // given
-        User user = User.newInstance("1", "jinwon@gmail.com", "profile.png", 1000, "jinwon", LocalDateTime.now(), Role.GENERAL);
+        User user = User.newInstance("1", "jinwon@gmail.com", "profile.png", 1000, "jinwon", Role.GENERAL);
         Donate donate = Donate.createDonate("패딩 나눔합니다", "image.png", "안 입는 패딩 기부해요", 0, Tag.TOP, user);
 
         // when
@@ -66,7 +66,7 @@ public class DonateServiceTest {
     public void 전체_게시글_조회() throws Exception {
 
         // given
-        User user = User.newInstance("1", "jinwon@gmail.com", "profile.png", 1000, "jinwon", LocalDateTime.now(), Role.GENERAL);
+        User user = User.newInstance("1", "jinwon@gmail.com", "profile.png", 1000, "jinwon", Role.GENERAL);
         Donate donate1 = Donate.createDonate("패딩 나눔합니다", "image1.png", "안 입는 패딩 기부해요", 0, Tag.TOP, user);
         Donate donate2 = Donate.createDonate("바지 나눔합니다", "image2.png", "안 입는 바지 기부해요", 0, Tag.PANTS, user);
 
@@ -85,8 +85,8 @@ public class DonateServiceTest {
     public void 전체_게시글_최근순_조회() throws Exception {
 
         // given
-        User user1 = User.newInstance("1", "jinwon@gmail.com", "profile.png", 1000, "jinwon", LocalDateTime.now(), Role.GENERAL);
-        User user2 = User.newInstance("2", "donggwon@gmail.com", "profile.png", 2000, "donggwon", LocalDateTime.now(), Role.GENERAL);
+        User user1 = User.newInstance("1", "jinwon@gmail.com", "profile.png", 1000, "jinwon", Role.GENERAL);
+        User user2 = User.newInstance("2", "donggwon@gmail.com", "profile.png", 2000, "donggwon", Role.GENERAL);
         Donate donate1 = Donate.createDonate("패딩 나눔합니다", "image1.png", "안 입는 패딩 기부해요", 0, Tag.TOP, user1);
         Donate donate2 = Donate.createDonate("바지 나눔합니다", "image2.png", "안 입는 바지 기부해요", 0, Tag.PANTS, user2);
 
@@ -105,7 +105,7 @@ public class DonateServiceTest {
     public void 전체_게시글_태그별_조회() throws Exception {
 
         // given
-        User user = User.newInstance("1", "jinwon@gmail.com", "profile.png", 1000, "jinwon", LocalDateTime.now(), Role.GENERAL);
+        User user = User.newInstance("1", "jinwon@gmail.com", "profile.png", 1000, "jinwon", Role.GENERAL);
         Donate donate1 = Donate.createDonate("패딩 나눔합니다", "image1.png", "안 입는 패딩 기부해요", 0, Tag.TOP, user);
         Donate donate2 = Donate.createDonate("후드티 나눔합니다", "image2.png", "안 입는 후드티 기부해요", 0, Tag.TOP, user);
         Donate donate3 = Donate.createDonate("바지 나눔합니다", "image3.png", "안 입는 바지 기부해요", 0, Tag.PANTS, user);
@@ -125,7 +125,7 @@ public class DonateServiceTest {
     public void 게시글_전체_수정() throws Exception {
 
         // given
-        User user = User.newInstance("1", "jinwon@gmail.com", "profile.png", 1000, "jinwon", LocalDateTime.now(), Role.GENERAL);
+        User user = User.newInstance("1", "jinwon@gmail.com", "profile.png", 1000, "jinwon", Role.GENERAL);
         Donate donate = Donate.createDonate("패딩 나눔합니다", "image1.png", "안 입는 패딩 기부해요", 0, Tag.TOP, user);
 
         // when
@@ -144,7 +144,7 @@ public class DonateServiceTest {
     public void 게시글_삭제() throws Exception {
 
         // given
-        User user = User.newInstance("1", "jinwon@gmail.com", "profile.png", 1000, "jinwon", LocalDateTime.now(), Role.GENERAL);
+        User user = User.newInstance("1", "jinwon@gmail.com", "profile.png", 1000, "jinwon", Role.GENERAL);
         Donate donate = Donate.createDonate("패딩 나눔합니다", "image1.png", "안 입는 패딩 기부해요", 0, Tag.TOP, user);
 
         // when

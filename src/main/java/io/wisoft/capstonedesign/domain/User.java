@@ -79,7 +79,6 @@ public class User {
             String profileImage,
             int point,
             String nickname,
-            LocalDateTime createdDate,
             Role userRole
     ) {
         User user = new User();
@@ -88,7 +87,7 @@ public class User {
         user.profileImage = profileImage;
         user.point = point;
         user.nickname = nickname;
-        user.createdDate = createdDate;
+        user.createdDate = LocalDateTime.now();
         user.userRole = userRole;
         return user;
     }

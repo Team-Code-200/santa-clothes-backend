@@ -35,7 +35,7 @@ public class FindOrderServiceTest {
     public void 주문내역_생성() throws Exception {
 
         // given
-        User user = User.newInstance("1", "jinwon@gmail.com", "profile.png", 1000, "jinwon", LocalDateTime.now(), Role.GENERAL);
+        User user = User.newInstance("1", "jinwon@gmail.com", "profile.png", 1000, "jinwon", Role.GENERAL);
         Find find = Find.createFind("패딩 찾아봅니다", "안 입는 패딩 기부받아요", "image.png", 0, Tag.TOP, user);
         Information information = Information.createInformation("윤진원", "대전광역시 관평동", "010-0000-0000", user);
         FindOrder findOrder = FindOrder.createFindOrder("배송전 문자 부탁드립니다", information, find, user);
@@ -54,7 +54,7 @@ public class FindOrderServiceTest {
     public void 주문내역_조회() throws Exception {
 
         // given
-        User user = User.newInstance("1", "jinwon@gmail.com", "profile.png", 1000, "jinwon", LocalDateTime.now(), Role.GENERAL);
+        User user = User.newInstance("1", "jinwon@gmail.com", "profile.png", 1000, "jinwon", Role.GENERAL);
         Find find = Find.createFind("패딩 찾아봅니다", "안 입는 패딩 기부받아요", "image.png", 0, Tag.TOP, user);
         Information information = Information.createInformation("윤진원", "대전광역시 관평동", "010-0000-0000", user);
         FindOrder findOrder = FindOrder.createFindOrder("배송전 문자 부탁드립니다", information, find, user);
@@ -74,7 +74,7 @@ public class FindOrderServiceTest {
     public void 전체_주문내역_조회() throws Exception {
 
         // given
-        User user = User.newInstance("1", "jinwon@gmail.com", "profile.png", 1000, "jinwon", LocalDateTime.now(), Role.GENERAL);
+        User user = User.newInstance("1", "jinwon@gmail.com", "profile.png", 1000, "jinwon", Role.GENERAL);
         Find find = Find.createFind("패딩 찾아봅니다", "안 입는 패딩 기부받아요", "image.png", 0, Tag.TOP, user);
         Information information = Information.createInformation("윤진원", "대전광역시 관평동", "010-0000-0000", user);
         FindOrder findOrder1 = FindOrder.createFindOrder("배송전 문자 부탁드립니다", information, find, user);
@@ -96,7 +96,7 @@ public class FindOrderServiceTest {
     public void 개별_주문내역_최근순_조회() throws Exception {
 
         // given
-        User user = User.newInstance("1", "jinwon@gmail.com", "profile.png", 1000, "jinwon", LocalDateTime.now(), Role.GENERAL);
+        User user = User.newInstance("1", "jinwon@gmail.com", "profile.png", 1000, "jinwon", Role.GENERAL);
         Find find = Find.createFind("패딩 찾아봅니다", "안 입는 패딩 기부받아요", "image.png", 0, Tag.TOP, user);
         Information information = Information.createInformation("윤진원", "대전광역시 관평동", "010-0000-0000", user);
         FindOrder findOrder1 = FindOrder.createFindOrder("배송전 문자 부탁드립니다", information, find, user);
@@ -118,7 +118,7 @@ public class FindOrderServiceTest {
     public void 주문내역_기타사항_수정() throws Exception {
 
         // given
-        User user = User.newInstance("1", "jinwon@gmail.com", "profile.png", 1000, "jinwon", LocalDateTime.now(), Role.GENERAL);
+        User user = User.newInstance("1", "jinwon@gmail.com", "profile.png", 1000, "jinwon", Role.GENERAL);
         Find find = Find.createFind("패딩 찾아봅니다", "안 입는 패딩 기부받아요", "image.png", 0, Tag.TOP, user);
         Information information = Information.createInformation("윤진원", "대전광역시 관평동", "010-0000-0000", user);
         FindOrder findOrder = FindOrder.createFindOrder("배송전 문자 부탁드립니다", information, find, user);
@@ -140,7 +140,7 @@ public class FindOrderServiceTest {
     public void 주문내역_삭제() throws Exception {
 
         // given
-        User user = User.newInstance("1", "jinwon@gmail.com", "profile.png", 1000, "jinwon", LocalDateTime.now(), Role.GENERAL);
+        User user = User.newInstance("1", "jinwon@gmail.com", "profile.png", 1000, "jinwon", Role.GENERAL);
         Find find = Find.createFind("패딩 찾아봅니다", "안 입는 패딩 기부받아요", "image.png", 0, Tag.TOP, user);
         Information information = Information.createInformation("윤진원", "대전광역시 관평동", "010-0000-0000", user);
         FindOrder findOrder = FindOrder.createFindOrder("배송전 문자 부탁드립니다", information, find, user);
