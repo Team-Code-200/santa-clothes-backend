@@ -32,7 +32,7 @@ public class FindServiceTest {
     public void 게시글_작성() throws Exception {
 
         // given
-        User user = User.newInstance("1", "jinwon@gmail.com", "profile.png", 1000, "jinwon", LocalDateTime.now(), Role.GENERAL);
+        User user = User.newInstance("1", "jinwon@gmail.com", "profile.png", 1000, "jinwon", Role.GENERAL);
         Find find = Find.createFind("패딩 찾아봅니다", "안 입는 패딩 기부받아요", "image.png", 0, Tag.TOP, user);
 
         // when
@@ -47,7 +47,7 @@ public class FindServiceTest {
     public void 게시글_조회() throws Exception {
 
         // given
-        User user = User.newInstance("1", "jinwon@gmail.com", "profile.png", 1000, "jinwon", LocalDateTime.now(), Role.GENERAL);
+        User user = User.newInstance("1", "jinwon@gmail.com", "profile.png", 1000, "jinwon", Role.GENERAL);
         Find find = Find.createFind("패딩 찾아봅니다", "image.png", "안 입는 패딩 기부받아요", 0, Tag.TOP, user);
 
         // when
@@ -63,7 +63,7 @@ public class FindServiceTest {
     public void 전체_게시글_조회() throws Exception {
 
         // given
-        User user = User.newInstance("1", "jinwon@gmail.com", "profile.png", 1000, "jinwon", LocalDateTime.now(), Role.GENERAL);
+        User user = User.newInstance("1", "jinwon@gmail.com", "profile.png", 1000, "jinwon", Role.GENERAL);
         Find find1 = Find.createFind("패딩 찾아봅니다", "안 입는 패딩 기부받아요", "image1", 0, Tag.TOP, user);
         Find find2 = Find.createFind("바지 찾아봅니다", "안 입는 바지 기부받아요", "image2", 0, Tag.PANTS, user);
 
@@ -82,8 +82,8 @@ public class FindServiceTest {
     public void 전체_게시글_최근순_조회() throws Exception {
 
         // given
-        User user1 = User.newInstance("1", "jinwon@gmail.com", "profile.png", 1000, "jinwon", LocalDateTime.now(), Role.GENERAL);
-        User user2 = User.newInstance("2", "donggwon@gmail.com", "profile.png", 2000, "donggwon", LocalDateTime.now(), Role.GENERAL);
+        User user1 = User.newInstance("1", "jinwon@gmail.com", "profile.png", 1000, "jinwon", Role.GENERAL);
+        User user2 = User.newInstance("2", "donggwon@gmail.com", "profile.png", 2000, "donggwon", Role.GENERAL);
         Find find1 = Find.createFind("패딩 찾아봅니다", "안 입는 패딩 기부받아요", "image1", 0, Tag.TOP, user1);
         Find find2 = Find.createFind("바지 찾아봅니다", "안 입는 바지 기부받아요", "image2", 0, Tag.PANTS, user2);
 
@@ -102,7 +102,7 @@ public class FindServiceTest {
     public void 전체_게시글_태그별_조회() throws Exception {
 
         // given
-        User user = User.newInstance("1", "jinwon@gmail.com", "profile.png", 1000, "jinwon", LocalDateTime.now(), Role.GENERAL);
+        User user = User.newInstance("1", "jinwon@gmail.com", "profile.png", 1000, "jinwon", Role.GENERAL);
         Find find1 = Find.createFind("패딩 찾아봅니다", "안 입는 패딩 기부받아요", "image1", 0, Tag.TOP, user);
         Find find2 = Find.createFind("청바지 찾아봅니다", "안 입는 바지 기부받아요", "image2", 0, Tag.PANTS, user);
         Find find3 = Find.createFind("트레이닝 바지 찾아봅니다", "안 입는 바지 기부받아요", "image3", 0, Tag.PANTS, user);
@@ -122,7 +122,7 @@ public class FindServiceTest {
     public void 게시글_전체_수정() throws Exception {
 
         // given
-        User user = User.newInstance("1", "jinwon@gmail.com", "profile.png", 1000, "jinwon", LocalDateTime.now(), Role.GENERAL);
+        User user = User.newInstance("1", "jinwon@gmail.com", "profile.png", 1000, "jinwon", Role.GENERAL);
         Find find = Find.createFind("패딩 찾아봅니다", "image1.png", "안 입는 패딩 기부받아요", 0, Tag.TOP, user);
 
         // when
@@ -141,7 +141,7 @@ public class FindServiceTest {
     public void 게시글_삭제() throws Exception {
 
         // given
-        User user = User.newInstance("1", "jinwon@gmail.com", "profile1.png", 1000, "jinwon", LocalDateTime.now(), Role.GENERAL);
+        User user = User.newInstance("1", "jinwon@gmail.com", "profile1.png", 1000, "jinwon", Role.GENERAL);
         Find find = Find.createFind("패딩 찾아봅니다", "image1.png", "안 입는 패딩 기부받아요", 0, Tag.TOP, user);
 
         // when

@@ -14,7 +14,6 @@ import org.springframework.test.annotation.Rollback;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.time.LocalDateTime;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -38,7 +37,7 @@ public class DonateOrderServiceTest {
     public void 주문내역_생성() throws Exception {
 
         // given
-        User user = User.newInstance("1", "jinwon@gmail.com", "profile.png", 1000, "jinwon", LocalDateTime.now(), Role.GENERAL);
+        User user = User.newInstance("1", "jinwon@gmail.com", "profile.png", 1000, "jinwon", Role.GENERAL);
         Donate donate = Donate.createDonate("패딩 나눔합니다", "image.png", "안 입는 패딩 기부해요", 0, Tag.TOP, user);
         Information information = Information.createInformation("윤진원", "대전광역시 관평동", "010-0000-0000", user);
         DonateOrder donateOrder = DonateOrder.createDonateOrder("배송전 문자 부탁드립니다", information, donate, user);
@@ -57,7 +56,7 @@ public class DonateOrderServiceTest {
     public void 주문내역_조회() throws Exception {
 
         // given
-        User user = User.newInstance("1", "jinwon@gmail.com", "profile.png", 1000, "jinwon", LocalDateTime.now(), Role.GENERAL);
+        User user = User.newInstance("1", "jinwon@gmail.com", "profile.png", 1000, "jinwon", Role.GENERAL);
         Donate donate = Donate.createDonate("패딩 나눔합니다", "image.png", "안 입는 패딩 기부해요", 0, Tag.TOP, user);
         Information information = Information.createInformation("윤진원", "대전광역시 관평동", "010-0000-0000", user);
         DonateOrder donateOrder = DonateOrder.createDonateOrder("배송전 문자 부탁드립니다", information, donate, user);
@@ -77,7 +76,7 @@ public class DonateOrderServiceTest {
     public void 전체_주문내역_조회() throws Exception {
 
         // given
-        User user = User.newInstance("1", "jinwon@gmail.com", "profile.png", 1000, "jinwon", LocalDateTime.now(), Role.GENERAL);
+        User user = User.newInstance("1", "jinwon@gmail.com", "profile.png", 1000, "jinwon", Role.GENERAL);
         Donate donate = Donate.createDonate("패딩 나눔합니다", "image.png", "안 입는 패딩 기부해요", 0, Tag.TOP, user);
         Information information = Information.createInformation("윤진원", "대전광역시 관평동", "010-0000-0000", user);
         DonateOrder donateOrder1 = DonateOrder.createDonateOrder("배송전 문자 부탁드립니다", information, donate, user);
@@ -99,7 +98,7 @@ public class DonateOrderServiceTest {
     public void 개별_주문내역_최근순_조회() throws Exception {
 
         // given
-        User user = User.newInstance("1", "jinwon@gmail.com", "profile.png", 1000, "jinwon", LocalDateTime.now(), Role.GENERAL);
+        User user = User.newInstance("1", "jinwon@gmail.com", "profile.png", 1000, "jinwon", Role.GENERAL);
         Donate donate = Donate.createDonate("패딩 나눔합니다", "image.png", "안 입는 패딩 기부해요", 0, Tag.TOP, user);
         Information information = Information.createInformation("윤진원", "대전광역시 관평동", "010-0000-0000", user);
         DonateOrder donateOrder1 = DonateOrder.createDonateOrder("배송전 문자 부탁드립니다.", information, donate, user);
@@ -121,7 +120,7 @@ public class DonateOrderServiceTest {
     public void 주문내역_기타사항_수정() throws Exception {
 
         // given
-        User user = User.newInstance("1", "jinwon@gmail.com", "profile.png", 1000, "jinwon", LocalDateTime.now(), Role.GENERAL);
+        User user = User.newInstance("1", "jinwon@gmail.com", "profile.png", 1000, "jinwon", Role.GENERAL);
         Donate donate = Donate.createDonate("패딩 나눔합니다", "image.png", "안 입는 패딩 기부해요", 0, Tag.TOP, user);
         Information information = Information.createInformation("윤진원", "대전광역시 관평동", "010-0000-0000", user);
         DonateOrder donateOrder = DonateOrder.createDonateOrder("배송전 문자 부탁드립니다.", information, donate, user);
@@ -143,7 +142,7 @@ public class DonateOrderServiceTest {
     public void 주문내역_삭제() throws Exception {
 
         // given
-        User user = User.newInstance("1", "jinwon@gmail.com", "profile.png", 1000, "jinwon", LocalDateTime.now(), Role.GENERAL);
+        User user = User.newInstance("1", "jinwon@gmail.com", "profile.png", 1000, "jinwon", Role.GENERAL);
         Donate donate = Donate.createDonate("패딩 나눔합니다", "image.png", "안 입는 패딩 기부해요", 0, Tag.TOP, user);
         Information information = Information.createInformation("윤진원", "대전광역시 관평동", "010-0000-0000", user);
         DonateOrder donateOrder = DonateOrder.createDonateOrder("배송전 문자 부탁드립니다.", information, donate, user);

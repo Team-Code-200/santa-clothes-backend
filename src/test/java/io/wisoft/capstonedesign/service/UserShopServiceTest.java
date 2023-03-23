@@ -38,7 +38,7 @@ public class UserShopServiceTest {
     public void 주문내역_생성() throws Exception {
 
         // given
-        User user = User.newInstance("2", "donggwon@gmail.com", "profile.png", 1000, "donggwon", LocalDateTime.now(), Role.GENERAL);
+        User user = User.newInstance("2", "donggwon@gmail.com", "profile.png", 1000, "donggwon", Role.GENERAL);
         Shop shop = Shop.createShop("라면 한 박스", 1000, "ramen.jpg", "포인트로 뜨끈한 라면 한 박스 가져가세요!");
         Information information = Information.createInformation("윤진원", "대전광역시 관평동", "010-0000-0000", user);
         UserShop userShop = UserShop.createUserShop("배송전 문자 부탁드립니다", user, shop, information);
@@ -57,7 +57,7 @@ public class UserShopServiceTest {
     public void 주문내역_조회() throws Exception {
 
         // given
-        User user = User.newInstance("2", "donggwon@gmail.com", "profile.png", 1000, "donggwon", LocalDateTime.now(), Role.GENERAL);
+        User user = User.newInstance("2", "donggwon@gmail.com", "profile.png", 1000, "donggwon", Role.GENERAL);
         Shop shop = Shop.createShop("라면 한 박스", 1000, "ramen.jpg", "포인트로 뜨끈한 라면 한 박스 가져가세요!");
         Information information = Information.createInformation("윤진원", "대전광역시 관평동", "010-0000-0000", user);
         UserShop userShop = UserShop.createUserShop("배송전 문자 부탁드립니다", user, shop, information);
@@ -77,7 +77,7 @@ public class UserShopServiceTest {
     public void 전체_주문내역_조회() throws Exception {
 
         // given
-        User user = User.newInstance("2", "donggwon@gmail.com", "profile.png", 1000, "donggwon", LocalDateTime.now(), Role.GENERAL);
+        User user = User.newInstance("2", "donggwon@gmail.com", "profile.png", 1000, "donggwon", Role.GENERAL);
         Shop shop = Shop.createShop("라면 한 박스", 1000, "ramen.jpg", "포인트로 뜨끈한 라면 한 박스 가져가세요!");
         Information information = Information.createInformation("윤진원", "대전광역시 관평동", "010-0000-0000", user);
         UserShop userShop1 = UserShop.createUserShop("배송전 문자 부탁드립니다", user, shop, information);
@@ -99,7 +99,7 @@ public class UserShopServiceTest {
     public void 개별_주문내역_최근순_조회() throws Exception {
 
         // given
-        User user = User.newInstance("2", "donggwon@gmail.com", "profile.png", 1000, "donggwon", LocalDateTime.now(), Role.GENERAL);
+        User user = User.newInstance("2", "donggwon@gmail.com", "profile.png", 1000, "donggwon", Role.GENERAL);
         Shop shop = Shop.createShop("라면 한 박스", 1000, "ramen.jpg", "포인트로 뜨끈한 라면 한 박스 가져가세요!");
         Information information = Information.createInformation("윤진원", "대전광역시 관평동", "010-0000-0000", user);
         UserShop userShop1 = UserShop.createUserShop("배송전 문자 부탁드립니다", user, shop, information);
@@ -121,7 +121,7 @@ public class UserShopServiceTest {
     public void 주문내역_기타사항_수정() throws Exception {
 
         // given
-        User user = User.newInstance("2", "donggwon@gmail.com", "profile.png", 1000, "donggwon", LocalDateTime.now(), Role.GENERAL);
+        User user = User.newInstance("2", "donggwon@gmail.com", "profile.png", 1000, "donggwon", Role.GENERAL);
         Shop shop = Shop.createShop("라면 한 박스", 1000, "ramen.jpg", "포인트로 뜨끈한 라면 한 박스 가져가세요!");
         Information information = Information.createInformation("윤진원", "대전광역시 관평동", "010-0000-0000", user);
         UserShop userShop = UserShop.createUserShop("배송전 문자 부탁드립니다", user, shop, information);
@@ -143,7 +143,7 @@ public class UserShopServiceTest {
     public void 주문내역_삭제() throws Exception {
 
         // given
-        User user = User.newInstance("2", "donggwon@gmail.com", "profile.png", 1000, "donggwon", LocalDateTime.now(), Role.GENERAL);
+        User user = User.newInstance("2", "donggwon@gmail.com", "profile.png", 1000, "donggwon", Role.GENERAL);
         Shop shop = Shop.createShop("라면 한 박스", 1000, "ramen.jpg", "포인트로 뜨끈한 라면 한 박스 가져가세요!");
         Information information = Information.createInformation("윤진원", "대전광역시 관평동", "010-0000-0000", user);
         UserShop userShop = UserShop.createUserShop("배송전 문자 부탁드립니다", user, shop, information);
