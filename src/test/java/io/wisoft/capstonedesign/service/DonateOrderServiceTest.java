@@ -1,10 +1,19 @@
 package io.wisoft.capstonedesign.service;
 
-import io.wisoft.capstonedesign.domain.*;
-import io.wisoft.capstonedesign.repository.DonateOrderRepository;
-import io.wisoft.capstonedesign.repository.DonateRepository;
-import io.wisoft.capstonedesign.repository.InformationRepository;
-import io.wisoft.capstonedesign.repository.UserRepository;
+import io.wisoft.capstonedesign.domain.donate.application.DonateService;
+import io.wisoft.capstonedesign.domain.donate.persistence.Donate;
+import io.wisoft.capstonedesign.domain.donateorder.application.DonateOrderService;
+import io.wisoft.capstonedesign.domain.donateorder.persistence.DonateOrder;
+import io.wisoft.capstonedesign.domain.donateorder.persistence.DonateOrderRepository;
+import io.wisoft.capstonedesign.domain.donate.persistence.DonateRepository;
+import io.wisoft.capstonedesign.global.enumerated.Role;
+import io.wisoft.capstonedesign.global.enumerated.Tag;
+import io.wisoft.capstonedesign.domain.information.application.InformationService;
+import io.wisoft.capstonedesign.domain.information.persistence.InformationRepository;
+import io.wisoft.capstonedesign.domain.user.application.UserService;
+import io.wisoft.capstonedesign.domain.information.persistence.Information;
+import io.wisoft.capstonedesign.domain.user.persistence.UserRepository;
+import io.wisoft.capstonedesign.domain.user.persistence.User;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.opentest4j.AssertionFailedError;
@@ -28,10 +37,14 @@ public class DonateOrderServiceTest {
     @Autowired UserRepository userRepository;
     @Autowired DonateRepository donateRepository;
     @Autowired InformationRepository informationRepository;
-    @Autowired DonateOrderService donateOrderService;
-    @Autowired UserService userService;
-    @Autowired DonateService donateService;
-    @Autowired InformationService informationService;
+    @Autowired
+    DonateOrderService donateOrderService;
+    @Autowired
+    UserService userService;
+    @Autowired
+    DonateService donateService;
+    @Autowired
+    InformationService informationService;
 
     @Test
     public void 주문내역_생성() throws Exception {

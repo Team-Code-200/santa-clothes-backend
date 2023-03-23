@@ -1,7 +1,19 @@
 package io.wisoft.capstonedesign.service;
 
-import io.wisoft.capstonedesign.domain.*;
-import io.wisoft.capstonedesign.repository.*;
+import io.wisoft.capstonedesign.domain.find.application.FindService;
+import io.wisoft.capstonedesign.domain.find.persistence.Find;
+import io.wisoft.capstonedesign.domain.find.persistence.FindRepository;
+import io.wisoft.capstonedesign.domain.findorder.application.FindOrderService;
+import io.wisoft.capstonedesign.domain.findorder.persistence.FindOrder;
+import io.wisoft.capstonedesign.domain.findorder.persistence.FindOrderRepository;
+import io.wisoft.capstonedesign.global.enumerated.Role;
+import io.wisoft.capstonedesign.global.enumerated.Tag;
+import io.wisoft.capstonedesign.domain.information.application.InformationService;
+import io.wisoft.capstonedesign.domain.user.application.UserService;
+import io.wisoft.capstonedesign.domain.information.persistence.Information;
+import io.wisoft.capstonedesign.domain.information.persistence.InformationRepository;
+import io.wisoft.capstonedesign.domain.user.persistence.User;
+import io.wisoft.capstonedesign.domain.user.persistence.UserRepository;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.opentest4j.AssertionFailedError;
@@ -11,7 +23,6 @@ import org.springframework.test.annotation.Rollback;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.time.LocalDateTime;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -22,14 +33,22 @@ import static org.junit.jupiter.api.Assertions.*;
 @Rollback(value = false)
 public class FindOrderServiceTest {
 
-    @Autowired FindOrderRepository findOrderRepository;
-    @Autowired UserRepository userRepository;
-    @Autowired FindRepository findRepository;
-    @Autowired InformationRepository informationRepository;
-    @Autowired FindOrderService findOrderService;
-    @Autowired UserService userService;
-    @Autowired FindService findService;
-    @Autowired InformationService informationService;
+    @Autowired
+    FindOrderRepository findOrderRepository;
+    @Autowired
+    UserRepository userRepository;
+    @Autowired
+    FindRepository findRepository;
+    @Autowired
+    InformationRepository informationRepository;
+    @Autowired
+    FindOrderService findOrderService;
+    @Autowired
+    UserService userService;
+    @Autowired
+    FindService findService;
+    @Autowired
+    InformationService informationService;
 
     @Test
     public void 주문내역_생성() throws Exception {

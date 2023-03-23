@@ -1,11 +1,13 @@
 package io.wisoft.capstonedesign.service;
 
-import io.wisoft.capstonedesign.domain.Donate;
-import io.wisoft.capstonedesign.domain.Role;
-import io.wisoft.capstonedesign.domain.Tag;
-import io.wisoft.capstonedesign.domain.User;
-import io.wisoft.capstonedesign.repository.DonateRepository;
-import io.wisoft.capstonedesign.repository.UserRepository;
+import io.wisoft.capstonedesign.domain.donate.application.DonateService;
+import io.wisoft.capstonedesign.domain.donate.persistence.Donate;
+import io.wisoft.capstonedesign.global.enumerated.Role;
+import io.wisoft.capstonedesign.global.enumerated.Tag;
+import io.wisoft.capstonedesign.domain.user.application.UserService;
+import io.wisoft.capstonedesign.domain.user.persistence.User;
+import io.wisoft.capstonedesign.domain.donate.persistence.DonateRepository;
+import io.wisoft.capstonedesign.domain.user.persistence.UserRepository;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.opentest4j.AssertionFailedError;
@@ -15,7 +17,6 @@ import org.springframework.test.annotation.Rollback;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.time.LocalDateTime;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -28,8 +29,10 @@ public class DonateServiceTest {
 
     @Autowired DonateRepository donateRepository;
     @Autowired UserRepository userRepository;
-    @Autowired DonateService donateService;
-    @Autowired UserService userService;
+    @Autowired
+    DonateService donateService;
+    @Autowired
+    UserService userService;
 
     @Test
     public void 게시글_작성() throws Exception {

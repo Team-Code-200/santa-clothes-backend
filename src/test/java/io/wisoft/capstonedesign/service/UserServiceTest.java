@@ -1,8 +1,9 @@
 package io.wisoft.capstonedesign.service;
 
-import io.wisoft.capstonedesign.domain.Role;
-import io.wisoft.capstonedesign.domain.User;
-import io.wisoft.capstonedesign.repository.UserRepository;
+import io.wisoft.capstonedesign.global.enumerated.Role;
+import io.wisoft.capstonedesign.domain.user.application.UserService;
+import io.wisoft.capstonedesign.domain.user.persistence.User;
+import io.wisoft.capstonedesign.domain.user.persistence.UserRepository;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.opentest4j.AssertionFailedError;
@@ -12,7 +13,6 @@ import org.springframework.test.annotation.Rollback;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.time.LocalDateTime;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -24,7 +24,8 @@ import static org.junit.jupiter.api.Assertions.*;
 public class UserServiceTest {
 
     @Autowired UserRepository userRepository;
-    @Autowired UserService userService;
+    @Autowired
+    UserService userService;
 
     @Test
     public void 회원가입() throws Exception {

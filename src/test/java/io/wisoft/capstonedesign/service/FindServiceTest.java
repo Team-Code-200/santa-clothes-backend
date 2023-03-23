@@ -1,8 +1,13 @@
 package io.wisoft.capstonedesign.service;
 
-import io.wisoft.capstonedesign.domain.*;
-import io.wisoft.capstonedesign.repository.FindRepository;
-import io.wisoft.capstonedesign.repository.UserRepository;
+import io.wisoft.capstonedesign.domain.find.application.FindService;
+import io.wisoft.capstonedesign.domain.find.persistence.Find;
+import io.wisoft.capstonedesign.domain.find.persistence.FindRepository;
+import io.wisoft.capstonedesign.global.enumerated.Role;
+import io.wisoft.capstonedesign.global.enumerated.Tag;
+import io.wisoft.capstonedesign.domain.user.application.UserService;
+import io.wisoft.capstonedesign.domain.user.persistence.UserRepository;
+import io.wisoft.capstonedesign.domain.user.persistence.User;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.opentest4j.AssertionFailedError;
@@ -12,7 +17,6 @@ import org.springframework.test.annotation.Rollback;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.time.LocalDateTime;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -25,8 +29,10 @@ public class FindServiceTest {
 
     @Autowired FindRepository findRepository;
     @Autowired UserRepository userRepository;
-    @Autowired FindService findService;
-    @Autowired UserService userService;
+    @Autowired
+    FindService findService;
+    @Autowired
+    UserService userService;
 
     @Test
     public void 게시글_작성() throws Exception {
