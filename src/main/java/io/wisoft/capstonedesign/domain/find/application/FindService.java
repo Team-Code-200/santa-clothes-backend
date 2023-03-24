@@ -2,6 +2,10 @@ package io.wisoft.capstonedesign.domain.find.application;
 
 import io.wisoft.capstonedesign.domain.find.persistence.FindRepository;
 import io.wisoft.capstonedesign.domain.find.persistence.Find;
+import io.wisoft.capstonedesign.domain.find.web.dto.CreateFindRequest;
+import io.wisoft.capstonedesign.domain.find.web.dto.UpdateFindRequest;
+import io.wisoft.capstonedesign.domain.user.persistence.User;
+import io.wisoft.capstonedesign.domain.user.persistence.UserRepository;
 import io.wisoft.capstonedesign.global.enumerated.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -15,12 +19,24 @@ import java.util.List;
 public class FindService {
 
     private final FindRepository findRepository;
+    private final UserRepository userRepository;
 
     /**
      * 게시글 저장
      */
     @Transactional
-    public Long join(Find find) {
+    public Long join(CreateFindRequest request) {
+
+        User user = userRepository.findOne(request.getUserId());
+        Find find = Find.createFind(
+                request.getTitle(),
+                request.getImage(),
+                request.getText(),
+                request.getView(),
+                Tag.valueOf(request.getTag()),
+                user
+        );
+
         findRepository.save(find);
         return find.getId();
     }
@@ -57,10 +73,10 @@ public class FindService {
      * 게시글 제목, 본문 및 태그 수정
      */
     @Transactional
-    public void updateAll(Long findId, String title, String image, String text, Tag tag) {
-        Find find = findOne(findId);
-        validateFind(title, image, text, tag);
-        find.update(title, image, text, tag);
+    public void updateAll(UpdateFindRequest request) {
+        Find find = findOne(request.getUserId());
+        validateFind(request.getTitle(), request.getImage(), request.getText(), Tag.valueOf(request.getTag()));
+        find.update(request.getTitle(), request.getImage(), request.getText(), Tag.valueOf(request.getTag()));
     }
 
     private void validateFind(String title, String image, String text, Tag tag) {

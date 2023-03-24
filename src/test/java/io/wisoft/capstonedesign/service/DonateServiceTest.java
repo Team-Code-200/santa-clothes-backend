@@ -2,6 +2,8 @@ package io.wisoft.capstonedesign.service;
 
 import io.wisoft.capstonedesign.domain.donate.application.DonateService;
 import io.wisoft.capstonedesign.domain.donate.persistence.Donate;
+import io.wisoft.capstonedesign.domain.donate.web.dto.CreateDonateRequest;
+import io.wisoft.capstonedesign.domain.donate.web.dto.UpdateDonateRequest;
 import io.wisoft.capstonedesign.global.enumerated.Role;
 import io.wisoft.capstonedesign.global.enumerated.Tag;
 import io.wisoft.capstonedesign.domain.user.application.UserService;
@@ -39,14 +41,14 @@ public class DonateServiceTest {
 
         // given
         User user = User.newInstance("1", "jinwon@gmail.com", "profile.png", 1000, "jinwon", Role.GENERAL);
-        Donate donate = Donate.createDonate("패딩 나눔합니다", "image.png", "안 입는 패딩 기부해요", 0, Tag.TOP, user);
+        CreateDonateRequest request = CreateDonateRequest.newInstance("패딩 나눔합니다", "image.png", "안 입는 패딩 기부해요", String.valueOf(Tag.TOP), 1L);
 
         // when
         userService.join(user);
-        Long savedId = donateService.join(donate);
+        Long savedId = donateService.join(request);
 
         // then
-        assertEquals(donate, donateRepository.findOne(savedId));
+        assertEquals(request.getTitle(), donateRepository.findOne(savedId).getTitle());
     }
 
     @Test
@@ -54,15 +56,15 @@ public class DonateServiceTest {
 
         // given
         User user = User.newInstance("1", "jinwon@gmail.com", "profile.png", 1000, "jinwon", Role.GENERAL);
-        Donate donate = Donate.createDonate("패딩 나눔합니다", "image.png", "안 입는 패딩 기부해요", 0, Tag.TOP, user);
+        CreateDonateRequest request = CreateDonateRequest.newInstance("패딩 나눔합니다", "image.png", "안 입는 패딩 기부해요", String.valueOf(Tag.TOP), 1L);
 
         // when
         userService.join(user);
-        Long savedId = donateService.join(donate);
+        Long savedId = donateService.join(request);
         Donate savedDonate = donateService.findOne(savedId);
 
         // then
-        assertEquals(donate, savedDonate);
+        assertEquals(request.getTitle(), savedDonate.getTitle());
     }
 
     @Test(expected = AssertionFailedError.class)
@@ -70,13 +72,13 @@ public class DonateServiceTest {
 
         // given
         User user = User.newInstance("1", "jinwon@gmail.com", "profile.png", 1000, "jinwon", Role.GENERAL);
-        Donate donate1 = Donate.createDonate("패딩 나눔합니다", "image1.png", "안 입는 패딩 기부해요", 0, Tag.TOP, user);
-        Donate donate2 = Donate.createDonate("바지 나눔합니다", "image2.png", "안 입는 바지 기부해요", 0, Tag.PANTS, user);
+        CreateDonateRequest request1 = CreateDonateRequest.newInstance("패딩 나눔합니다", "image.png", "안 입는 패딩 기부해요", String.valueOf(Tag.TOP), 1L);
+        CreateDonateRequest request2 = CreateDonateRequest.newInstance("바지 나눔합니다", "image.png", "안 입는 바지 기부해요", String.valueOf(Tag.PANTS), 1L);
 
         // when
         userService.join(user);
-        donateService.join(donate1);
-        donateService.join(donate2);
+        donateService.join(request1);
+        donateService.join(request2);
         List<Donate> donates = donateService.findDonates();
 
         // then
@@ -90,18 +92,18 @@ public class DonateServiceTest {
         // given
         User user1 = User.newInstance("1", "jinwon@gmail.com", "profile.png", 1000, "jinwon", Role.GENERAL);
         User user2 = User.newInstance("2", "donggwon@gmail.com", "profile.png", 2000, "donggwon", Role.GENERAL);
-        Donate donate1 = Donate.createDonate("패딩 나눔합니다", "image1.png", "안 입는 패딩 기부해요", 0, Tag.TOP, user1);
-        Donate donate2 = Donate.createDonate("바지 나눔합니다", "image2.png", "안 입는 바지 기부해요", 0, Tag.PANTS, user2);
+        CreateDonateRequest request1 = CreateDonateRequest.newInstance("패딩 나눔합니다", "image.png", "안 입는 패딩 기부해요", String.valueOf(Tag.TOP), 1L);
+        CreateDonateRequest request2 = CreateDonateRequest.newInstance("바지 나눔합니다", "image.png", "안 입는 바지 기부해요", String.valueOf(Tag.PANTS), 2L);
 
         // when
         userService.join(user1);
         userService.join(user2);
-        donateService.join(donate1);
-        donateService.join(donate2);
+        donateService.join(request1);
+        donateService.join(request2);
         List<Donate> donateListDESC = donateService.findByCreatedDateDESC();
 
         // then
-        assertEquals(donate2, donateListDESC.get(0));
+        assertEquals(request2.getTitle(), donateListDESC.get(0).getTitle());
     }
 
     @Test
@@ -109,15 +111,15 @@ public class DonateServiceTest {
 
         // given
         User user = User.newInstance("1", "jinwon@gmail.com", "profile.png", 1000, "jinwon", Role.GENERAL);
-        Donate donate1 = Donate.createDonate("패딩 나눔합니다", "image1.png", "안 입는 패딩 기부해요", 0, Tag.TOP, user);
-        Donate donate2 = Donate.createDonate("후드티 나눔합니다", "image2.png", "안 입는 후드티 기부해요", 0, Tag.TOP, user);
-        Donate donate3 = Donate.createDonate("바지 나눔합니다", "image3.png", "안 입는 바지 기부해요", 0, Tag.PANTS, user);
+        CreateDonateRequest request1 = CreateDonateRequest.newInstance("패딩 나눔합니다", "image.png", "안 입는 패딩 기부해요", String.valueOf(Tag.TOP), 1L);
+        CreateDonateRequest request2 = CreateDonateRequest.newInstance("바지 나눔합니다", "image.png", "안 입는 바지 기부해요", String.valueOf(Tag.PANTS), 1L);
+        CreateDonateRequest request3 = CreateDonateRequest.newInstance("후드티 나눔합니다", "image.png", "안 입는 후드티 기부해요", String.valueOf(Tag.TOP), 1L);
 
         // when
         userService.join(user);
-        donateService.join(donate1);
-        donateService.join(donate2);
-        donateService.join(donate3);
+        donateService.join(request1);
+        donateService.join(request2);
+        donateService.join(request3);
         List<Donate> byTag = donateService.findByTag(Tag.TOP);
 
         // then
@@ -129,13 +131,14 @@ public class DonateServiceTest {
 
         // given
         User user = User.newInstance("1", "jinwon@gmail.com", "profile.png", 1000, "jinwon", Role.GENERAL);
-        Donate donate = Donate.createDonate("패딩 나눔합니다", "image1.png", "안 입는 패딩 기부해요", 0, Tag.TOP, user);
+        CreateDonateRequest request = CreateDonateRequest.newInstance("패딩 나눔합니다", "image.png", "안 입는 패딩 기부해요", String.valueOf(Tag.TOP), 1L);
 
         // when
         userService.join(user);
-        Long donateId = donateService.join(donate);
+        Long donateId = donateService.join(request);
 
-        donateService.updateAll(donateId, "바지 나눔합니다", "image2.png", "안 입는 바지 기부해요", Tag.PANTS);
+        UpdateDonateRequest updateRequest = UpdateDonateRequest.newInstance("바지 나눔합니다", "image.png", "안 입은 바지 기부해요", String.valueOf(Tag.PANTS), 1L);
+        donateService.updateAll(updateRequest);
         Donate updateDonate = donateService.findOne(donateId);
 
         // then
@@ -148,16 +151,16 @@ public class DonateServiceTest {
 
         // given
         User user = User.newInstance("1", "jinwon@gmail.com", "profile.png", 1000, "jinwon", Role.GENERAL);
-        Donate donate = Donate.createDonate("패딩 나눔합니다", "image1.png", "안 입는 패딩 기부해요", 0, Tag.TOP, user);
+        CreateDonateRequest request = CreateDonateRequest.newInstance("패딩 나눔합니다", "image.png", "안 입는 패딩 기부해요", String.valueOf(Tag.TOP), 1L);
 
         // when
         userService.join(user);
-        Long donateId = donateService.join(donate);
+        Long donateId = donateService.join(request);
 
         donateService.deleteDonate(donateId);
         Donate deletedDonate = donateService.findOne(donateId);
 
         // then
-        assertEquals(donate, deletedDonate);
+        assertEquals(request, deletedDonate);
     }
 }
