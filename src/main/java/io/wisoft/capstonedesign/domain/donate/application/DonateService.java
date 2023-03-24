@@ -1,6 +1,10 @@
 package io.wisoft.capstonedesign.domain.donate.application;
 
 import io.wisoft.capstonedesign.domain.donate.persistence.Donate;
+import io.wisoft.capstonedesign.domain.donate.web.dto.CreateDonateRequest;
+import io.wisoft.capstonedesign.domain.donate.web.dto.UpdateDonateRequest;
+import io.wisoft.capstonedesign.domain.user.persistence.User;
+import io.wisoft.capstonedesign.domain.user.persistence.UserRepository;
 import io.wisoft.capstonedesign.global.enumerated.Tag;
 import io.wisoft.capstonedesign.domain.donate.persistence.DonateRepository;
 import lombok.RequiredArgsConstructor;
@@ -15,12 +19,24 @@ import java.util.List;
 public class DonateService {
 
     private final DonateRepository donateRepository;
+    private final UserRepository userRepository;
 
     /**
      * 게시글 저장
      */
     @Transactional
-    public Long join(Donate donate) {
+    public Long join(CreateDonateRequest request) {
+
+        User user = userRepository.findOne(request.getUserId());
+        Donate donate = Donate.createDonate(
+                request.getTitle(),
+                request.getImage(),
+                request.getText(),
+                request.getView(),
+                Tag.valueOf(request.getTag()),
+                user
+        );
+
         donateRepository.save(donate);
         return donate.getId();
     }
@@ -57,10 +73,10 @@ public class DonateService {
      * 게시글 제목, 본문 및 태그 수정
      */
     @Transactional
-    public void updateAll(Long donateId, String title, String image, String text, Tag tag) {
-        Donate donate = findOne(donateId);
-        validateDonate(title, image, text, tag);
-        donate.update(title, image, text, tag);
+    public void updateAll(UpdateDonateRequest request) {
+        Donate donate = findOne(request.getUserId());
+        validateDonate(request.getTitle(), request.getImage(), request.getText(), Tag.valueOf(request.getTag()));
+        donate.update(request.getTitle(), request.getImage(), request.getText(), Tag.valueOf(request.getTag()));
     }
 
     private void validateDonate(String title, String image, String text, Tag tag) {
