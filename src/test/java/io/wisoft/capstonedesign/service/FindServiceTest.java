@@ -3,6 +3,8 @@ package io.wisoft.capstonedesign.service;
 import io.wisoft.capstonedesign.domain.find.application.FindService;
 import io.wisoft.capstonedesign.domain.find.persistence.Find;
 import io.wisoft.capstonedesign.domain.find.persistence.FindRepository;
+import io.wisoft.capstonedesign.domain.find.web.dto.CreateFindRequest;
+import io.wisoft.capstonedesign.domain.find.web.dto.UpdateFindRequest;
 import io.wisoft.capstonedesign.global.enumerated.Role;
 import io.wisoft.capstonedesign.global.enumerated.Tag;
 import io.wisoft.capstonedesign.domain.user.application.UserService;
@@ -39,14 +41,14 @@ public class FindServiceTest {
 
         // given
         User user = User.newInstance("1", "jinwon@gmail.com", "profile.png", 1000, "jinwon", Role.GENERAL);
-        Find find = Find.createFind("패딩 찾아봅니다", "안 입는 패딩 기부받아요", "image.png", 0, Tag.TOP, user);
+        CreateFindRequest request = CreateFindRequest.newInstance("패딩 찾아봅니다", "image.png", "안 입는 패딩 기부받아요", String.valueOf(Tag.TOP), 1L);
 
         // when
         userService.join(user);
-        Long savedId = findService.join(find);
+        Long savedId = findService.join(request);
 
         // then
-        assertEquals(find, findRepository.findOne(savedId));
+        assertEquals(request.getTitle(), findRepository.findOne(savedId).getTitle());
     }
 
     @Test
@@ -54,15 +56,15 @@ public class FindServiceTest {
 
         // given
         User user = User.newInstance("1", "jinwon@gmail.com", "profile.png", 1000, "jinwon", Role.GENERAL);
-        Find find = Find.createFind("패딩 찾아봅니다", "image.png", "안 입는 패딩 기부받아요", 0, Tag.TOP, user);
+        CreateFindRequest request = CreateFindRequest.newInstance("패딩 찾아봅니다", "image.png", "안 입는 패딩 기부받아요", String.valueOf(Tag.TOP), 1L);
 
         // when
         userService.join(user);
-        Long savedId = findService.join(find);
+        Long savedId = findService.join(request);
         Find savedFind = findService.findOne(savedId);
 
         // then
-        assertEquals(find, savedFind);
+        assertEquals(request.getTitle(), savedFind.getTitle());
     }
 
     @Test(expected = AssertionFailedError.class)
@@ -70,13 +72,13 @@ public class FindServiceTest {
 
         // given
         User user = User.newInstance("1", "jinwon@gmail.com", "profile.png", 1000, "jinwon", Role.GENERAL);
-        Find find1 = Find.createFind("패딩 찾아봅니다", "안 입는 패딩 기부받아요", "image1", 0, Tag.TOP, user);
-        Find find2 = Find.createFind("바지 찾아봅니다", "안 입는 바지 기부받아요", "image2", 0, Tag.PANTS, user);
+        CreateFindRequest request1 = CreateFindRequest.newInstance("패딩 찾아봅니다", "image.png", "안 입는 패딩 기부받아요", String.valueOf(Tag.TOP), 1L);
+        CreateFindRequest request2 = CreateFindRequest.newInstance("바지 찾아봅니다", "image.png", "안 입는 바지 기부받아요", String.valueOf(Tag.PANTS), 1L);
 
         // when
         userService.join(user);
-        findService.join(find1);
-        findService.join(find2);
+        findService.join(request1);
+        findService.join(request2);
         List<Find> finds = findService.findFinds();
 
         // then
@@ -90,18 +92,18 @@ public class FindServiceTest {
         // given
         User user1 = User.newInstance("1", "jinwon@gmail.com", "profile.png", 1000, "jinwon", Role.GENERAL);
         User user2 = User.newInstance("2", "donggwon@gmail.com", "profile.png", 2000, "donggwon", Role.GENERAL);
-        Find find1 = Find.createFind("패딩 찾아봅니다", "안 입는 패딩 기부받아요", "image1", 0, Tag.TOP, user1);
-        Find find2 = Find.createFind("바지 찾아봅니다", "안 입는 바지 기부받아요", "image2", 0, Tag.PANTS, user2);
+        CreateFindRequest request1 = CreateFindRequest.newInstance("패딩 찾아봅니다", "image.png", "안 입는 패딩 기부받아요", String.valueOf(Tag.TOP), 1L);
+        CreateFindRequest request2 = CreateFindRequest.newInstance("바지 찾아봅니다", "image.png", "안 입는 바지 기부받아요", String.valueOf(Tag.PANTS), 2L);
 
         // when
         userService.join(user1);
         userService.join(user2);
-        findService.join(find1);
-        findService.join(find2);
+        findService.join(request1);
+        findService.join(request2);
         List<Find> findListDESC = findService.findByCreatedDateDESC();
 
         // then
-        assertEquals(find2, findListDESC.get(0));
+        assertEquals(request2.getTitle(), findListDESC.get(0).getTitle());
     }
 
     @Test
@@ -109,15 +111,15 @@ public class FindServiceTest {
 
         // given
         User user = User.newInstance("1", "jinwon@gmail.com", "profile.png", 1000, "jinwon", Role.GENERAL);
-        Find find1 = Find.createFind("패딩 찾아봅니다", "안 입는 패딩 기부받아요", "image1", 0, Tag.TOP, user);
-        Find find2 = Find.createFind("청바지 찾아봅니다", "안 입는 바지 기부받아요", "image2", 0, Tag.PANTS, user);
-        Find find3 = Find.createFind("트레이닝 바지 찾아봅니다", "안 입는 바지 기부받아요", "image3", 0, Tag.PANTS, user);
+        CreateFindRequest request1 = CreateFindRequest.newInstance("패딩 찾아봅니다", "image.png", "안 입는 패딩 기부받아요", String.valueOf(Tag.TOP), 1L);
+        CreateFindRequest request2 = CreateFindRequest.newInstance("청바지 찾아봅니다", "image.png", "안 입는 바지 기부받아요", String.valueOf(Tag.PANTS), 1L);
+        CreateFindRequest request3 = CreateFindRequest.newInstance("트레이닝 바지 찾아봅니다", "image.png", "안 입는 바지 기부받아요", String.valueOf(Tag.PANTS), 1L);
 
         // when
         userService.join(user);
-        findService.join(find1);
-        findService.join(find2);
-        findService.join(find3);
+        findService.join(request1);
+        findService.join(request2);
+        findService.join(request3);
         List<Find> byTag = findService.findByTag(Tag.PANTS);
 
         // then
@@ -129,13 +131,13 @@ public class FindServiceTest {
 
         // given
         User user = User.newInstance("1", "jinwon@gmail.com", "profile.png", 1000, "jinwon", Role.GENERAL);
-        Find find = Find.createFind("패딩 찾아봅니다", "image1.png", "안 입는 패딩 기부받아요", 0, Tag.TOP, user);
-
+        CreateFindRequest request = CreateFindRequest.newInstance("패딩 찾아봅니다", "image.png", "안 입는 패딩 기부받아요", String.valueOf(Tag.TOP), 1L);
         // when
         userService.join(user);
-        Long findId = findService.join(find);
+        Long findId = findService.join(request);
 
-        findService.updateAll(findId, "바지 찾아봅니다", "image2.png", "안 입는 바지 기부받아요", Tag.PANTS);
+        UpdateFindRequest updateRequest = UpdateFindRequest.newInstance("바지 찾아봅니다", "image.png", "안 입는 바지 기부받아요", String.valueOf(Tag.PANTS), 1L);
+        findService.updateAll(updateRequest);
         Find updateFind = findService.findOne(findId);
 
         // then
@@ -148,16 +150,16 @@ public class FindServiceTest {
 
         // given
         User user = User.newInstance("1", "jinwon@gmail.com", "profile1.png", 1000, "jinwon", Role.GENERAL);
-        Find find = Find.createFind("패딩 찾아봅니다", "image1.png", "안 입는 패딩 기부받아요", 0, Tag.TOP, user);
+        CreateFindRequest request = CreateFindRequest.newInstance("패딩 찾아봅니다", "image.png", "안 입는 패딩 기부받아요", String.valueOf(Tag.TOP), 1L);
 
         // when
         userService.join(user);
-        Long findId = findService.join(find);
+        Long findId = findService.join(request);
 
         findService.deleteFind(findId);
         Find deletedFind = findService.findOne(findId);
 
         // then
-        assertEquals(find, deletedFind);
+        assertEquals(request, deletedFind);
     }
 }
