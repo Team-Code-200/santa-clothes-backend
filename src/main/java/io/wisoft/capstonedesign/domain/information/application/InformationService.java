@@ -1,8 +1,11 @@
 package io.wisoft.capstonedesign.domain.information.application;
 
 import io.wisoft.capstonedesign.domain.information.persistence.Information;
+import io.wisoft.capstonedesign.domain.information.web.dto.CreateInformationRequest;
+import io.wisoft.capstonedesign.domain.information.web.dto.UpdateInformationRequest;
 import io.wisoft.capstonedesign.domain.user.persistence.User;
 import io.wisoft.capstonedesign.domain.information.persistence.InformationRepository;
+import io.wisoft.capstonedesign.domain.user.persistence.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -15,12 +18,22 @@ import java.util.List;
 public class InformationService {
 
     private final InformationRepository informationRepository;
+    private final UserRepository userRepository;
 
     /**
      * 배송 정보 저장
      */
     @Transactional
-    public Long save(Information information) {
+    public Long save(CreateInformationRequest request) {
+
+        User user = userRepository.findOne(request.getUserId());
+        Information information = Information.createInformation(
+                request.getUsername(),
+                request.getAddress(),
+                request.getPhoneNumber(),
+                user
+        );
+
         informationRepository.save(information);
         return information.getId();
     }
@@ -50,10 +63,10 @@ public class InformationService {
      * 배송 정보 수정
      */
     @Transactional
-    public void updateAll(Long informationId, String username, String address, String phoneNumber) {
-        Information information = findOne(informationId);
-        validateInformation(username, address, phoneNumber);
-        information.update(username, address, phoneNumber);
+    public void updateAll(UpdateInformationRequest request) {
+        Information information = findOne(request.getUserId());
+        validateInformation(request.getUsername(), request.getAddress(), request.getPhoneNumber());
+        information.update(request.getUsername(), request.getAddress(), request.getPhoneNumber());
     }
 
     private void validateInformation(String username, String address, String phoneNumber) {

@@ -2,6 +2,8 @@ package io.wisoft.capstonedesign.service;
 
 import io.wisoft.capstonedesign.domain.information.application.InformationService;
 import io.wisoft.capstonedesign.domain.information.persistence.Information;
+import io.wisoft.capstonedesign.domain.information.web.dto.CreateInformationRequest;
+import io.wisoft.capstonedesign.domain.information.web.dto.UpdateInformationRequest;
 import io.wisoft.capstonedesign.global.enumerated.Role;
 import io.wisoft.capstonedesign.domain.user.application.UserService;
 import io.wisoft.capstonedesign.domain.user.persistence.User;
@@ -28,24 +30,22 @@ public class InformationServiceTest {
 
     @Autowired InformationRepository informationRepository;
     @Autowired UserRepository userRepository;
-    @Autowired
-    InformationService informationService;
-    @Autowired
-    UserService userService;
+    @Autowired InformationService informationService;
+    @Autowired UserService userService;
 
     @Test
     public void 배송정보_생성() throws Exception {
 
         // given
         User user = User.newInstance("1", "jinwon@gmail.com", "profile.png", 1000, "jinwon", Role.GENERAL);
-        Information information = Information.createInformation("윤진원", "대전광역시 유성구", "010-0000-0000", user);
+        CreateInformationRequest request = CreateInformationRequest.newInstance("윤진원", "대전광역시 유성구", "010-0000-0000", 1L);
 
         // when
         userService.join(user);
-        Long savedId = informationService.save(information);
+        Long savedId = informationService.save(request);
 
         // then
-        assertEquals(information, informationService.findOne(savedId));
+        assertEquals(request.getAddress(), informationService.findOne(savedId).getAddress());
     }
 
     @Test
@@ -54,16 +54,16 @@ public class InformationServiceTest {
         // given
         User user1 = User.newInstance("1", "jinwon@gmail.com", "profile.png", 1000, "jinwon", Role.GENERAL);
         User user2 = User.newInstance("2", "donggwon@gmail.com", "profile.png", 1000, "donggown", Role.GENERAL);
-        Information information1 = Information.createInformation("윤진원", "대전광역시 관평동", "010-0000-0000", user1);
-        Information information2 = Information.createInformation("윤진원", "대전광역시 관평동", "010-0000-0000", user1);
-        Information information3 = Information.createInformation("서동권", "대전광역시 덕명동", "010-0000-0000", user2);
+        CreateInformationRequest request1 = CreateInformationRequest.newInstance("윤진원", "대전광역시 관평동", "010-0000-0000", 1L);
+        CreateInformationRequest request2 = CreateInformationRequest.newInstance("윤진원", "대전광역시 관평동", "010-0000-0000", 1L);
+        CreateInformationRequest request3 = CreateInformationRequest.newInstance("서동권", "대전광역시 덕명동", "010-1111-1111", 2L);
 
         // when
         userService.join(user1);
         userService.join(user2);
-        informationService.save(information1);
-        informationService.save(information2);
-        informationService.save(information3);
+        informationService.save(request1);
+        informationService.save(request2);
+        informationService.save(request3);
         List<Information> savedInfo = informationService.findInformationByUser(user1);
 
         // then
@@ -76,16 +76,16 @@ public class InformationServiceTest {
         // given
         User user1 = User.newInstance("1", "jinwon@gmail.com", "profile.png", 1000, "jinwon", Role.GENERAL);
         User user2 = User.newInstance("2", "donggwon@gmail.com", "profile.png", 1000, "donggown", Role.GENERAL);
-        Information information1 = Information.createInformation("윤진원", "대전광역시 관평동", "010-0000-0000", user1);
-        Information information2 = Information.createInformation("윤진원", "대전광역시 관평동", "010-0000-0000", user1);
-        Information information3 = Information.createInformation("서동권", "대전광역시 덕명동", "010-0000-0000", user2);
+        CreateInformationRequest request1 = CreateInformationRequest.newInstance("윤진원", "대전광역시 관평동", "010-0000-0000", 1L);
+        CreateInformationRequest request2 = CreateInformationRequest.newInstance("윤진원", "대전광역시 관평동", "010-0000-0000", 1L);
+        CreateInformationRequest request3 = CreateInformationRequest.newInstance("서동권", "대전광역시 덕명동", "010-1111-1111", 2L);
 
         // when
         userService.join(user1);
         userService.join(user2);
-        informationService.save(information1);
-        informationService.save(information2);
-        informationService.save(information3);
+        informationService.save(request1);
+        informationService.save(request2);
+        informationService.save(request3);
         List<Information> informations = informationService.findInformations();
 
         // then
@@ -98,17 +98,18 @@ public class InformationServiceTest {
 
         // given
         User user = User.newInstance("1", "jinwon@gmail.com", "profile.png", 1000, "jinwon", Role.GENERAL);
-        Information information = Information.createInformation("윤진원", "대전광역시 관평동", "010-0000-0000", user);
+        CreateInformationRequest request = CreateInformationRequest.newInstance("윤진원", "대전광역시 유성구", "010-0000-0000", 1L);
 
         // when
         userService.join(user);
-        Long savedId = informationService.save(information);
+        Long savedId = informationService.save(request);
 
-        informationService.updateAll(savedId, "윤진원", "대전광역시 덕명동", "010-0000-0000");
+        UpdateInformationRequest updateRequest = UpdateInformationRequest.newInstance("윤진원", "대전광역시 서구", "010-1111-1111", 1L);
+        informationService.updateAll(updateRequest);
         Information updateInfo = informationService.findOne(savedId);
 
         // then
-        assertEquals("대전광역시 덕명동", updateInfo.getAddress());
+        assertEquals("대전광역시 서구", updateInfo.getAddress());
     }
 
     @Test(expected = AssertionFailedError.class)
@@ -116,16 +117,16 @@ public class InformationServiceTest {
 
         // given
         User user = User.newInstance("1", "jinwon@gmail.com", "profile.png", 1000, "jinwon", Role.GENERAL);
-        Information information = Information.createInformation("윤진원", "대전광역시 관평동", "010-0000-0000", user);
+        CreateInformationRequest request = CreateInformationRequest.newInstance("윤진원", "대전광역시 유성구", "010-0000-0000", 1L);
 
         // when
         userService.join(user);
-        Long savedId = informationService.save(information);
+        Long savedId = informationService.save(request);
 
         informationService.deleteInformation(savedId);
         Information deleteInfo = informationService.findOne(savedId);
 
         // then
-        assertEquals(information, deleteInfo);
+        assertEquals(request, deleteInfo);
     }
 }
