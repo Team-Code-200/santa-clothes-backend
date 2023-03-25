@@ -1,5 +1,7 @@
 package io.wisoft.capstonedesign.service;
 
+import io.wisoft.capstonedesign.domain.shop.web.dto.CreateShopRequest;
+import io.wisoft.capstonedesign.domain.shop.web.dto.UpdateShopRequest;
 import io.wisoft.capstonedesign.global.enumerated.Role;
 import io.wisoft.capstonedesign.domain.shop.application.ShopService;
 import io.wisoft.capstonedesign.domain.shop.persistence.Shop;
@@ -38,14 +40,14 @@ public class ShopServiceTest {
 
         // given
         User user = User.newInstance("1", "jinwon@gmail.com", "profile.png", 1000, "jinwon", Role.ADMIN);
-        Shop shop = Shop.createShop("라면 한 박스", 1000, "ramen.jpg", "포인트로 뜨끈한 라면 한 박스 가져가세요!");
+        CreateShopRequest request = CreateShopRequest.newInstance("라면 한 박스", 1000, "ramen.jpg", "포인트로 뜨끈한 라면 한 박스 가져가세요!", 1L);
 
         // when
         userService.join(user);
-        Long savedId = shopService.save(shop);
+        Long savedId = shopService.save(request);
 
         // then
-        assertEquals(shop, shopService.findOne(savedId));
+        assertEquals(request.getTitle(), shopService.findOne(savedId).getTitle());
     }
 
     @Test
@@ -53,14 +55,14 @@ public class ShopServiceTest {
 
         // given
         User user = User.newInstance("1", "jinwon@gmail.com", "profile.png", 1000, "jinwon", Role.ADMIN);
-        Shop shop = Shop.createShop("라면 한 박스", 1000, "ramen.jpg", "포인트로 뜨끈한 라면 한 박스 가져가세요!");
+        CreateShopRequest request = CreateShopRequest.newInstance("라면 한 박스", 1000, "ramen.jpg", "포인트로 뜨끈한 라면 한 박스 가져가세요!", 1L);
 
         // when
         userService.join(user);
-        shopService.save(shop);
+        shopService.save(request);
 
         // then
-        assertEquals("라면 한 박스", shop.getTitle());
+        assertEquals("라면 한 박스", request.getTitle());
     }
 
     @Test
@@ -68,17 +70,17 @@ public class ShopServiceTest {
 
         // given
         User user = User.newInstance("1", "jinwon@gmail.com", "profile.png", 1000, "jinwon", Role.ADMIN);
-        Shop shop1 = Shop.createShop("라면 한 박스", 1000, "ramen.jpg", "포인트로 뜨끈한 라면 한 박스 가져가세요!");
-        Shop shop2 = Shop.createShop("쌀 10kg", 2000, "rice.jpg", "포인트로 든든한 쌀밥 가져가세요!");
+        CreateShopRequest request1 = CreateShopRequest.newInstance("라면 한 박스", 1000, "ramen.jpg", "포인트로 뜨끈한 라면 한 박스 가져가세요!", 1L);
+        CreateShopRequest request2 = CreateShopRequest.newInstance("쌀 10kg", 2000, "rice.jpg", "포인트로 든든한 쌀 밥 가져가세요!", 1L);
 
         // when
         userService.join(user);
-        shopService.save(shop1);
-        shopService.save(shop2);
+        shopService.save(request1);
+        shopService.save(request2);
         List<Shop> shopDESC = shopService.findByCreatedDateDESC();
 
         // then
-        assertEquals(shop2, shopDESC.get(0));
+        assertEquals(request2.getTitle(), shopDESC.get(0).getTitle());
     }
 
     @Test
@@ -86,13 +88,14 @@ public class ShopServiceTest {
 
         // given
         User user = User.newInstance("1", "jinwon@gmail.com", "profile.png", 1000, "jinwon", Role.ADMIN);
-        Shop shop = Shop.createShop("라면 한 박스", 1000, "ramen.jpg", "포인트로 뜨끈한 라면 한 박스 가져가세요!");
+        CreateShopRequest request = CreateShopRequest.newInstance("라면 한 박스", 1000, "ramen.jpg", "포인트로 뜨끈한 라면 한 박스 가져가세요!", 1L);
 
         // when
         userService.join(user);
-        Long savedId = shopService.save(shop);
+        Long savedId = shopService.save(request);
 
-        shopService.updateAll(savedId, "라면 한 박스", 2000, "ramen.jpg", "포인트로 뜨끈한 라면 한 박스 가져가세요!");
+        UpdateShopRequest updateRequest = UpdateShopRequest.newInstance("쌀 10kg", 2000, "rice.png", "포인트로 든든한 쌀 밥 가져가세요!", 1L);
+        shopService.updateAll(updateRequest);
         Shop updateShop = shopService.findOne(savedId);
 
         // then
@@ -104,16 +107,16 @@ public class ShopServiceTest {
 
         // given
         User user = User.newInstance("1", "jinwon@gmail.com", "profile.png", 1000, "jinwon", Role.ADMIN);
-        Shop shop = Shop.createShop("라면 한 박스", 1000, "ramen.jpg", "포인트로 뜨끈한 라면 한 박스 가져가세요!");
+        CreateShopRequest request = CreateShopRequest.newInstance("라면 한 박스", 1000, "ramen.jpg", "포인트로 뜨끈한 라면 한 박스 가져가세요!", 1L);
 
         // when
         userService.join(user);
-        Long savedId = shopService.save(shop);
+        Long savedId = shopService.save(request);
 
         shopService.deleteShop(savedId);
         Shop deleteShop = shopService.findOne(savedId);
 
         // then
-        assertEquals(shop, deleteShop);
+        assertEquals(request, deleteShop);
     }
 }
