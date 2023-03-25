@@ -19,19 +19,19 @@ public class UpdateInformationRequest {
     @NotEmpty
     private String phoneNumber;
 
-    private Long userId;
+    private Long infoId;
 
     public static UpdateInformationRequest newInstance(
             String username,
             String address,
             String phoneNumber,
-            Long userId
+            Long infoId
     ) {
         UpdateInformationRequest request = new UpdateInformationRequest();
         request.username = username;
         request.address = address;
         request.phoneNumber = phoneNumber;
-        request.userId = userId;
+        request.infoId = infoId;
 
         return request;
     }

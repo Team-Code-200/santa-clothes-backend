@@ -22,21 +22,21 @@ public class UpdateDonateRequest {
 
     private String tag;
 
-    private Long userId;
+    private Long donateId;
 
     public static UpdateDonateRequest newInstance(
             String title,
             String image,
             String text,
             String tag,
-            Long userId
+            Long donateId
     ) {
         UpdateDonateRequest request = new UpdateDonateRequest();
         request.title = title;
         request.image = image;
         request.text = text;
         request.tag = tag;
-        request.userId = userId;
+        request.donateId = donateId;
 
         return request;
     }
