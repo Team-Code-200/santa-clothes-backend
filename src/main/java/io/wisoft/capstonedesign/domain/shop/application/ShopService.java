@@ -2,6 +2,10 @@ package io.wisoft.capstonedesign.domain.shop.application;
 
 import io.wisoft.capstonedesign.domain.shop.persistence.Shop;
 import io.wisoft.capstonedesign.domain.shop.persistence.ShopRepository;
+import io.wisoft.capstonedesign.domain.shop.web.dto.CreateShopRequest;
+import io.wisoft.capstonedesign.domain.shop.web.dto.UpdateShopRequest;
+import io.wisoft.capstonedesign.domain.user.persistence.User;
+import io.wisoft.capstonedesign.domain.user.persistence.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -19,7 +23,15 @@ public class ShopService {
      * 산타샵 물품 저장
      */
     @Transactional
-    public Long save(Shop shop) {
+    public Long save(CreateShopRequest request) {
+
+        Shop shop = Shop.createShop(
+                request.getTitle(),
+                request.getPrice(),
+                request.getImage(),
+                request.getBody()
+        );
+
         shopRepository.save(shop);
         return shop.getId();
     }
@@ -56,9 +68,9 @@ public class ShopService {
      * 산타샵 물품 정보 수정
      */
     @Transactional
-    public void updateAll(Long shopId, String title, int price, String image, String body) {
-        Shop shop = findOne(shopId);
-        shop.update(title, price, image, body);
+    public void updateAll(UpdateShopRequest request) {
+        Shop shop = findOne(request.getShopId());
+        shop.update(request.getTitle(), request.getPrice(), request.getImage(), request.getBody());
     }
 
     /**
