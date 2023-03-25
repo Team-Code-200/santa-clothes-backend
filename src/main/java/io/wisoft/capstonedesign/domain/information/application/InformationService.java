@@ -64,7 +64,7 @@ public class InformationService {
      */
     @Transactional
     public void updateAll(UpdateInformationRequest request) {
-        Information information = findOne(request.getUserId());
+        Information information = findOne(request.getInfoId());
         validateInformation(request.getUsername(), request.getAddress(), request.getPhoneNumber());
         information.update(request.getUsername(), request.getAddress(), request.getPhoneNumber());
     }

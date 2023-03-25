@@ -74,7 +74,7 @@ public class FindService {
      */
     @Transactional
     public void updateAll(UpdateFindRequest request) {
-        Find find = findOne(request.getUserId());
+        Find find = findOne(request.getFindId());
         validateFind(request.getTitle(), request.getImage(), request.getText(), Tag.valueOf(request.getTag()));
         find.update(request.getTitle(), request.getImage(), request.getText(), Tag.valueOf(request.getTag()));
     }

@@ -74,7 +74,7 @@ public class DonateService {
      */
     @Transactional
     public void updateAll(UpdateDonateRequest request) {
-        Donate donate = findOne(request.getUserId());
+        Donate donate = findOne(request.getDonateId());
         validateDonate(request.getTitle(), request.getImage(), request.getText(), Tag.valueOf(request.getTag()));
         donate.update(request.getTitle(), request.getImage(), request.getText(), Tag.valueOf(request.getTag()));
     }

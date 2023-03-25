@@ -22,21 +22,21 @@ public class UpdateFindRequest {
 
     private String tag;
 
-    private Long userId;
+    private Long findId;
 
     public static UpdateFindRequest newInstance(
             String title,
             String image,
             String text,
             String tag,
-            Long userId
+            Long findId
     ) {
         UpdateFindRequest request = new UpdateFindRequest();
         request.title = title;
         request.image = image;
         request.text = text;
         request.tag = tag;
-        request.userId = userId;
+        request.findId = findId;
 
         return request;
     }
