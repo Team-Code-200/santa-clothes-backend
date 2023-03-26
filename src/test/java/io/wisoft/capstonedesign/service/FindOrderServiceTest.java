@@ -1,16 +1,18 @@
 package io.wisoft.capstonedesign.service;
 
 import io.wisoft.capstonedesign.domain.find.application.FindService;
-import io.wisoft.capstonedesign.domain.find.persistence.Find;
 import io.wisoft.capstonedesign.domain.find.persistence.FindRepository;
+import io.wisoft.capstonedesign.domain.find.web.dto.CreateFindRequest;
 import io.wisoft.capstonedesign.domain.findorder.application.FindOrderService;
 import io.wisoft.capstonedesign.domain.findorder.persistence.FindOrder;
 import io.wisoft.capstonedesign.domain.findorder.persistence.FindOrderRepository;
+import io.wisoft.capstonedesign.domain.findorder.web.dto.CreateOrderRequest;
+import io.wisoft.capstonedesign.domain.findorder.web.dto.UpdateOrderRequest;
+import io.wisoft.capstonedesign.domain.information.web.dto.CreateInformationRequest;
 import io.wisoft.capstonedesign.global.enumerated.Role;
 import io.wisoft.capstonedesign.global.enumerated.Tag;
 import io.wisoft.capstonedesign.domain.information.application.InformationService;
 import io.wisoft.capstonedesign.domain.user.application.UserService;
-import io.wisoft.capstonedesign.domain.information.persistence.Information;
 import io.wisoft.capstonedesign.domain.information.persistence.InformationRepository;
 import io.wisoft.capstonedesign.domain.user.persistence.User;
 import io.wisoft.capstonedesign.domain.user.persistence.UserRepository;
@@ -33,40 +35,32 @@ import static org.junit.jupiter.api.Assertions.*;
 @Rollback(value = false)
 public class FindOrderServiceTest {
 
-    @Autowired
-    FindOrderRepository findOrderRepository;
-    @Autowired
-    UserRepository userRepository;
-    @Autowired
-    FindRepository findRepository;
-    @Autowired
-    InformationRepository informationRepository;
-    @Autowired
-    FindOrderService findOrderService;
-    @Autowired
-    UserService userService;
-    @Autowired
-    FindService findService;
-    @Autowired
-    InformationService informationService;
+    @Autowired FindOrderRepository findOrderRepository;
+    @Autowired UserRepository userRepository;
+    @Autowired FindRepository findRepository;
+    @Autowired InformationRepository informationRepository;
+    @Autowired FindOrderService findOrderService;
+    @Autowired UserService userService;
+    @Autowired FindService findService;
+    @Autowired InformationService informationService;
 
     @Test
     public void 주문내역_생성() throws Exception {
 
         // given
         User user = User.newInstance("1", "jinwon@gmail.com", "profile.png", 1000, "jinwon", Role.GENERAL);
-        Find find = Find.createFind("패딩 찾아봅니다", "안 입는 패딩 기부받아요", "image.png", 0, Tag.TOP, user);
-        Information information = Information.createInformation("윤진원", "대전광역시 관평동", "010-0000-0000", user);
-        FindOrder findOrder = FindOrder.createFindOrder("배송전 문자 부탁드립니다", information, find, user);
+        CreateFindRequest request1 = CreateFindRequest.newInstance("패딩 찾아봅니다", "image.png", "안 입는 패딩 기부받아요", String.valueOf(Tag.TOP), 1L);
+        CreateInformationRequest request2 = CreateInformationRequest.newInstance("윤진원", "대전광역시 유성구", "010-0000-0000", 1L);
+        CreateOrderRequest request3 = CreateOrderRequest.newInstance("배송전 문자주세요", 1L, 1L, 1L);
 
         // when
         userService.join(user);
-        findService.join(find);
-        informationService.save(information);
-        Long savedId = findOrderService.save(findOrder);
+        findService.join(request1);
+        informationService.save(request2);
+        Long savedId = findOrderService.save(request3);
 
         // then
-        assertEquals(findOrder, findOrderRepository.findOne(savedId));
+        assertEquals(request3.getText(), findOrderRepository.findOne(savedId).getText());
     }
 
     @Test
@@ -74,19 +68,19 @@ public class FindOrderServiceTest {
 
         // given
         User user = User.newInstance("1", "jinwon@gmail.com", "profile.png", 1000, "jinwon", Role.GENERAL);
-        Find find = Find.createFind("패딩 찾아봅니다", "안 입는 패딩 기부받아요", "image.png", 0, Tag.TOP, user);
-        Information information = Information.createInformation("윤진원", "대전광역시 관평동", "010-0000-0000", user);
-        FindOrder findOrder = FindOrder.createFindOrder("배송전 문자 부탁드립니다", information, find, user);
+        CreateFindRequest request1 = CreateFindRequest.newInstance("패딩 찾아봅니다", "image.png", "안 입는 패딩 기부받아요", String.valueOf(Tag.TOP), 1L);
+        CreateInformationRequest request2 = CreateInformationRequest.newInstance("윤진원", "대전광역시 유성구", "010-0000-0000", 1L);
+        CreateOrderRequest request3 = CreateOrderRequest.newInstance("배송전 문자주세요", 1L, 1L, 1L);
 
         // when
         userService.join(user);
-        findService.join(find);
-        informationService.save(information);
-        Long savedId = findOrderService.save(findOrder);
+        findService.join(request1);
+        informationService.save(request2);
+        Long savedId = findOrderService.save(request3);
         FindOrder savedOrder = findOrderService.findOne(savedId);
 
         // then
-        assertEquals(findOrder, savedOrder);
+        assertEquals(request3.getText(), savedOrder.getText());
     }
 
     @Test(expected = AssertionFailedError.class)
@@ -94,17 +88,17 @@ public class FindOrderServiceTest {
 
         // given
         User user = User.newInstance("1", "jinwon@gmail.com", "profile.png", 1000, "jinwon", Role.GENERAL);
-        Find find = Find.createFind("패딩 찾아봅니다", "안 입는 패딩 기부받아요", "image.png", 0, Tag.TOP, user);
-        Information information = Information.createInformation("윤진원", "대전광역시 관평동", "010-0000-0000", user);
-        FindOrder findOrder1 = FindOrder.createFindOrder("배송전 문자 부탁드립니다", information, find, user);
-        FindOrder findOrder2 = FindOrder.createFindOrder("경비실에 맡겨주세요", information, find, user);
+        CreateFindRequest request1 = CreateFindRequest.newInstance("패딩 찾아봅니다", "image.png", "안 입는 패딩 기부받아요", String.valueOf(Tag.TOP), 1L);
+        CreateInformationRequest request2 = CreateInformationRequest.newInstance("윤진원", "대전광역시 유성구", "010-0000-0000", 1L);
+        CreateOrderRequest request3 = CreateOrderRequest.newInstance("배송전 문자주세요", 1L, 1L, 1L);
+        CreateOrderRequest request4 = CreateOrderRequest.newInstance("경비실에 맡겨주세요", 1L, 1L, 1L);
 
         // when
         userService.join(user);
-        findService.join(find);
-        informationService.save(information);
-        findOrderService.save(findOrder1);
-        findOrderService.save(findOrder2);
+        findService.join(request1);
+        informationService.save(request2);
+        findOrderService.save(request3);
+        findOrderService.save(request4);
         List<FindOrder> findOrders = findOrderService.findFindOrders();
 
         // then
@@ -116,21 +110,21 @@ public class FindOrderServiceTest {
 
         // given
         User user = User.newInstance("1", "jinwon@gmail.com", "profile.png", 1000, "jinwon", Role.GENERAL);
-        Find find = Find.createFind("패딩 찾아봅니다", "안 입는 패딩 기부받아요", "image.png", 0, Tag.TOP, user);
-        Information information = Information.createInformation("윤진원", "대전광역시 관평동", "010-0000-0000", user);
-        FindOrder findOrder1 = FindOrder.createFindOrder("배송전 문자 부탁드립니다", information, find, user);
-        FindOrder findOrder2 = FindOrder.createFindOrder("경비실에 맡겨주세요", information, find, user);
+        CreateFindRequest request1 = CreateFindRequest.newInstance("패딩 찾아봅니다", "image.png", "안 입는 패딩 기부받아요", String.valueOf(Tag.TOP), 1L);
+        CreateInformationRequest request2 = CreateInformationRequest.newInstance("윤진원", "대전광역시 유성구", "010-0000-0000", 1L);
+        CreateOrderRequest request3 = CreateOrderRequest.newInstance("배송전 문자주세요", 1L, 1L, 1L);
+        CreateOrderRequest request4 = CreateOrderRequest.newInstance("경비실에 맡겨주세요", 1L, 1L, 1L);
 
         // when
         userService.join(user);
-        findService.join(find);
-        informationService.save(information);
-        findOrderService.save(findOrder1);
-        findOrderService.save(findOrder2);
+        findService.join(request1);
+        informationService.save(request2);
+        findOrderService.save(request3);
+        findOrderService.save(request4);
         List<FindOrder> orderDESC = findOrderService.findByUserDESC(user);
 
         // then
-        assertEquals(findOrder2, orderDESC.get(0));
+        assertEquals(request4.getText(), orderDESC.get(0).getText());
     }
 
     @Test
@@ -138,17 +132,18 @@ public class FindOrderServiceTest {
 
         // given
         User user = User.newInstance("1", "jinwon@gmail.com", "profile.png", 1000, "jinwon", Role.GENERAL);
-        Find find = Find.createFind("패딩 찾아봅니다", "안 입는 패딩 기부받아요", "image.png", 0, Tag.TOP, user);
-        Information information = Information.createInformation("윤진원", "대전광역시 관평동", "010-0000-0000", user);
-        FindOrder findOrder = FindOrder.createFindOrder("배송전 문자 부탁드립니다", information, find, user);
+        CreateFindRequest request1 = CreateFindRequest.newInstance("패딩 찾아봅니다", "image.png", "안 입는 패딩 기부받아요", String.valueOf(Tag.TOP), 1L);
+        CreateInformationRequest request2 = CreateInformationRequest.newInstance("윤진원", "대전광역시 유성구", "010-0000-0000", 1L);
+        CreateOrderRequest request3 = CreateOrderRequest.newInstance("배송전 문자주세요", 1L, 1L, 1L);
 
         // when
         userService.join(user);
-        findService.join(find);
-        informationService.save(information);
-        Long savedId = findOrderService.save(findOrder);
+        findService.join(request1);
+        informationService.save(request2);
+        Long savedId = findOrderService.save(request3);
 
-        findOrderService.updateBody(savedId, "경비실에 맡겨주세요");
+        UpdateOrderRequest updateRequest = UpdateOrderRequest.newInstance("경비실에 맡겨주세요", 1L);
+        findOrderService.updateBody(updateRequest);
         FindOrder updateOrder = findOrderService.findOne(savedId);
 
         // then
@@ -160,20 +155,20 @@ public class FindOrderServiceTest {
 
         // given
         User user = User.newInstance("1", "jinwon@gmail.com", "profile.png", 1000, "jinwon", Role.GENERAL);
-        Find find = Find.createFind("패딩 찾아봅니다", "안 입는 패딩 기부받아요", "image.png", 0, Tag.TOP, user);
-        Information information = Information.createInformation("윤진원", "대전광역시 관평동", "010-0000-0000", user);
-        FindOrder findOrder = FindOrder.createFindOrder("배송전 문자 부탁드립니다", information, find, user);
+        CreateFindRequest request1 = CreateFindRequest.newInstance("패딩 찾아봅니다", "image.png", "안 입는 패딩 기부받아요", String.valueOf(Tag.TOP), 1L);
+        CreateInformationRequest request2 = CreateInformationRequest.newInstance("윤진원", "대전광역시 유성구", "010-0000-0000", 1L);
+        CreateOrderRequest request3 = CreateOrderRequest.newInstance("배송전 문자주세요", 1L, 1L, 1L);
 
         // when
         userService.join(user);
-        findService.join(find);
-        informationService.save(information);
-        Long savedId = findOrderService.save(findOrder);
+        findService.join(request1);
+        informationService.save(request2);
+        Long savedId = findOrderService.save(request3);
 
         findOrderService.deleteOrder(savedId);
         FindOrder deleteOrder = findOrderService.findOne(savedId);
 
         // then
-        assertEquals(findOrder, deleteOrder);
+        assertEquals(request3, deleteOrder);
     }
 }

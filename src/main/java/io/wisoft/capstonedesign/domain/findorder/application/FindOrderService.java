@@ -1,8 +1,15 @@
 package io.wisoft.capstonedesign.domain.findorder.application;
 
+import io.wisoft.capstonedesign.domain.find.persistence.Find;
+import io.wisoft.capstonedesign.domain.find.persistence.FindRepository;
 import io.wisoft.capstonedesign.domain.findorder.persistence.FindOrder;
 import io.wisoft.capstonedesign.domain.findorder.persistence.FindOrderRepository;
+import io.wisoft.capstonedesign.domain.findorder.web.dto.CreateOrderRequest;
+import io.wisoft.capstonedesign.domain.findorder.web.dto.UpdateOrderRequest;
+import io.wisoft.capstonedesign.domain.information.persistence.Information;
+import io.wisoft.capstonedesign.domain.information.persistence.InformationRepository;
 import io.wisoft.capstonedesign.domain.user.persistence.User;
+import io.wisoft.capstonedesign.domain.user.persistence.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -15,12 +22,27 @@ import java.util.List;
 public class FindOrderService {
 
     private final FindOrderRepository findOrderRepository;
+    private final UserRepository userRepository;
+    private final InformationRepository informationRepository;
+    private final FindRepository findRepository;
 
     /**
      * 주문 내역 저장
      */
     @Transactional
-    public Long save(FindOrder findOrder) {
+    public Long save(CreateOrderRequest request) {
+
+        User user = userRepository.findOne(request.getUserId());
+        Information information = informationRepository.findOne(request.getInfoId());
+        Find find = findRepository.findOne(request.getFindId());
+
+        FindOrder findOrder = FindOrder.createFindOrder(
+                request.getText(),
+                information,
+                find,
+                user
+        );
+
         findOrderRepository.save(findOrder);
         return findOrder.getId();
     }
@@ -57,9 +79,9 @@ public class FindOrderService {
      * 주문 내역 기타 사항 수정
      */
     @Transactional
-    public void updateBody(Long orderId, String text) {
-        FindOrder findOrder = findOne(orderId);
-        findOrder.update(text);
+    public void updateBody(UpdateOrderRequest request) {
+        FindOrder findOrder = findOne(request.getOrderId());
+        findOrder.update(request.getText());
     }
 
     /**

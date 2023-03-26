@@ -1,8 +1,15 @@
 package io.wisoft.capstonedesign.domain.donateorder.application;
 
+import io.wisoft.capstonedesign.domain.donate.persistence.Donate;
+import io.wisoft.capstonedesign.domain.donate.persistence.DonateRepository;
 import io.wisoft.capstonedesign.domain.donateorder.persistence.DonateOrder;
 import io.wisoft.capstonedesign.domain.donateorder.persistence.DonateOrderRepository;
+import io.wisoft.capstonedesign.domain.donateorder.web.dto.CreateOrderRequest;
+import io.wisoft.capstonedesign.domain.donateorder.web.dto.UpdateOrderRequest;
+import io.wisoft.capstonedesign.domain.information.persistence.Information;
+import io.wisoft.capstonedesign.domain.information.persistence.InformationRepository;
 import io.wisoft.capstonedesign.domain.user.persistence.User;
+import io.wisoft.capstonedesign.domain.user.persistence.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -15,12 +22,27 @@ import java.util.List;
 public class DonateOrderService {
 
     private final DonateOrderRepository donateOrderRepository;
+    private final UserRepository userRepository;
+    private final InformationRepository informationRepository;
+    private final DonateRepository donateRepository;
 
     /**
      * 주문 내역 저장
      */
     @Transactional
-    public Long save(DonateOrder donateOrder) {
+    public Long save(CreateOrderRequest request) {
+
+        User user = userRepository.findOne(request.getUserId());
+        Information information = informationRepository.findOne(request.getInfoId());
+        Donate donate = donateRepository.findOne(request.getDonateId());
+
+        DonateOrder donateOrder = DonateOrder.createDonateOrder(
+                request.getText(),
+                information,
+                donate,
+                user
+        );
+
         donateOrderRepository.save(donateOrder);
         return donateOrder.getId();
     }
@@ -57,9 +79,9 @@ public class DonateOrderService {
      * 주문 내역 기타 사항 수정
      */
     @Transactional
-    public void updateBody(Long orderId, String text) {
-        DonateOrder donateOrder = findOne(orderId);
-        donateOrder.update(text);
+    public void updateBody(UpdateOrderRequest request) {
+        DonateOrder donateOrder = findOne(request.getOrderId());
+        donateOrder.update(request.getText());
     }
 
     /**
