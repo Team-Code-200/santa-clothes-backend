@@ -1,8 +1,15 @@
 package io.wisoft.capstonedesign.domain.usershop.application;
 
+import io.wisoft.capstonedesign.domain.information.persistence.Information;
+import io.wisoft.capstonedesign.domain.information.persistence.InformationRepository;
+import io.wisoft.capstonedesign.domain.shop.persistence.Shop;
+import io.wisoft.capstonedesign.domain.shop.persistence.ShopRepository;
+import io.wisoft.capstonedesign.domain.user.persistence.UserRepository;
 import io.wisoft.capstonedesign.domain.usershop.persistence.UserShopRepository;
 import io.wisoft.capstonedesign.domain.user.persistence.User;
 import io.wisoft.capstonedesign.domain.usershop.persistence.UserShop;
+import io.wisoft.capstonedesign.domain.usershop.web.dto.CreateOrderRequest;
+import io.wisoft.capstonedesign.domain.usershop.web.dto.UpdateOrderRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -15,12 +22,27 @@ import java.util.List;
 public class UserShopService {
 
     private final UserShopRepository userShopRepository;
+    private final UserRepository userRepository;
+    private final InformationRepository informationRepository;
+    private final ShopRepository shopRepository;
 
     /**
      * 주문 내역 저장
      */
     @Transactional
-    public Long save(UserShop userShop) {
+    public Long save(CreateOrderRequest request) {
+
+        User user = userRepository.findOne(request.getUserId());
+        Information information = informationRepository.findOne(request.getInfoId());
+        Shop shop = shopRepository.findOne(request.getShopId());
+
+        UserShop userShop = UserShop.createUserShop(
+                request.getText(),
+                user,
+                shop,
+                information
+        );
+
         userShopRepository.save(userShop);
         return userShop.getId();
     }
@@ -57,9 +79,9 @@ public class UserShopService {
      * 주문 내역 기타 사항 수정
      */
     @Transactional
-    public void updateBody(Long orderId, String text) {
-        UserShop userShop = findOne(orderId);
-        userShop.update(text);
+    public void updateBody(UpdateOrderRequest request) {
+        UserShop userShop = findOne(request.getOrderId());
+        userShop.update(request.getText());
     }
 
     /**
