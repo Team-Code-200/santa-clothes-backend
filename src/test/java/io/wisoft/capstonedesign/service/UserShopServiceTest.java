@@ -1,13 +1,15 @@
 package io.wisoft.capstonedesign.service;
 
+import io.wisoft.capstonedesign.domain.information.web.dto.CreateInformationRequest;
+import io.wisoft.capstonedesign.domain.shop.web.dto.CreateShopRequest;
+import io.wisoft.capstonedesign.domain.usershop.web.dto.CreateOrderRequest;
+import io.wisoft.capstonedesign.domain.usershop.web.dto.UpdateOrderRequest;
 import io.wisoft.capstonedesign.global.enumerated.Role;
 import io.wisoft.capstonedesign.domain.information.application.InformationService;
 import io.wisoft.capstonedesign.domain.information.persistence.InformationRepository;
 import io.wisoft.capstonedesign.domain.shop.application.ShopService;
 import io.wisoft.capstonedesign.domain.shop.persistence.ShopRepository;
-import io.wisoft.capstonedesign.domain.shop.persistence.Shop;
 import io.wisoft.capstonedesign.domain.user.application.UserService;
-import io.wisoft.capstonedesign.domain.information.persistence.Information;
 import io.wisoft.capstonedesign.domain.user.persistence.UserRepository;
 import io.wisoft.capstonedesign.domain.usershop.application.UserShopService;
 import io.wisoft.capstonedesign.domain.usershop.persistence.UserShopRepository;
@@ -36,32 +38,28 @@ public class UserShopServiceTest {
     @Autowired UserRepository userRepository;
     @Autowired ShopRepository shopRepository;
     @Autowired InformationRepository informationRepository;
-    @Autowired
-    UserShopService userShopService;
-    @Autowired
-    UserService userService;
-    @Autowired
-    ShopService shopService;
-    @Autowired
-    InformationService informationService;
+    @Autowired UserShopService userShopService;
+    @Autowired UserService userService;
+    @Autowired ShopService shopService;
+    @Autowired InformationService informationService;
 
     @Test
     public void 주문내역_생성() throws Exception {
 
         // given
         User user = User.newInstance("2", "donggwon@gmail.com", "profile.png", 1000, "donggwon", Role.GENERAL);
-        Shop shop = Shop.createShop("라면 한 박스", 1000, "ramen.jpg", "포인트로 뜨끈한 라면 한 박스 가져가세요!");
-        Information information = Information.createInformation("윤진원", "대전광역시 관평동", "010-0000-0000", user);
-        UserShop userShop = UserShop.createUserShop("배송전 문자 부탁드립니다", user, shop, information);
+        CreateShopRequest request1 = CreateShopRequest.newInstance("라면 한 박스", 1000, "ramen.jpg", "포인트로 뜨끈한 라면 한 박스 가져가세요!", 1L);
+        CreateInformationRequest request2 = CreateInformationRequest.newInstance("윤진원", "대전광역시 유성구", "010-0000-0000", 1L);
+        CreateOrderRequest request3 = CreateOrderRequest.newInstance("배송 전 문자 부탁드립니다", 1L, 1L, 1L);
 
         // when
         userService.join(user);
-        shopService.save(shop);
-        informationService.save(information);
-        Long savedId = userShopService.save(userShop);
+        shopService.save(request1);
+        informationService.save(request2);
+        Long savedId = userShopService.save(request3);
 
         // then
-        assertEquals(userShop, userShopRepository.findOne(savedId));
+        assertEquals(request3.getText(), userShopRepository.findOne(savedId).getText());
     }
 
     @Test
@@ -69,19 +67,19 @@ public class UserShopServiceTest {
 
         // given
         User user = User.newInstance("2", "donggwon@gmail.com", "profile.png", 1000, "donggwon", Role.GENERAL);
-        Shop shop = Shop.createShop("라면 한 박스", 1000, "ramen.jpg", "포인트로 뜨끈한 라면 한 박스 가져가세요!");
-        Information information = Information.createInformation("윤진원", "대전광역시 관평동", "010-0000-0000", user);
-        UserShop userShop = UserShop.createUserShop("배송전 문자 부탁드립니다", user, shop, information);
+        CreateShopRequest request1 = CreateShopRequest.newInstance("라면 한 박스", 1000, "ramen.jpg", "포인트로 뜨끈한 라면 한 박스 가져가세요!", 1L);
+        CreateInformationRequest request2 = CreateInformationRequest.newInstance("윤진원", "대전광역시 유성구", "010-0000-0000", 1L);
+        CreateOrderRequest request3 = CreateOrderRequest.newInstance("배송 전 문자 부탁드립니다", 1L, 1L, 1L);
 
         // when
         userService.join(user);
-        shopService.save(shop);
-        informationService.save(information);
-        Long savedId = userShopService.save(userShop);
+        shopService.save(request1);
+        informationService.save(request2);
+        Long savedId = userShopService.save(request3);
         UserShop savedOrder = userShopService.findOne(savedId);
 
         // then
-        assertEquals(userShop, savedOrder);
+        assertEquals(request3.getText(), savedOrder.getText());
     }
 
     @Test(expected = AssertionFailedError.class)
@@ -89,17 +87,17 @@ public class UserShopServiceTest {
 
         // given
         User user = User.newInstance("2", "donggwon@gmail.com", "profile.png", 1000, "donggwon", Role.GENERAL);
-        Shop shop = Shop.createShop("라면 한 박스", 1000, "ramen.jpg", "포인트로 뜨끈한 라면 한 박스 가져가세요!");
-        Information information = Information.createInformation("윤진원", "대전광역시 관평동", "010-0000-0000", user);
-        UserShop userShop1 = UserShop.createUserShop("배송전 문자 부탁드립니다", user, shop, information);
-        UserShop userShop2 = UserShop.createUserShop("경비실에 맡겨주세요", user, shop, information);
+        CreateShopRequest request1 = CreateShopRequest.newInstance("라면 한 박스", 1000, "ramen.jpg", "포인트로 뜨끈한 라면 한 박스 가져가세요!", 1L);
+        CreateInformationRequest request2 = CreateInformationRequest.newInstance("윤진원", "대전광역시 유성구", "010-0000-0000", 1L);
+        CreateOrderRequest request3 = CreateOrderRequest.newInstance("배송 전 문자 부탁드립니다", 1L, 1L, 1L);
+        CreateOrderRequest request4 = CreateOrderRequest.newInstance("경비실에 맡겨주세요", 1L, 1L, 1L);
 
         // when
         userService.join(user);
-        shopService.save(shop);
-        informationService.save(information);
-        userShopService.save(userShop1);
-        userShopService.save(userShop2);
+        shopService.save(request1);
+        informationService.save(request2);
+        userShopService.save(request3);
+        userShopService.save(request4);
         List<UserShop> shopOrders = userShopService.findShopOrders();
 
         // then
@@ -111,21 +109,21 @@ public class UserShopServiceTest {
 
         // given
         User user = User.newInstance("2", "donggwon@gmail.com", "profile.png", 1000, "donggwon", Role.GENERAL);
-        Shop shop = Shop.createShop("라면 한 박스", 1000, "ramen.jpg", "포인트로 뜨끈한 라면 한 박스 가져가세요!");
-        Information information = Information.createInformation("윤진원", "대전광역시 관평동", "010-0000-0000", user);
-        UserShop userShop1 = UserShop.createUserShop("배송전 문자 부탁드립니다", user, shop, information);
-        UserShop userShop2 = UserShop.createUserShop("경비실에 맡겨주세요", user, shop, information);
+        CreateShopRequest request1 = CreateShopRequest.newInstance("라면 한 박스", 1000, "ramen.jpg", "포인트로 뜨끈한 라면 한 박스 가져가세요!", 1L);
+        CreateInformationRequest request2 = CreateInformationRequest.newInstance("윤진원", "대전광역시 유성구", "010-0000-0000", 1L);
+        CreateOrderRequest request3 = CreateOrderRequest.newInstance("배송 전 문자 부탁드립니다", 1L, 1L, 1L);
+        CreateOrderRequest request4 = CreateOrderRequest.newInstance("경비실에 맡겨주세요", 1L, 1L, 1L);
 
         // when
         userService.join(user);
-        shopService.save(shop);
-        informationService.save(information);
-        userShopService.save(userShop1);
-        userShopService.save(userShop2);
+        shopService.save(request1);
+        informationService.save(request2);
+        userShopService.save(request3);
+        userShopService.save(request4);
         List<UserShop> orderDESC = userShopService.findByUserDESC(user);
 
         // then
-        assertEquals(userShop2, orderDESC.get(0));
+        assertEquals(request4.getText(), orderDESC.get(0).getText());
     }
 
     @Test
@@ -133,17 +131,18 @@ public class UserShopServiceTest {
 
         // given
         User user = User.newInstance("2", "donggwon@gmail.com", "profile.png", 1000, "donggwon", Role.GENERAL);
-        Shop shop = Shop.createShop("라면 한 박스", 1000, "ramen.jpg", "포인트로 뜨끈한 라면 한 박스 가져가세요!");
-        Information information = Information.createInformation("윤진원", "대전광역시 관평동", "010-0000-0000", user);
-        UserShop userShop = UserShop.createUserShop("배송전 문자 부탁드립니다", user, shop, information);
+        CreateShopRequest request1 = CreateShopRequest.newInstance("라면 한 박스", 1000, "ramen.jpg", "포인트로 뜨끈한 라면 한 박스 가져가세요!", 1L);
+        CreateInformationRequest request2 = CreateInformationRequest.newInstance("윤진원", "대전광역시 유성구", "010-0000-0000", 1L);
+        CreateOrderRequest request3 = CreateOrderRequest.newInstance("배송 전 문자 부탁드립니다", 1L, 1L, 1L);
 
         // when
         userService.join(user);
-        shopService.save(shop);
-        informationService.save(information);
-        Long savedId = userShopService.save(userShop);
+        shopService.save(request1);
+        informationService.save(request2);
+        Long savedId = userShopService.save(request3);
 
-        userShopService.updateBody(savedId, "경비실에 맡겨주세요");
+        UpdateOrderRequest updateRequest = UpdateOrderRequest.newInstance("경비실에 맡겨주세요", 1L);
+        userShopService.updateBody(updateRequest);
         UserShop updateOrder = userShopService.findOne(savedId);
 
         // then
@@ -155,20 +154,20 @@ public class UserShopServiceTest {
 
         // given
         User user = User.newInstance("2", "donggwon@gmail.com", "profile.png", 1000, "donggwon", Role.GENERAL);
-        Shop shop = Shop.createShop("라면 한 박스", 1000, "ramen.jpg", "포인트로 뜨끈한 라면 한 박스 가져가세요!");
-        Information information = Information.createInformation("윤진원", "대전광역시 관평동", "010-0000-0000", user);
-        UserShop userShop = UserShop.createUserShop("배송전 문자 부탁드립니다", user, shop, information);
+        CreateShopRequest request1 = CreateShopRequest.newInstance("라면 한 박스", 1000, "ramen.jpg", "포인트로 뜨끈한 라면 한 박스 가져가세요!", 1L);
+        CreateInformationRequest request2 = CreateInformationRequest.newInstance("윤진원", "대전광역시 유성구", "010-0000-0000", 1L);
+        CreateOrderRequest request3 = CreateOrderRequest.newInstance("배송 전 문자 부탁드립니다", 1L, 1L, 1L);
 
         // when
         userService.join(user);
-        shopService.save(shop);
-        informationService.save(information);
-        Long savedId = userShopService.save(userShop);
+        shopService.save(request1);
+        informationService.save(request2);
+        Long savedId = userShopService.save(request3);
 
         userShopService.deleteOrder(savedId);
         UserShop deleteOrder = userShopService.findOne(savedId);
 
         // then
-        assertEquals(userShop, deleteOrder);
+        assertEquals(request3, deleteOrder);
     }
 }
