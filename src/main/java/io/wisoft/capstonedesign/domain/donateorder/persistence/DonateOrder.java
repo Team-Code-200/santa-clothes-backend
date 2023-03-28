@@ -33,7 +33,7 @@ public class DonateOrder {
     @JoinColumn(name = "info_id", nullable = false)
     private Information information;
 
-    @OneToOne
+    @OneToOne(fetch = LAZY)
     @JoinColumn(name = "donate_id", nullable = false)
     private Donate donate;
 

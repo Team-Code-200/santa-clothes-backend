@@ -9,6 +9,7 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
+import static jakarta.persistence.CascadeType.*;
 import static lombok.AccessLevel.*;
 
 @Entity
@@ -37,7 +38,7 @@ public class Shop {
     @Temporal(TemporalType.TIMESTAMP)
     private LocalDateTime createdDate;
 
-    @OneToMany(mappedBy = "shop")
+    @OneToMany(mappedBy = "shop", cascade = REMOVE)
     private List<UserShop> userShops = new ArrayList<>();
 
     /**

@@ -10,6 +10,7 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
+import static jakarta.persistence.CascadeType.*;
 import static lombok.AccessLevel.*;
 
 @Entity
@@ -26,10 +27,10 @@ public class Chat {
     @Temporal(TemporalType.TIMESTAMP)
     private LocalDateTime createdDate;
 
-    @OneToMany(mappedBy = "chat")
+    @OneToMany(mappedBy = "chat", cascade = REMOVE)
     private List<Message> messages = new ArrayList<>();
 
-    @OneToMany(mappedBy = "chat")
+    @OneToMany(mappedBy = "chat", cascade = REMOVE)
     private List<UserChat> userChats = new ArrayList<>();
 
     /**
