@@ -11,6 +11,7 @@ import lombok.NoArgsConstructor;
 import java.util.ArrayList;
 import java.util.List;
 
+import static jakarta.persistence.CascadeType.*;
 import static jakarta.persistence.FetchType.*;
 import static lombok.AccessLevel.*;
 
@@ -37,13 +38,13 @@ public class Information {
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
 
-    @OneToMany(mappedBy = "information")
+    @OneToMany(mappedBy = "information", cascade = REMOVE)
     private List<FindOrder> findOrders = new ArrayList<>();
 
-    @OneToMany(mappedBy = "information")
+    @OneToMany(mappedBy = "information", cascade = REMOVE)
     private List<DonateOrder> donateOrders = new ArrayList<>();
 
-    @OneToMany(mappedBy = "information")
+    @OneToMany(mappedBy = "information", cascade = REMOVE)
     private List<UserShop> userShops = new ArrayList<>();
 
     /**

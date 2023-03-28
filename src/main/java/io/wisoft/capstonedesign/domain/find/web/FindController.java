@@ -50,4 +50,11 @@ public class FindController {
 
         return new Result(collect);
     }
+
+    @DeleteMapping("/api/finds/{id}")
+    public DeleteFindResponse deleteFind(@PathVariable("id") Long id) {
+
+        findService.deleteFind(id);
+        return new DeleteFindResponse(id);
+    }
 }

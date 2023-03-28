@@ -33,7 +33,7 @@ public class FindOrder {
     @JoinColumn(name = "info_id", nullable = false)
     private Information information;
 
-    @OneToOne
+    @OneToOne(fetch = LAZY)
     @JoinColumn(name = "find_id", nullable = false)
     private Find find;
 

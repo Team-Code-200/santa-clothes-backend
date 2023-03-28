@@ -10,6 +10,7 @@ import lombok.Setter;
 
 import java.time.LocalDateTime;
 
+import static jakarta.persistence.CascadeType.*;
 import static jakarta.persistence.FetchType.*;
 import static lombok.AccessLevel.*;
 
@@ -47,7 +48,7 @@ public class Donate {
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
 
-    @OneToOne(mappedBy = "donate")
+    @OneToOne(mappedBy = "donate", fetch = LAZY, cascade = REMOVE)
     private DonateOrder donateOrder;
 
     /**

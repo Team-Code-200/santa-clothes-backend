@@ -46,4 +46,11 @@ public class FindOrderController {
 
         return new Result(collect);
     }
+
+    @DeleteMapping("/api/find-orders/{id}")
+    public DeleteOrderResponse deleteOrder(@PathVariable("id") Long id) {
+
+        findOrderService.deleteOrder(id);
+        return new DeleteOrderResponse(id);
+    }
 }

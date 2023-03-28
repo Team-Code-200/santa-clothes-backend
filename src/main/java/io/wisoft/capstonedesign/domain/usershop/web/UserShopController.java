@@ -46,4 +46,11 @@ public class UserShopController {
 
         return new Result(collect);
     }
+
+    @DeleteMapping("/api/shop-orders/{id}")
+    public DeleteOrderResponse deleteOrder(@PathVariable("id") Long id) {
+
+        userShopService.deleteOrder(id);
+        return new DeleteOrderResponse(id);
+    }
 }
