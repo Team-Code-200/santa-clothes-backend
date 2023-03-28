@@ -48,4 +48,11 @@ public class InformationController {
 
         return new Result(collect);
     }
+
+    @DeleteMapping("/api/informations/{id}")
+    public DeleteInformationResponse deleteInfo(@PathVariable("id") Long id) {
+
+        informationService.deleteInformation(id);
+        return new DeleteInformationResponse(id);
+    }
 }

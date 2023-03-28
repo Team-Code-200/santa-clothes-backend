@@ -50,4 +50,11 @@ public class DonateController {
 
         return new Result(collect);
     }
+
+    @DeleteMapping("/api/donates/{id}")
+    public DeleteDonateResponse deleteDonate(@PathVariable("id") Long id) {
+
+        donateService.deleteDonate(id);
+        return new DeleteDonateResponse(id);
+    }
 }

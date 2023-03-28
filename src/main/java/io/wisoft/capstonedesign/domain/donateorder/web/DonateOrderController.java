@@ -46,4 +46,11 @@ public class DonateOrderController {
 
         return new Result(collect);
     }
+
+    @DeleteMapping("/api/donate-orders/{id}")
+    public DeleteOrderResponse deleteOrder(@PathVariable("id") Long id) {
+
+        donateOrderService.deleteOrder(id);
+        return new DeleteOrderResponse(id);
+    }
 }

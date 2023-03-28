@@ -1,13 +1,8 @@
 package io.wisoft.capstonedesign.domain.user.web;
 
 import io.wisoft.capstonedesign.domain.user.persistence.User;
+import io.wisoft.capstonedesign.domain.user.web.dto.*;
 import io.wisoft.capstonedesign.global.enumerated.Role;
-import io.wisoft.capstonedesign.domain.user.web.dto.CreateUserRequest;
-import io.wisoft.capstonedesign.domain.user.web.dto.UpdateUserRequest;
-import io.wisoft.capstonedesign.domain.user.web.dto.UserDto;
-import io.wisoft.capstonedesign.domain.user.web.dto.CreateUserResponse;
-import io.wisoft.capstonedesign.domain.user.web.dto.Result;
-import io.wisoft.capstonedesign.domain.user.web.dto.UpdateUserResponse;
 import io.wisoft.capstonedesign.domain.user.application.UserService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -56,5 +51,12 @@ public class UserController {
                 .collect(Collectors.toList());
 
         return new Result(collect);
+    }
+
+    @DeleteMapping("/api/users/{id}")
+    public DeleteUserResponse deleteUser(@PathVariable("id") Long id) {
+
+        userService.deleteUser(id);
+        return new DeleteUserResponse(id);
     }
 }

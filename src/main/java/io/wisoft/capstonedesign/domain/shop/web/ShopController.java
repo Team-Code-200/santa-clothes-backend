@@ -49,4 +49,11 @@ public class ShopController {
 
         return new Result(collect);
     }
+
+    @DeleteMapping("/api/shops/{id}")
+    public DeleteShopResponse deleteShop(@PathVariable("id") Long id) {
+
+        shopService.deleteShop(id);
+        return new DeleteShopResponse(id);
+    }
 }
