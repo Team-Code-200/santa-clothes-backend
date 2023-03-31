@@ -14,11 +14,11 @@ public class InformationRepository {
     @PersistenceContext
     private EntityManager em;
 
-    public void save(Information information) {
+    public void save(final Information information) {
         em.persist(information);
     }
 
-    public Optional<Information> findOne(Long id) {
+    public Optional<Information> findOne(final Long id) {
         return Optional.ofNullable(em.find(Information.class, id));
     }
 
@@ -27,13 +27,13 @@ public class InformationRepository {
                 .getResultList();
     }
 
-    public List<Information> findByUser(User user) {
+    public List<Information> findByUser(final User user) {
         return em.createQuery("select i from Information i where i.user = :user", Information.class)
                 .setParameter("user", user)
                 .getResultList();
     }
 
-    public void delete(Information information) {
+    public void delete(final Information information) {
         em.remove(information);
     }
 }

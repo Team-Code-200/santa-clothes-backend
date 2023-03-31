@@ -36,7 +36,7 @@ public class UserShopService {
      * 주문 내역 저장
      */
     @Transactional
-    public Long save(CreateOrderRequest request) {
+    public Long save(final CreateOrderRequest request) {
 
         User user = userRepository.findOne(request.getUserId())
                 .orElseThrow(() -> new UserNotFoundException(NOT_FOUND_ACCOUNT));
@@ -66,7 +66,7 @@ public class UserShopService {
     /**
      * 단 건 조회
      */
-    public UserShop findOne(Long id) {
+    public UserShop findOne(final Long id) {
         return userShopRepository.findOne(id)
                 .orElseThrow(() -> new OrderNotFoundException(NOT_FOUND_ORDER));
     }
@@ -74,7 +74,7 @@ public class UserShopService {
     /**
      * 특정 사용자의 주문 내역 최근순으로 조회 - 기본값
      */
-    public List<UserShop> findByUserDESC(User user) {
+    public List<UserShop> findByUserDESC(final User user) {
         return userShopRepository.findByUserDESC(user);
     }
 
@@ -89,7 +89,7 @@ public class UserShopService {
      * 주문 내역 기타 사항 수정
      */
     @Transactional
-    public void updateBody(UpdateOrderRequest request) {
+    public void updateBody(final UpdateOrderRequest request) {
         UserShop userShop = userShopRepository.findOne(request.getOrderId())
                 .orElseThrow(() -> new OrderNotFoundException(NOT_FOUND_ORDER));
         userShop.update(request.getText());
@@ -99,7 +99,7 @@ public class UserShopService {
      * 주문 내역 삭제
      */
     @Transactional
-    public void deleteOrder(Long orderId) {
+    public void deleteOrder(final Long orderId) {
         UserShop userShop = userShopRepository.findOne(orderId)
                 .orElseThrow(() -> new OrderNotFoundException(NOT_FOUND_ORDER));
         userShopRepository.delete(userShop);

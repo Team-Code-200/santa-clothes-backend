@@ -17,7 +17,7 @@ public class InformationController {
     private final InformationService informationService;
 
     @PostMapping("/api/informations/new")
-    public CreateInformationResponse saveInfo(@RequestBody @Valid CreateInformationRequest request) {
+    public CreateInformationResponse saveInfo(@RequestBody @Valid final CreateInformationRequest request) {
 
         Long id = informationService.save(request);
         return new CreateInformationResponse(id);
@@ -25,8 +25,8 @@ public class InformationController {
 
     @PatchMapping("/api/informations/{id}")
     public UpdateInformationResponse updateInfo(
-            @PathVariable("id") Long id,
-            @RequestBody @Valid UpdateInformationRequest request) {
+            @PathVariable("id") final Long id,
+            @RequestBody @Valid final UpdateInformationRequest request) {
 
         informationService.updateAll(request);
         Information updateInfo = informationService.findOne(id);
@@ -50,7 +50,7 @@ public class InformationController {
     }
 
     @DeleteMapping("/api/informations/{id}")
-    public DeleteInformationResponse deleteInfo(@PathVariable("id") Long id) {
+    public DeleteInformationResponse deleteInfo(@PathVariable("id") final Long id) {
 
         informationService.deleteInformation(id);
         return new DeleteInformationResponse(id);

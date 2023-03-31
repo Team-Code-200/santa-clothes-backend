@@ -14,11 +14,11 @@ public class DonateOrderRepository {
     @PersistenceContext
     private EntityManager em;
 
-    public void save(DonateOrder donateOrder) {
+    public void save(final DonateOrder donateOrder) {
         em.persist(donateOrder);
     }
 
-    public Optional<DonateOrder> findOne(Long id) {
+    public Optional<DonateOrder> findOne(final Long id) {
         return Optional.ofNullable(em.find(DonateOrder.class, id));
     }
 
@@ -27,7 +27,7 @@ public class DonateOrderRepository {
                 .getResultList();
     }
 
-    public List<DonateOrder> findByUserDESC(User user) {
+    public List<DonateOrder> findByUserDESC(final User user) {
         return em.createQuery("select d from DonateOrder d where d.user = :user order by d.sendDate desc", DonateOrder.class)
                 .setParameter("user", user)
                 .getResultList();
@@ -38,7 +38,7 @@ public class DonateOrderRepository {
                 .getResultList();
     }
 
-    public void delete(DonateOrder donateOrder) {
+    public void delete(final DonateOrder donateOrder) {
         em.remove(donateOrder);
     }
 }

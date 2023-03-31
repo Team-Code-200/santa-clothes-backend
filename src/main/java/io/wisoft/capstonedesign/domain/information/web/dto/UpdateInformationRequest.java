@@ -22,10 +22,10 @@ public class UpdateInformationRequest {
     private Long infoId;
 
     public static UpdateInformationRequest newInstance(
-            String username,
-            String address,
-            String phoneNumber,
-            Long infoId
+            final String username,
+            final String address,
+            final String phoneNumber,
+            final Long infoId
     ) {
         UpdateInformationRequest request = new UpdateInformationRequest();
         request.username = username;

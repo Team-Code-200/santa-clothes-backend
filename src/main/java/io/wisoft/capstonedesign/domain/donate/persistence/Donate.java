@@ -55,12 +55,12 @@ public class Donate {
      * 정적 생성자 메소드
      */
     public static Donate createDonate(
-            String title,
-            String image,
-            String text,
-            int view,
-            Tag tag,
-            User user
+            final String title,
+            final String image,
+            final String text,
+            final int view,
+            final Tag tag,
+            final User user
     ) {
         Donate donate = new Donate();
         donate.title = title;
@@ -76,7 +76,7 @@ public class Donate {
     /**
      * 연관관계 편의 메소드
      */
-    public void setUser(User user) {
+    public void setUser(final User user) {
 
         if (this.user != null) this.user.getDonates().remove(this);
         this.user = user;
@@ -86,7 +86,7 @@ public class Donate {
     /**
      * 게시글 제목, 본문 및 태그 수정
      */
-    public void update(String title, String image, String text, Tag tag) {
+    public void update(final String title, final String image, final String text, final Tag tag) {
         this.title = title;
         this.image = image;
         this.text = text;

@@ -18,10 +18,10 @@ public class CreateInformationRequest {
     private Long userId;
 
     public static CreateInformationRequest newInstance(
-            String username,
-            String address,
-            String phoneNumber,
-            Long userId
+            final String username,
+            final String address,
+            final String phoneNumber,
+            final Long userId
     ) {
         CreateInformationRequest request = new CreateInformationRequest();
         request.username = username;

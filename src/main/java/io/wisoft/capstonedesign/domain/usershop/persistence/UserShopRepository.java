@@ -14,11 +14,11 @@ public class UserShopRepository {
     @PersistenceContext
     private EntityManager em;
 
-    public void save(UserShop userShop) {
+    public void save(final UserShop userShop) {
         em.persist(userShop);
     }
 
-    public Optional<UserShop> findOne(Long id) {
+    public Optional<UserShop> findOne(final Long id) {
         return Optional.ofNullable(em.find(UserShop.class, id));
     }
 
@@ -27,7 +27,7 @@ public class UserShopRepository {
                 .getResultList();
     }
 
-    public List<UserShop> findByUserDESC(User user) {
+    public List<UserShop> findByUserDESC(final User user) {
         return em.createQuery("select u from UserShop u where u.user = :user order by u.createdDate desc ", UserShop.class)
                 .setParameter("user", user)
                 .getResultList();
@@ -38,7 +38,7 @@ public class UserShopRepository {
                 .getResultList();
     }
 
-    public void delete(UserShop userShop) {
+    public void delete(final UserShop userShop) {
         em.remove(userShop);
     }
 }

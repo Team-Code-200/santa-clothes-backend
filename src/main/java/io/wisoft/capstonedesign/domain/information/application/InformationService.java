@@ -29,7 +29,7 @@ public class InformationService {
      * 배송 정보 저장
      */
     @Transactional
-    public Long save(CreateInformationRequest request) {
+    public Long save(final CreateInformationRequest request) {
 
         User user = userRepository.findOne(request.getUserId())
                 .orElseThrow(() -> new UserNotFoundException(DUPLICATE_USER));
@@ -54,7 +54,7 @@ public class InformationService {
     /**
      * 단 건 조회
      */
-    public Information findOne(Long id) {
+    public Information findOne(final Long id) {
         return informationRepository.findOne(id)
                 .orElseThrow(() -> new InfoNotFoundException(NOT_FOUND_INFO));
     }
@@ -62,7 +62,7 @@ public class InformationService {
     /**
      * 회원별 배송 정보 조회
      */
-    public List<Information> findInformationByUser(User user) {
+    public List<Information> findInformationByUser(final User user) {
         return informationRepository.findByUser(user);
     }
 
@@ -70,14 +70,14 @@ public class InformationService {
      * 배송 정보 수정
      */
     @Transactional
-    public void updateAll(UpdateInformationRequest request) {
+    public void updateAll(final UpdateInformationRequest request) {
         Information information = informationRepository.findOne(request.getInfoId())
                 .orElseThrow(() -> new InfoNotFoundException(NOT_FOUND_INFO));
         validateInformation(request.getUsername(), request.getAddress(), request.getPhoneNumber());
         information.update(request.getUsername(), request.getAddress(), request.getPhoneNumber());
     }
 
-    private void validateInformation(String username, String address, String phoneNumber) {
+    private void validateInformation(final String username, final String address, final String phoneNumber) {
         if (username == null || address == null || phoneNumber == null) {
             throw new IllegalStateException("배송 정보를 모두 입력해주세요.");
         }
@@ -87,7 +87,7 @@ public class InformationService {
      * 배송 정보 삭제
      */
     @Transactional
-    public void deleteInformation(Long informationId) {
+    public void deleteInformation(final Long informationId) {
         Information information = informationRepository.findOne(informationId)
                 .orElseThrow(() -> new InfoNotFoundException(NOT_FOUND_INFO));
         informationRepository.delete(information);

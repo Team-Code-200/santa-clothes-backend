@@ -21,11 +21,11 @@ public class CreateFindRequest {
     private Long userId;
 
     public static CreateFindRequest newInstance(
-            String title,
-            String image,
-            String text,
-            String tag,
-            Long userId
+            final String title,
+            final String image,
+            final String text,
+            final String tag,
+            final Long userId
     ) {
         CreateFindRequest request = new CreateFindRequest();
         request.title = title;

@@ -40,10 +40,10 @@ public class Message {
      * 정적 생성자 메소드
      */
     public static Message createMessage(
-            LocalDateTime createdDate,
-            String body,
-            User sender,
-            Chat chat
+            final LocalDateTime createdDate,
+            final String body,
+            final User sender,
+            final Chat chat
     ) {
         Message message = new Message();
         message.createdDate = createdDate;
@@ -56,14 +56,14 @@ public class Message {
     /**
      * 연관관계 편의 메소드
      */
-    public void setSender(User sender) {
+    public void setSender(final User sender) {
 
         if (this.sender != null) this.sender.getMessages().remove(this);
         this.sender = sender;
         sender.getMessages().add(this);
     }
 
-    public void setChat(Chat chat) {
+    public void setChat(final Chat chat) {
 
         if (this.chat != null) this.chat.getMessages().remove(this);
         this.chat = chat;

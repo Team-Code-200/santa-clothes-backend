@@ -27,7 +27,7 @@ public class ShopService {
      * 산타샵 물품 저장
      */
     @Transactional
-    public Long save(CreateShopRequest request) {
+    public Long save(final CreateShopRequest request) {
 
         Shop shop = Shop.createShop(
                 request.getTitle(),
@@ -50,7 +50,7 @@ public class ShopService {
     /**
      * 단 건 조회
      */
-    public Shop findOne(Long id) {
+    public Shop findOne(final Long id) {
         return shopRepository.findOne(id)
                 .orElseThrow(() -> new PostNotFoundException(NOT_FOUND_POST));
     }
@@ -58,7 +58,7 @@ public class ShopService {
     /**
      * 산타샵 물품 이름으로 조회
      */
-    public List<Shop> findShopByTitle(String title) {
+    public List<Shop> findShopByTitle(final String title) {
         return shopRepository.findByTitle(title);
     }
 
@@ -73,7 +73,7 @@ public class ShopService {
      * 산타샵 물품 정보 수정
      */
     @Transactional
-    public void updateAll(UpdateShopRequest request) {
+    public void updateAll(final UpdateShopRequest request) {
         Shop shop = shopRepository.findOne(request.getShopId())
                 .orElseThrow(() -> new PostNotFoundException(NOT_FOUND_POST));
         shop.update(request.getTitle(), request.getPrice(), request.getImage(), request.getBody());
@@ -83,7 +83,7 @@ public class ShopService {
      * 산타샵 물품 삭제
      */
     @Transactional
-    public void deleteShop(Long shopId) {
+    public void deleteShop(final Long shopId) {
         Shop shop = shopRepository.findOne(shopId)
                 .orElseThrow(() -> new PostNotFoundException(NOT_FOUND_POST));
         shopRepository.delete(shop);

@@ -21,11 +21,11 @@ public class CreateDonateRequest {
     private Long userId;
 
     public static CreateDonateRequest newInstance(
-            String title,
-            String image,
-            String text,
-            String tag,
-            Long userId
+            final String title,
+            final String image,
+            final String text,
+            final String tag,
+            final Long userId
     ) {
         CreateDonateRequest request = new CreateDonateRequest();
         request.title = title;

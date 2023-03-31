@@ -25,11 +25,11 @@ public class UpdateDonateRequest {
     private Long donateId;
 
     public static UpdateDonateRequest newInstance(
-            String title,
-            String image,
-            String text,
-            String tag,
-            Long donateId
+            final String title,
+            final String image,
+            final String text,
+            final String tag,
+            final Long donateId
     ) {
         UpdateDonateRequest request = new UpdateDonateRequest();
         request.title = title;

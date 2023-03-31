@@ -13,11 +13,11 @@ public class UserRepository {
     @PersistenceContext
     private EntityManager em;
 
-    public void save(User user) {
+    public void save(final User user) {
         em.persist(user);
     }
 
-    public Optional<User> findOne(Long id) {
+    public Optional<User> findOne(final Long id) {
         return Optional.ofNullable(em.find(User.class, id));
     }
 
@@ -26,19 +26,19 @@ public class UserRepository {
                 .getResultList();
     }
 
-    public List<User> findByNickname(String nickname) {
+    public List<User> findByNickname(final String nickname) {
         return em.createQuery("select u from User u where u.nickname = :nickname", User.class)
                 .setParameter("nickname", nickname)
                 .getResultList();
     }
 
-    public List<User> findByEmail(String email) {
+    public List<User> findByEmail(final String email) {
         return em.createQuery("select u from User u where u.email = :email", User.class)
                 .setParameter("email", email)
                 .getResultList();
     }
 
-    public void delete(User user) {
+    public void delete(final User user) {
         em.remove(user);
     }
 }

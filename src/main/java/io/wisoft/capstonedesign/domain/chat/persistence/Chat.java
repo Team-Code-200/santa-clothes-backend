@@ -36,7 +36,7 @@ public class Chat {
     /**
      * 정적 생성자 메소드
      */
-    public static Chat createChat(LocalDateTime createdDate) {
+    public static Chat createChat(final LocalDateTime createdDate) {
         Chat chat = new Chat();
         chat.createdDate = createdDate;
         return chat;
