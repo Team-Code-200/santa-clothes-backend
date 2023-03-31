@@ -2,13 +2,11 @@ package io.wisoft.capstonedesign.service;
 
 import io.wisoft.capstonedesign.domain.find.application.FindService;
 import io.wisoft.capstonedesign.domain.find.persistence.Find;
-import io.wisoft.capstonedesign.domain.find.persistence.FindRepository;
 import io.wisoft.capstonedesign.domain.find.web.dto.CreateFindRequest;
 import io.wisoft.capstonedesign.domain.find.web.dto.UpdateFindRequest;
 import io.wisoft.capstonedesign.global.enumerated.Role;
 import io.wisoft.capstonedesign.global.enumerated.Tag;
 import io.wisoft.capstonedesign.domain.user.application.UserService;
-import io.wisoft.capstonedesign.domain.user.persistence.UserRepository;
 import io.wisoft.capstonedesign.domain.user.persistence.User;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -29,12 +27,8 @@ import static org.junit.jupiter.api.Assertions.*;
 @Rollback(value = false)
 public class FindServiceTest {
 
-    @Autowired FindRepository findRepository;
-    @Autowired UserRepository userRepository;
-    @Autowired
-    FindService findService;
-    @Autowired
-    UserService userService;
+    @Autowired FindService findService;
+    @Autowired UserService userService;
 
     @Test
     public void 게시글_작성() throws Exception {
@@ -48,7 +42,7 @@ public class FindServiceTest {
         Long savedId = findService.join(request);
 
         // then
-        assertEquals(request.getTitle(), findRepository.findOne(savedId).getTitle());
+        assertEquals(request.getTitle(), findService.findOne(savedId).getTitle());
     }
 
     @Test

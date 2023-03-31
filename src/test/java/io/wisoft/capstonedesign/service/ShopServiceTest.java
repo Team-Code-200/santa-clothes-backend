@@ -7,8 +7,6 @@ import io.wisoft.capstonedesign.domain.shop.application.ShopService;
 import io.wisoft.capstonedesign.domain.shop.persistence.Shop;
 import io.wisoft.capstonedesign.domain.user.application.UserService;
 import io.wisoft.capstonedesign.domain.user.persistence.User;
-import io.wisoft.capstonedesign.domain.shop.persistence.ShopRepository;
-import io.wisoft.capstonedesign.domain.user.persistence.UserRepository;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.opentest4j.AssertionFailedError;
@@ -28,12 +26,8 @@ import static org.junit.jupiter.api.Assertions.*;
 @Rollback(value = false)
 public class ShopServiceTest {
 
-    @Autowired ShopRepository shopRepository;
-    @Autowired UserRepository userRepository;
-    @Autowired
-    ShopService shopService;
-    @Autowired
-    UserService userService;
+    @Autowired ShopService shopService;
+    @Autowired UserService userService;
 
     @Test
     public void 산타샵_물품_생성() throws Exception {

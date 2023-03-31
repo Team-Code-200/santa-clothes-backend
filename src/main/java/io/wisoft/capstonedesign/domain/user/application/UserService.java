@@ -2,11 +2,15 @@ package io.wisoft.capstonedesign.domain.user.application;
 
 import io.wisoft.capstonedesign.domain.user.persistence.User;
 import io.wisoft.capstonedesign.domain.user.persistence.UserRepository;
+import io.wisoft.capstonedesign.global.exception.service.UserDuplicateException;
+import io.wisoft.capstonedesign.global.exception.service.UserNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+
+import static io.wisoft.capstonedesign.global.exception.ErrorCode.*;
 
 @Service
 @Transactional(readOnly = true)
@@ -30,7 +34,7 @@ public class UserService {
      */
     private void validateDuplicateUser(User user) {
         List<User> findUsers = userRepository.findByEmail(user.getEmail());
-        if (!findUsers.isEmpty()) throw new IllegalStateException("이미 존재하는 회원입니다.");
+        if (!findUsers.isEmpty()) throw new UserDuplicateException(DUPLICATE_USER);
     }
 
     /**
@@ -44,7 +48,8 @@ public class UserService {
      * 단 건 조회
      */
     public User findOne(Long userId) {
-        return userRepository.findOne(userId);
+        return userRepository.findOne(userId)
+                .orElseThrow(() -> new UserNotFoundException(NOT_FOUND_ACCOUNT));
     }
 
     /**
@@ -52,7 +57,8 @@ public class UserService {
      */
     @Transactional
     public void updateNickname(Long userId, String nickname) {
-        User user = findOne(userId);
+        User user = userRepository.findOne(userId)
+                .orElseThrow(() -> new UserNotFoundException(NOT_FOUND_ACCOUNT));
         validateNickname(nickname);
         user.updateNickname(nickname);
     }
@@ -68,7 +74,7 @@ public class UserService {
      */
     @Transactional
     public void deleteUser(Long userId) {
-        User user = userRepository.findOne(userId);
+        User user = userRepository.findOne(userId).orElseThrow(() -> new UserNotFoundException(NOT_FOUND_ACCOUNT));
         userRepository.delete(user);
     }
 }

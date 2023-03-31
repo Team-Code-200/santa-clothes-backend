@@ -3,7 +3,6 @@ package io.wisoft.capstonedesign.service;
 import io.wisoft.capstonedesign.global.enumerated.Role;
 import io.wisoft.capstonedesign.domain.user.application.UserService;
 import io.wisoft.capstonedesign.domain.user.persistence.User;
-import io.wisoft.capstonedesign.domain.user.persistence.UserRepository;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.opentest4j.AssertionFailedError;
@@ -23,9 +22,7 @@ import static org.junit.jupiter.api.Assertions.*;
 @Rollback(value = false)
 public class UserServiceTest {
 
-    @Autowired UserRepository userRepository;
-    @Autowired
-    UserService userService;
+    @Autowired UserService userService;
 
     @Test
     public void 회원가입() throws Exception {
@@ -37,7 +34,7 @@ public class UserServiceTest {
         Long saveId = userService.join(user);
 
         // then
-        assertEquals(user, userRepository.findOne(saveId));
+        assertEquals(user, userService.findOne(saveId));
     }
 
     @Test(expected = IllegalStateException.class)

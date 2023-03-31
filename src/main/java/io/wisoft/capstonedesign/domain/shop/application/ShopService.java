@@ -6,11 +6,15 @@ import io.wisoft.capstonedesign.domain.shop.web.dto.CreateShopRequest;
 import io.wisoft.capstonedesign.domain.shop.web.dto.UpdateShopRequest;
 import io.wisoft.capstonedesign.domain.user.persistence.User;
 import io.wisoft.capstonedesign.domain.user.persistence.UserRepository;
+import io.wisoft.capstonedesign.global.exception.ErrorCode;
+import io.wisoft.capstonedesign.global.exception.service.PostNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+
+import static io.wisoft.capstonedesign.global.exception.ErrorCode.*;
 
 @Service
 @Transactional(readOnly = true)
@@ -47,7 +51,8 @@ public class ShopService {
      * 단 건 조회
      */
     public Shop findOne(Long id) {
-        return shopRepository.findOne(id);
+        return shopRepository.findOne(id)
+                .orElseThrow(() -> new PostNotFoundException(NOT_FOUND_POST));
     }
 
     /**
@@ -69,7 +74,8 @@ public class ShopService {
      */
     @Transactional
     public void updateAll(UpdateShopRequest request) {
-        Shop shop = findOne(request.getShopId());
+        Shop shop = shopRepository.findOne(request.getShopId())
+                .orElseThrow(() -> new PostNotFoundException(NOT_FOUND_POST));
         shop.update(request.getTitle(), request.getPrice(), request.getImage(), request.getBody());
     }
 
@@ -78,7 +84,8 @@ public class ShopService {
      */
     @Transactional
     public void deleteShop(Long shopId) {
-        Shop shop = shopRepository.findOne(shopId);
+        Shop shop = shopRepository.findOne(shopId)
+                .orElseThrow(() -> new PostNotFoundException(NOT_FOUND_POST));
         shopRepository.delete(shop);
     }
 }

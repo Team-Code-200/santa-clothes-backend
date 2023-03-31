@@ -7,8 +7,6 @@ import io.wisoft.capstonedesign.domain.information.web.dto.UpdateInformationRequ
 import io.wisoft.capstonedesign.global.enumerated.Role;
 import io.wisoft.capstonedesign.domain.user.application.UserService;
 import io.wisoft.capstonedesign.domain.user.persistence.User;
-import io.wisoft.capstonedesign.domain.information.persistence.InformationRepository;
-import io.wisoft.capstonedesign.domain.user.persistence.UserRepository;
 import org.junit.runner.RunWith;
 import org.junit.Test;
 import org.opentest4j.AssertionFailedError;
@@ -28,8 +26,6 @@ import static org.junit.jupiter.api.Assertions.*;
 @Rollback(value = false)
 public class InformationServiceTest {
 
-    @Autowired InformationRepository informationRepository;
-    @Autowired UserRepository userRepository;
     @Autowired InformationService informationService;
     @Autowired UserService userService;
 

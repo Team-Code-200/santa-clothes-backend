@@ -5,6 +5,7 @@ import jakarta.persistence.PersistenceContext;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public class UserRepository {
@@ -16,8 +17,8 @@ public class UserRepository {
         em.persist(user);
     }
 
-    public User findOne(Long id) {
-        return em.find(User.class, id);
+    public Optional<User> findOne(Long id) {
+        return Optional.ofNullable(em.find(User.class, id));
     }
 
     public List<User> findAll() {

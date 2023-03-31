@@ -7,11 +7,16 @@ import io.wisoft.capstonedesign.domain.user.persistence.User;
 import io.wisoft.capstonedesign.domain.user.persistence.UserRepository;
 import io.wisoft.capstonedesign.global.enumerated.Tag;
 import io.wisoft.capstonedesign.domain.donate.persistence.DonateRepository;
+import io.wisoft.capstonedesign.global.exception.ErrorCode;
+import io.wisoft.capstonedesign.global.exception.service.PostNotFoundException;
+import io.wisoft.capstonedesign.global.exception.service.UnAuthorizedAccessException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+
+import static io.wisoft.capstonedesign.global.exception.ErrorCode.*;
 
 @Service
 @Transactional(readOnly = true)
@@ -27,7 +32,8 @@ public class DonateService {
     @Transactional
     public Long join(CreateDonateRequest request) {
 
-        User user = userRepository.findOne(request.getUserId());
+        User user = userRepository.findOne(request.getUserId())
+                .orElseThrow(() -> new PostNotFoundException(NOT_FOUND_POST));
         Donate donate = Donate.createDonate(
                 request.getTitle(),
                 request.getImage(),
@@ -52,7 +58,8 @@ public class DonateService {
      * 단 건 조회
      */
     public Donate findOne(Long id) {
-        return donateRepository.findOne(id);
+        return donateRepository.findOne(id)
+                .orElseThrow(() -> new PostNotFoundException(NOT_FOUND_POST));
     }
 
     /**
@@ -90,7 +97,8 @@ public class DonateService {
      */
     @Transactional
     public void deleteDonate(Long donateId) {
-        Donate donate = donateRepository.findOne(donateId);
+        Donate donate = donateRepository.findOne(donateId)
+                .orElseThrow(() -> new PostNotFoundException(NOT_FOUND_POST));
         donateRepository.delete(donate);
     }
 }

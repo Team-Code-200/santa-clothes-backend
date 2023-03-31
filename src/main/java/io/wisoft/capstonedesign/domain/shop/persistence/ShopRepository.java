@@ -5,6 +5,7 @@ import jakarta.persistence.PersistenceContext;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public class ShopRepository {
@@ -16,8 +17,8 @@ public class ShopRepository {
         em.persist(shop);
     }
 
-    public Shop findOne(Long id) {
-        return em.find(Shop.class, id);
+    public Optional<Shop> findOne(Long id) {
+        return Optional.ofNullable(em.find(Shop.class, id));
     }
 
     public List<Shop> findAll() {

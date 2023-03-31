@@ -10,11 +10,18 @@ import io.wisoft.capstonedesign.domain.information.persistence.Information;
 import io.wisoft.capstonedesign.domain.information.persistence.InformationRepository;
 import io.wisoft.capstonedesign.domain.user.persistence.User;
 import io.wisoft.capstonedesign.domain.user.persistence.UserRepository;
+import io.wisoft.capstonedesign.global.exception.ErrorCode;
+import io.wisoft.capstonedesign.global.exception.service.InfoNotFoundException;
+import io.wisoft.capstonedesign.global.exception.service.OrderNotFoundException;
+import io.wisoft.capstonedesign.global.exception.service.PostNotFoundException;
+import io.wisoft.capstonedesign.global.exception.service.UserNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+
+import static io.wisoft.capstonedesign.global.exception.ErrorCode.*;
 
 @Service
 @Transactional(readOnly = true)
@@ -32,9 +39,12 @@ public class DonateOrderService {
     @Transactional
     public Long save(CreateOrderRequest request) {
 
-        User user = userRepository.findOne(request.getUserId());
-        Information information = informationRepository.findOne(request.getInfoId());
-        Donate donate = donateRepository.findOne(request.getDonateId());
+        User user = userRepository.findOne(request.getUserId())
+                .orElseThrow(() -> new UserNotFoundException(NOT_FOUND_ACCOUNT));
+        Information information = informationRepository.findOne(request.getInfoId())
+                .orElseThrow(() -> new InfoNotFoundException(NOT_FOUND_INFO));
+        Donate donate = donateRepository.findOne(request.getDonateId())
+                .orElseThrow(() -> new PostNotFoundException(NOT_FOUND_POST));
 
         DonateOrder donateOrder = DonateOrder.createDonateOrder(
                 request.getText(),
@@ -58,7 +68,8 @@ public class DonateOrderService {
      * 단 건 조회
      */
     public DonateOrder findOne(Long id) {
-        return donateOrderRepository.findOne(id);
+        return donateOrderRepository.findOne(id)
+                .orElseThrow(() -> new OrderNotFoundException(NOT_FOUND_ORDER));
     }
 
     /**
@@ -80,7 +91,8 @@ public class DonateOrderService {
      */
     @Transactional
     public void updateBody(UpdateOrderRequest request) {
-        DonateOrder donateOrder = findOne(request.getOrderId());
+        DonateOrder donateOrder = donateOrderRepository.findOne(request.getOrderId())
+                .orElseThrow(() -> new OrderNotFoundException(NOT_FOUND_ORDER));
         donateOrder.update(request.getText());
     }
 
@@ -89,7 +101,8 @@ public class DonateOrderService {
      */
     @Transactional
     public void deleteOrder(Long orderId) {
-        DonateOrder donateOrder = donateOrderRepository.findOne(orderId);
+        DonateOrder donateOrder = donateOrderRepository.findOne(orderId)
+                .orElseThrow(() -> new OrderNotFoundException(NOT_FOUND_ORDER));
         donateOrderRepository.delete(donateOrder);
     }
 }

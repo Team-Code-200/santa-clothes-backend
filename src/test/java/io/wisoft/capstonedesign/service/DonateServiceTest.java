@@ -8,8 +8,6 @@ import io.wisoft.capstonedesign.global.enumerated.Role;
 import io.wisoft.capstonedesign.global.enumerated.Tag;
 import io.wisoft.capstonedesign.domain.user.application.UserService;
 import io.wisoft.capstonedesign.domain.user.persistence.User;
-import io.wisoft.capstonedesign.domain.donate.persistence.DonateRepository;
-import io.wisoft.capstonedesign.domain.user.persistence.UserRepository;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.opentest4j.AssertionFailedError;
@@ -29,12 +27,8 @@ import static org.junit.jupiter.api.Assertions.*;
 @Rollback(value = false)
 public class DonateServiceTest {
 
-    @Autowired DonateRepository donateRepository;
-    @Autowired UserRepository userRepository;
-    @Autowired
-    DonateService donateService;
-    @Autowired
-    UserService userService;
+    @Autowired DonateService donateService;
+    @Autowired UserService userService;
 
     @Test
     public void 게시글_작성() throws Exception {
@@ -48,7 +42,7 @@ public class DonateServiceTest {
         Long savedId = donateService.join(request);
 
         // then
-        assertEquals(request.getTitle(), donateRepository.findOne(savedId).getTitle());
+        assertEquals(request.getTitle(), donateService.findOne(savedId).getTitle());
     }
 
     @Test
