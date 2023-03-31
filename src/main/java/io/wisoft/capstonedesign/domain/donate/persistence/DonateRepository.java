@@ -7,6 +7,7 @@ import jakarta.persistence.PersistenceContext;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public class DonateRepository {
@@ -18,8 +19,8 @@ public class DonateRepository {
         em.persist(donate);
     }
 
-    public Donate findOne(Long id) {
-        return em.find(Donate.class, id);
+    public Optional<Donate> findOne(Long id) {
+        return Optional.ofNullable(em.find(Donate.class, id));
     }
 
     public List<Donate> findAll() {

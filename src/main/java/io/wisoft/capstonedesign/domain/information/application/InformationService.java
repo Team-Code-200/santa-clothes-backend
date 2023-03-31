@@ -6,11 +6,16 @@ import io.wisoft.capstonedesign.domain.information.web.dto.UpdateInformationRequ
 import io.wisoft.capstonedesign.domain.user.persistence.User;
 import io.wisoft.capstonedesign.domain.information.persistence.InformationRepository;
 import io.wisoft.capstonedesign.domain.user.persistence.UserRepository;
+import io.wisoft.capstonedesign.global.exception.ErrorCode;
+import io.wisoft.capstonedesign.global.exception.service.InfoNotFoundException;
+import io.wisoft.capstonedesign.global.exception.service.UserNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+
+import static io.wisoft.capstonedesign.global.exception.ErrorCode.*;
 
 @Service
 @Transactional(readOnly = true)
@@ -26,7 +31,8 @@ public class InformationService {
     @Transactional
     public Long save(CreateInformationRequest request) {
 
-        User user = userRepository.findOne(request.getUserId());
+        User user = userRepository.findOne(request.getUserId())
+                .orElseThrow(() -> new UserNotFoundException(DUPLICATE_USER));
         Information information = Information.createInformation(
                 request.getUsername(),
                 request.getAddress(),
@@ -49,7 +55,8 @@ public class InformationService {
      * 단 건 조회
      */
     public Information findOne(Long id) {
-        return informationRepository.findOne(id);
+        return informationRepository.findOne(id)
+                .orElseThrow(() -> new InfoNotFoundException(NOT_FOUND_INFO));
     }
 
     /**
@@ -64,7 +71,8 @@ public class InformationService {
      */
     @Transactional
     public void updateAll(UpdateInformationRequest request) {
-        Information information = findOne(request.getInfoId());
+        Information information = informationRepository.findOne(request.getInfoId())
+                .orElseThrow(() -> new InfoNotFoundException(NOT_FOUND_INFO));
         validateInformation(request.getUsername(), request.getAddress(), request.getPhoneNumber());
         information.update(request.getUsername(), request.getAddress(), request.getPhoneNumber());
     }
@@ -80,7 +88,8 @@ public class InformationService {
      */
     @Transactional
     public void deleteInformation(Long informationId) {
-        Information information = informationRepository.findOne(informationId);
+        Information information = informationRepository.findOne(informationId)
+                .orElseThrow(() -> new InfoNotFoundException(NOT_FOUND_INFO));
         informationRepository.delete(information);
     }
 }
