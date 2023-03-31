@@ -17,7 +17,7 @@ public class UserShopController {
     private final UserShopService userShopService;
 
     @PostMapping("/api/shop-orders/new")
-    public CreateOrderResponse saveOrder(@RequestBody @Valid CreateOrderRequest request) {
+    public CreateOrderResponse saveOrder(@RequestBody @Valid final CreateOrderRequest request) {
 
         Long id = userShopService.save(request);
         return new CreateOrderResponse(id);
@@ -25,8 +25,8 @@ public class UserShopController {
 
     @PatchMapping("/api/shop-orders/{id}")
     public UpdateOrderResponse updateOrder(
-            @PathVariable("id") Long id,
-            @RequestBody @Valid UpdateOrderRequest request) {
+            @PathVariable("id") final Long id,
+            @RequestBody @Valid final UpdateOrderRequest request) {
 
         userShopService.updateBody(request);
         UserShop updateOrder = userShopService.findOne(id);
@@ -48,7 +48,7 @@ public class UserShopController {
     }
 
     @DeleteMapping("/api/shop-orders/{id}")
-    public DeleteOrderResponse deleteOrder(@PathVariable("id") Long id) {
+    public DeleteOrderResponse deleteOrder(@PathVariable("id") final Long id) {
 
         userShopService.deleteOrder(id);
         return new DeleteOrderResponse(id);

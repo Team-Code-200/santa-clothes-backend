@@ -45,10 +45,10 @@ public class DonateOrder {
      * 정적 생성자 메소드
      */
     public static DonateOrder createDonateOrder(
-            String text,
-            Information information,
-            Donate donate,
-            User user
+            final String text,
+            final Information information,
+            final Donate donate,
+            final User user
     ) {
         DonateOrder donateOrder = new DonateOrder();
         donateOrder.sendDate = LocalDateTime.now();
@@ -62,21 +62,21 @@ public class DonateOrder {
     /**
      * 연관관계 편의 메소드
      */
-    public void setInformation(Information information) {
+    public void setInformation(final Information information) {
 
         if (this.information != null) this.information.getDonateOrders().remove(this);
         this.information = information;
         information.getDonateOrders().add(this);
     }
 
-    public void setDonate(Donate donate) {
+    public void setDonate(final Donate donate) {
 
         if (this.donate != null) this.donate.setDonateOrder(null);
         this.donate = donate;
         donate.setDonateOrder(this);
     }
 
-    public void setUser(User user) {
+    public void setUser(final User user) {
 
         if (this.user != null) this.user.getDonateOrders().remove(this);
         this.user = user;
@@ -86,7 +86,7 @@ public class DonateOrder {
     /**
      * 주문 내역 기타 사항 수정
      */
-    public void update(String text) {
+    public void update(final String text) {
         this.text = text;
     }
 }

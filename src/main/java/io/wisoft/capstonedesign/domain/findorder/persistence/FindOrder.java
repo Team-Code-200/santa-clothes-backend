@@ -45,10 +45,10 @@ public class FindOrder {
      * 정적 생성자 메소드
      */
     public static FindOrder createFindOrder(
-            String text,
-            Information information,
-            Find find,
-            User user
+            final String text,
+            final Information information,
+            final Find find,
+            final User user
     ) {
         FindOrder findOrder = new FindOrder();
         findOrder.sendDate = LocalDateTime.now();
@@ -62,21 +62,21 @@ public class FindOrder {
     /**
      * 연관관계 편의 메소드
      */
-    public void setInformation(Information information) {
+    public void setInformation(final Information information) {
 
         if (this.information != null) this.information.getFindOrders().remove(this);
         this.information = information;
         information.getFindOrders().add(this);
     }
 
-    public void setFind(Find find) {
+    public void setFind(final Find find) {
 
         if (this.find != null) this.find.setFindOrder(null);
         this.find = find;
         find.setFindOrder(this);
     }
 
-    public void setUser(User user) {
+    public void setUser(final User user) {
 
         if (this.user != null) this.user.getFindOrders().remove(this);
         this.user = user;
@@ -86,7 +86,7 @@ public class FindOrder {
     /**
      * 주문 내역 기타 사항 수정
      */
-    public void update(String text) {
+    public void update(final String text) {
         this.text = text;
     }
 }

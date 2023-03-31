@@ -18,7 +18,7 @@ public class UserController {
     private final UserService userService;
 
     @PostMapping("/api/auth/signup")
-    public CreateUserResponse saveUser(@RequestBody @Valid CreateUserRequest request) {
+    public CreateUserResponse saveUser(@RequestBody @Valid final CreateUserRequest request) {
 
         User user = User.newInstance(
                 request.getOauthId(),
@@ -34,8 +34,8 @@ public class UserController {
 
     @PatchMapping("/api/users/{id}")
     public UpdateUserResponse updateUser(
-            @PathVariable("id") Long id,
-            @RequestBody @Valid UpdateUserRequest request) {
+            @PathVariable("id") final Long id,
+            @RequestBody @Valid final UpdateUserRequest request) {
 
         userService.updateNickname(id, request.getNickname());
         User findUser = userService.findOne(id);
@@ -54,7 +54,7 @@ public class UserController {
     }
 
     @DeleteMapping("/api/users/{id}")
-    public DeleteUserResponse deleteUser(@PathVariable("id") Long id) {
+    public DeleteUserResponse deleteUser(@PathVariable("id") final Long id) {
 
         userService.deleteUser(id);
         return new DeleteUserResponse(id);

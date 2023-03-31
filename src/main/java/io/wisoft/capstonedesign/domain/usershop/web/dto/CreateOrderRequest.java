@@ -16,10 +16,10 @@ public class CreateOrderRequest {
     private Long userId;
 
     public static CreateOrderRequest newInstance(
-            String text,
-            Long infoId,
-            Long shopId,
-            Long userId
+            final String text,
+            final Long infoId,
+            final Long shopId,
+            final Long userId
     ) {
         CreateOrderRequest request = new CreateOrderRequest();
         request.text = text;

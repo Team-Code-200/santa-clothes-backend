@@ -37,7 +37,7 @@ public class DonateOrderService {
      * 주문 내역 저장
      */
     @Transactional
-    public Long save(CreateOrderRequest request) {
+    public Long save(final CreateOrderRequest request) {
 
         User user = userRepository.findOne(request.getUserId())
                 .orElseThrow(() -> new UserNotFoundException(NOT_FOUND_ACCOUNT));
@@ -67,7 +67,7 @@ public class DonateOrderService {
     /**
      * 단 건 조회
      */
-    public DonateOrder findOne(Long id) {
+    public DonateOrder findOne(final Long id) {
         return donateOrderRepository.findOne(id)
                 .orElseThrow(() -> new OrderNotFoundException(NOT_FOUND_ORDER));
     }
@@ -75,7 +75,7 @@ public class DonateOrderService {
     /**
      * 특정 사용자의 주문 내역 최근순으로 조회 - 기본값
      */
-    public List<DonateOrder> findByUserDESC(User user) {
+    public List<DonateOrder> findByUserDESC(final User user) {
         return donateOrderRepository.findByUserDESC(user);
     }
 
@@ -90,7 +90,7 @@ public class DonateOrderService {
      * 주문 내역 기타 사항 수정
      */
     @Transactional
-    public void updateBody(UpdateOrderRequest request) {
+    public void updateBody(final UpdateOrderRequest request) {
         DonateOrder donateOrder = donateOrderRepository.findOne(request.getOrderId())
                 .orElseThrow(() -> new OrderNotFoundException(NOT_FOUND_ORDER));
         donateOrder.update(request.getText());
@@ -100,7 +100,7 @@ public class DonateOrderService {
      * 주문 내역 삭제
      */
     @Transactional
-    public void deleteOrder(Long orderId) {
+    public void deleteOrder(final Long orderId) {
         DonateOrder donateOrder = donateOrderRepository.findOne(orderId)
                 .orElseThrow(() -> new OrderNotFoundException(NOT_FOUND_ORDER));
         donateOrderRepository.delete(donateOrder);

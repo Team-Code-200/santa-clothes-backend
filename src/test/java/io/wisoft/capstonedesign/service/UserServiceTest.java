@@ -3,6 +3,7 @@ package io.wisoft.capstonedesign.service;
 import io.wisoft.capstonedesign.global.enumerated.Role;
 import io.wisoft.capstonedesign.domain.user.application.UserService;
 import io.wisoft.capstonedesign.domain.user.persistence.User;
+import io.wisoft.capstonedesign.global.exception.service.UserNotFoundException;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.opentest4j.AssertionFailedError;
@@ -19,7 +20,6 @@ import static org.junit.jupiter.api.Assertions.*;
 @RunWith(SpringRunner.class)
 @SpringBootTest
 @Transactional
-@Rollback(value = false)
 public class UserServiceTest {
 
     @Autowired UserService userService;
@@ -97,7 +97,7 @@ public class UserServiceTest {
         assertEquals("jinony", user1.getNickname());
     }
 
-    @Test(expected = AssertionFailedError.class)
+    @Test(expected = UserNotFoundException.class)
     public void 회원_탈퇴() throws Exception {
 
         // given

@@ -7,6 +7,7 @@ import io.wisoft.capstonedesign.domain.information.web.dto.UpdateInformationRequ
 import io.wisoft.capstonedesign.global.enumerated.Role;
 import io.wisoft.capstonedesign.domain.user.application.UserService;
 import io.wisoft.capstonedesign.domain.user.persistence.User;
+import io.wisoft.capstonedesign.global.exception.service.InfoNotFoundException;
 import org.junit.runner.RunWith;
 import org.junit.Test;
 import org.opentest4j.AssertionFailedError;
@@ -23,7 +24,6 @@ import static org.junit.jupiter.api.Assertions.*;
 @RunWith(SpringRunner.class)
 @SpringBootTest
 @Transactional
-@Rollback(value = false)
 public class InformationServiceTest {
 
     @Autowired InformationService informationService;
@@ -108,7 +108,7 @@ public class InformationServiceTest {
         assertEquals("대전광역시 서구", updateInfo.getAddress());
     }
 
-    @Test(expected = AssertionFailedError.class)
+    @Test(expected = InfoNotFoundException.class)
     public void 배송정보_삭제() throws Exception {
 
         // given

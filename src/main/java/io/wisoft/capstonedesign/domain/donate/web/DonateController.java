@@ -17,7 +17,7 @@ public class DonateController {
     private final DonateService donateService;
 
     @PostMapping("/api/donates/new")
-    public CreateDonateResponse saveDonate(@RequestBody @Valid CreateDonateRequest request) {
+    public CreateDonateResponse saveDonate(@RequestBody @Valid final CreateDonateRequest request) {
 
         Long id = donateService.join(request);
         return new CreateDonateResponse(id);
@@ -25,8 +25,8 @@ public class DonateController {
 
     @PatchMapping("/api/donates/{id}")
     public UpdateDonateResponse updateDonate(
-            @PathVariable("id") Long id,
-            @RequestBody @Valid UpdateDonateRequest request) {
+            @PathVariable("id") final Long id,
+            @RequestBody @Valid final UpdateDonateRequest request) {
 
         donateService.updateAll(request);
         Donate updateDonate = donateService.findOne(id);
@@ -52,7 +52,7 @@ public class DonateController {
     }
 
     @DeleteMapping("/api/donates/{id}")
-    public DeleteDonateResponse deleteDonate(@PathVariable("id") Long id) {
+    public DeleteDonateResponse deleteDonate(@PathVariable("id") final Long id) {
 
         donateService.deleteDonate(id);
         return new DeleteDonateResponse(id);

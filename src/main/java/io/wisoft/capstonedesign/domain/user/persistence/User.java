@@ -84,12 +84,12 @@ public class User {
      * 정적 생성자 메소드
      */
     public static User newInstance(
-            String oauthId,
-            String email,
-            String profileImage,
-            int point,
-            String nickname,
-            Role userRole
+            final String oauthId,
+            final String email,
+            final String profileImage,
+            final int point,
+            final String nickname,
+            final Role userRole
     ) {
         User user = new User();
         user.oauthId = oauthId;
@@ -105,7 +105,7 @@ public class User {
     /**
      * 닉네임 수정
      */
-    public void updateNickname(String nickname) {
+    public void updateNickname(final String nickname) {
         this.nickname = nickname;
     }
 }

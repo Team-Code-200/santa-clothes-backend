@@ -19,11 +19,11 @@ public class CreateShopRequest {
     private Long userId;
 
     public static CreateShopRequest newInstance(
-            String title,
-            int price,
-            String image,
-            String body,
-            Long userId
+            final String title,
+            final int price,
+            final String image,
+            final String body,
+            final Long userId
     ) {
         CreateShopRequest request = new CreateShopRequest();
         request.title = title;

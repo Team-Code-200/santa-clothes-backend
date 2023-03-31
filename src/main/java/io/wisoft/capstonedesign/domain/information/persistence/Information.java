@@ -51,10 +51,10 @@ public class Information {
      * 정적 생성자 메소드
      */
     public static Information createInformation(
-            String username,
-            String address,
-            String phoneNumber,
-            User user
+            final String username,
+            final String address,
+            final String phoneNumber,
+            final User user
     ) {
         Information information = new Information();
         information.username = username;
@@ -67,7 +67,7 @@ public class Information {
     /**
      * 연관관계 편의 메소드
      */
-    public void setUser(User user) {
+    public void setUser(final User user) {
 
         if (this.user != null) this.user.getInformation().remove(this);
         this.user = user;
@@ -77,7 +77,7 @@ public class Information {
     /**
      * 배송 정보 전체 수정
      */
-    public void update(String username, String address, String phoneNumber) {
+    public void update(final String username, final String address, final String phoneNumber) {
         this.username = username;
         this.address = address;
         this.phoneNumber = phoneNumber;

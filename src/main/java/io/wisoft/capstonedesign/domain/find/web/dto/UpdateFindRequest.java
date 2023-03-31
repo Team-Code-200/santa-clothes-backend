@@ -25,11 +25,11 @@ public class UpdateFindRequest {
     private Long findId;
 
     public static UpdateFindRequest newInstance(
-            String title,
-            String image,
-            String text,
-            String tag,
-            Long findId
+            final String title,
+            final String image,
+            final String text,
+            final String tag,
+            final Long findId
     ) {
         UpdateFindRequest request = new UpdateFindRequest();
         request.title = title;

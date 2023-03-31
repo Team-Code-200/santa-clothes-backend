@@ -17,7 +17,7 @@ public class ShopController {
     private final ShopService shopService;
 
     @PostMapping("/api/shops/new")
-    public CreateShopResponse saveShop(@RequestBody @Valid CreateShopRequest request) {
+    public CreateShopResponse saveShop(@RequestBody @Valid final CreateShopRequest request) {
 
         Long id = shopService.save(request);
         return new CreateShopResponse(id);
@@ -25,8 +25,8 @@ public class ShopController {
 
     @PatchMapping("/api/shops/{id}")
     public UpdateShopResponse updateShop(
-            @PathVariable("id") Long id,
-            @RequestBody @Valid UpdateShopRequest request) {
+            @PathVariable("id") final Long id,
+            @RequestBody @Valid final UpdateShopRequest request) {
 
         shopService.updateAll(request);
         Shop updateShop = shopService.findOne(id);
@@ -51,7 +51,7 @@ public class ShopController {
     }
 
     @DeleteMapping("/api/shops/{id}")
-    public DeleteShopResponse deleteShop(@PathVariable("id") Long id) {
+    public DeleteShopResponse deleteShop(@PathVariable("id") final Long id) {
 
         shopService.deleteShop(id);
         return new DeleteShopResponse(id);

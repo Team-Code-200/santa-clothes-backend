@@ -15,11 +15,11 @@ public class FindRepository {
     @PersistenceContext
     private EntityManager em;
 
-    public void save(Find find) {
+    public void save(final Find find) {
         em.persist(find);
     }
 
-    public Optional<Find> findOne(Long id) {
+    public Optional<Find> findOne(final Long id) {
         return Optional.ofNullable(em.find(Find.class, id));
     }
 
@@ -28,7 +28,7 @@ public class FindRepository {
                 .getResultList();
     }
 
-    public List<Find> findByUser(User user) {
+    public List<Find> findByUser(final User user) {
         return em.createQuery("select f from Find f where f.user = :user", Find.class)
                 .setParameter("user", user)
                 .getResultList();
@@ -39,13 +39,13 @@ public class FindRepository {
                 .getResultList();
     }
 
-    public List<Find> findByTag(Tag tag) {
+    public List<Find> findByTag(final Tag tag) {
         return em.createQuery("select f from Find  f where f.tag = :tag", Find.class)
                 .setParameter("tag", tag)
                 .getResultList();
     }
 
-    public void delete(Find find) {
+    public void delete(final Find find) {
         em.remove(find);
     }
 }

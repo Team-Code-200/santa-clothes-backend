@@ -30,7 +30,7 @@ public class DonateService {
      * 게시글 저장
      */
     @Transactional
-    public Long join(CreateDonateRequest request) {
+    public Long join(final CreateDonateRequest request) {
 
         User user = userRepository.findOne(request.getUserId())
                 .orElseThrow(() -> new PostNotFoundException(NOT_FOUND_POST));
@@ -57,7 +57,7 @@ public class DonateService {
     /**
      * 단 건 조회
      */
-    public Donate findOne(Long id) {
+    public Donate findOne(final Long id) {
         return donateRepository.findOne(id)
                 .orElseThrow(() -> new PostNotFoundException(NOT_FOUND_POST));
     }
@@ -72,7 +72,7 @@ public class DonateService {
     /**
      * 모든 게시글 태그 종류별 조회
      */
-    public List<Donate> findByTag(Tag tag) {
+    public List<Donate> findByTag(final Tag tag) {
         return donateRepository.findByTag(tag);
     }
 
@@ -80,13 +80,13 @@ public class DonateService {
      * 게시글 제목, 본문 및 태그 수정
      */
     @Transactional
-    public void updateAll(UpdateDonateRequest request) {
+    public void updateAll(final UpdateDonateRequest request) {
         Donate donate = findOne(request.getDonateId());
         validateDonate(request.getTitle(), request.getImage(), request.getText(), Tag.valueOf(request.getTag()));
         donate.update(request.getTitle(), request.getImage(), request.getText(), Tag.valueOf(request.getTag()));
     }
 
-    private void validateDonate(String title, String image, String text, Tag tag) {
+    private void validateDonate(final String title, final String image, final String text, final Tag tag) {
         if (title == null || image == null || text == null || tag == null) {
             throw new IllegalStateException("게시글을 모두 작성해주세요.");
         }
@@ -96,7 +96,7 @@ public class DonateService {
      * 게시글 삭제
      */
     @Transactional
-    public void deleteDonate(Long donateId) {
+    public void deleteDonate(final Long donateId) {
         Donate donate = donateRepository.findOne(donateId)
                 .orElseThrow(() -> new PostNotFoundException(NOT_FOUND_POST));
         donateRepository.delete(donate);

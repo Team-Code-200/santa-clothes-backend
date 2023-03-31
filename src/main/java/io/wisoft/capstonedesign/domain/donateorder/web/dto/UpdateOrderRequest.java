@@ -16,8 +16,8 @@ public class UpdateOrderRequest {
     private Long orderId;
 
     public static UpdateOrderRequest newInstance(
-            String text,
-            Long orderId
+            final String text,
+            final Long orderId
     ) {
         UpdateOrderRequest request = new UpdateOrderRequest();
         request.text = text;

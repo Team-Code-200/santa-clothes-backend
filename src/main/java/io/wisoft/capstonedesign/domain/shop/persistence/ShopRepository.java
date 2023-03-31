@@ -13,11 +13,11 @@ public class ShopRepository {
     @PersistenceContext
     private EntityManager em;
 
-    public void save(Shop shop) {
+    public void save(final Shop shop) {
         em.persist(shop);
     }
 
-    public Optional<Shop> findOne(Long id) {
+    public Optional<Shop> findOne(final Long id) {
         return Optional.ofNullable(em.find(Shop.class, id));
     }
 
@@ -26,7 +26,7 @@ public class ShopRepository {
                 .getResultList();
     }
 
-    public List<Shop> findByTitle(String title) {
+    public List<Shop> findByTitle(final String title) {
         return em.createQuery("select s from Shop s where s.title = :title", Shop.class)
                 .setParameter("title", title)
                 .getResultList();
@@ -37,7 +37,7 @@ public class ShopRepository {
                 .getResultList();
     }
 
-    public void delete(Shop shop) {
+    public void delete(final Shop shop) {
         em.remove(shop);
     }
 }

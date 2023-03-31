@@ -14,11 +14,11 @@ public class FindOrderRepository {
     @PersistenceContext
     private EntityManager em;
 
-    public void save(FindOrder findOrder) {
+    public void save(final FindOrder findOrder) {
         em.persist(findOrder);
     }
 
-    public Optional<FindOrder> findOne(Long id) {
+    public Optional<FindOrder> findOne(final Long id) {
         return Optional.ofNullable(em.find(FindOrder.class, id));
     }
 
@@ -27,7 +27,7 @@ public class FindOrderRepository {
                 .getResultList();
     }
 
-    public List<FindOrder> findByUserDESC(User user) {
+    public List<FindOrder> findByUserDESC(final User user) {
         return em.createQuery("select f from FindOrder f where f.user = :user order by f.sendDate desc", FindOrder.class)
                 .setParameter("user", user)
                 .getResultList();
@@ -38,7 +38,7 @@ public class FindOrderRepository {
                 .getResultList();
     }
 
-    public void delete(FindOrder findOrder) {
+    public void delete(final FindOrder findOrder) {
         em.remove(findOrder);
     }
 }

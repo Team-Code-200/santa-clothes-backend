@@ -24,11 +24,11 @@ public class UpdateShopRequest {
     private Long shopId;
 
     public static UpdateShopRequest newInstance(
-            String title,
-            int price,
-            String image,
-            String body,
-            Long shopId
+            final String title,
+            final int price,
+            final String image,
+            final String body,
+            final Long shopId
     ) {
         UpdateShopRequest request = new UpdateShopRequest();
         request.title = title;

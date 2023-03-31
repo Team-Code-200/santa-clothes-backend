@@ -15,11 +15,11 @@ public class DonateRepository {
     @PersistenceContext
     private EntityManager em;
 
-    public void save(Donate donate) {
+    public void save(final Donate donate) {
         em.persist(donate);
     }
 
-    public Optional<Donate> findOne(Long id) {
+    public Optional<Donate> findOne(final Long id) {
         return Optional.ofNullable(em.find(Donate.class, id));
     }
 
@@ -28,7 +28,7 @@ public class DonateRepository {
                 .getResultList();
     }
 
-    public List<Donate> findByUser(User user) {
+    public List<Donate> findByUser(final User user) {
         return em.createQuery("select d from Donate d where d.user = :user", Donate.class)
                 .setParameter("user", user)
                 .getResultList();
@@ -39,13 +39,13 @@ public class DonateRepository {
                 .getResultList();
     }
 
-    public List<Donate> findByTag(Tag tag) {
+    public List<Donate> findByTag(final Tag tag) {
         return em.createQuery("select d from Donate d where d.tag = :tag", Donate.class)
                 .setParameter("tag", tag)
                 .getResultList();
     }
 
-    public void delete(Donate donate) {
+    public void delete(final Donate donate) {
         em.remove(donate);
     }
 }

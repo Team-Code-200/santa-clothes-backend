@@ -17,7 +17,7 @@ public class DonateOrderController {
     private final DonateOrderService donateOrderService;
 
     @PostMapping("/api/donate-orders/new")
-    public CreateOrderResponse saveOrder(@RequestBody @Valid CreateOrderRequest request) {
+    public CreateOrderResponse saveOrder(@RequestBody @Valid final CreateOrderRequest request) {
 
         Long id = donateOrderService.save(request);
         return new CreateOrderResponse(id);
@@ -25,8 +25,8 @@ public class DonateOrderController {
 
     @PatchMapping("/api/donate-orders/{id}")
     public UpdateOrderResponse updateOrder(
-            @PathVariable("id") Long id,
-            @RequestBody @Valid UpdateOrderRequest request) {
+            @PathVariable("id") final Long id,
+            @RequestBody @Valid final UpdateOrderRequest request) {
 
         donateOrderService.updateBody(request);
         DonateOrder updateOrder = donateOrderService.findOne(id);
@@ -48,7 +48,7 @@ public class DonateOrderController {
     }
 
     @DeleteMapping("/api/donate-orders/{id}")
-    public DeleteOrderResponse deleteOrder(@PathVariable("id") Long id) {
+    public DeleteOrderResponse deleteOrder(@PathVariable("id") final Long id) {
 
         donateOrderService.deleteOrder(id);
         return new DeleteOrderResponse(id);

@@ -45,10 +45,10 @@ public class Shop {
      * 정적 생성자 메소드
      */
     public static Shop createShop(
-            String title,
-            int price,
-            String image,
-            String body
+            final String title,
+            final int price,
+            final String image,
+            final String body
     ) {
         Shop shop = new Shop();
         shop.title = title;
@@ -62,7 +62,7 @@ public class Shop {
     /**
      * 산타샵 물품 정보 전체 수정
      */
-    public void update(String title, int price, String image, String body) {
+    public void update(final String title, final int price, final String image, final String body) {
         this.title = title;
         this.price = price;
         this.image = image;

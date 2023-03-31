@@ -45,10 +45,10 @@ public class UserShop {
      * 정적 생성자 메소드
      */
     public static UserShop createUserShop(
-            String text,
-            User user,
-            Shop shop,
-            Information information
+            final String text,
+            final User user,
+            final Shop shop,
+            final Information information
     ) {
         UserShop userShop = new UserShop();
         userShop.createdDate = LocalDateTime.now();
@@ -62,21 +62,21 @@ public class UserShop {
     /**
      * 연관관계 편의 메소드
      */
-    public void setUser(User user) {
+    public void setUser(final User user) {
 
         if (this.user != null) this.user.getUserShops().remove(this);
         this.user = user;
         user.getUserShops().add(this);
     }
 
-    public void setShop(Shop shop) {
+    public void setShop(final Shop shop) {
 
         if (this.shop != null) this.shop.getUserShops().remove(this);
         this.shop = shop;
         shop.getUserShops().add(this);
     }
 
-    public void setInformation(Information information) {
+    public void setInformation(final Information information) {
 
         if (this.information != null) this.information.getUserShops().remove(this);
         this.information = information;
@@ -86,7 +86,7 @@ public class UserShop {
     /**
      * 산타샵 주문 내역 기타 사항 수정
      */
-    public void update(String text) {
+    public void update(final String text) {
         this.text = text;
     }
 }

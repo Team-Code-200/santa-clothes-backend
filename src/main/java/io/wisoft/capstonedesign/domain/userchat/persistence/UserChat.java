@@ -31,8 +31,8 @@ public class UserChat {
      * 정적 생성자 메소드
      */
     public static UserChat createUserChat(
-            User user,
-            Chat chat
+            final User user,
+            final Chat chat
     ) {
         UserChat userChat = new UserChat();
         userChat.setUser(user);
@@ -43,14 +43,14 @@ public class UserChat {
     /**
      * 연관관계 편의 메소드
      */
-    public void setUser(User user) {
+    public void setUser(final User user) {
 
         if (this.user != null) this.user.getUserChats().remove(this);
         this.user = user;
         user.getUserChats().add(this);
     }
 
-    public void setChat(Chat chat) {
+    public void setChat(final Chat chat) {
 
         if (this.chat != null) this.chat.getUserChats().remove(this);
         this.chat = chat;
