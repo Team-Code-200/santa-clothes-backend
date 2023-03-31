@@ -1,11 +1,9 @@
 package io.wisoft.capstonedesign.service;
 
 import io.wisoft.capstonedesign.domain.find.application.FindService;
-import io.wisoft.capstonedesign.domain.find.persistence.FindRepository;
 import io.wisoft.capstonedesign.domain.find.web.dto.CreateFindRequest;
 import io.wisoft.capstonedesign.domain.findorder.application.FindOrderService;
 import io.wisoft.capstonedesign.domain.findorder.persistence.FindOrder;
-import io.wisoft.capstonedesign.domain.findorder.persistence.FindOrderRepository;
 import io.wisoft.capstonedesign.domain.findorder.web.dto.CreateOrderRequest;
 import io.wisoft.capstonedesign.domain.findorder.web.dto.UpdateOrderRequest;
 import io.wisoft.capstonedesign.domain.information.web.dto.CreateInformationRequest;
@@ -13,9 +11,7 @@ import io.wisoft.capstonedesign.global.enumerated.Role;
 import io.wisoft.capstonedesign.global.enumerated.Tag;
 import io.wisoft.capstonedesign.domain.information.application.InformationService;
 import io.wisoft.capstonedesign.domain.user.application.UserService;
-import io.wisoft.capstonedesign.domain.information.persistence.InformationRepository;
 import io.wisoft.capstonedesign.domain.user.persistence.User;
-import io.wisoft.capstonedesign.domain.user.persistence.UserRepository;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.opentest4j.AssertionFailedError;
@@ -35,10 +31,6 @@ import static org.junit.jupiter.api.Assertions.*;
 @Rollback(value = false)
 public class FindOrderServiceTest {
 
-    @Autowired FindOrderRepository findOrderRepository;
-    @Autowired UserRepository userRepository;
-    @Autowired FindRepository findRepository;
-    @Autowired InformationRepository informationRepository;
     @Autowired FindOrderService findOrderService;
     @Autowired UserService userService;
     @Autowired FindService findService;
@@ -60,7 +52,7 @@ public class FindOrderServiceTest {
         Long savedId = findOrderService.save(request3);
 
         // then
-        assertEquals(request3.getText(), findOrderRepository.findOne(savedId).getText());
+        assertEquals(request3.getText(), findOrderService.findOne(savedId).getText());
     }
 
     @Test

@@ -4,17 +4,13 @@ import io.wisoft.capstonedesign.domain.donate.application.DonateService;
 import io.wisoft.capstonedesign.domain.donate.web.dto.CreateDonateRequest;
 import io.wisoft.capstonedesign.domain.donateorder.application.DonateOrderService;
 import io.wisoft.capstonedesign.domain.donateorder.persistence.DonateOrder;
-import io.wisoft.capstonedesign.domain.donateorder.persistence.DonateOrderRepository;
-import io.wisoft.capstonedesign.domain.donate.persistence.DonateRepository;
 import io.wisoft.capstonedesign.domain.donateorder.web.dto.CreateOrderRequest;
 import io.wisoft.capstonedesign.domain.donateorder.web.dto.UpdateOrderRequest;
 import io.wisoft.capstonedesign.domain.information.web.dto.CreateInformationRequest;
 import io.wisoft.capstonedesign.global.enumerated.Role;
 import io.wisoft.capstonedesign.global.enumerated.Tag;
 import io.wisoft.capstonedesign.domain.information.application.InformationService;
-import io.wisoft.capstonedesign.domain.information.persistence.InformationRepository;
 import io.wisoft.capstonedesign.domain.user.application.UserService;
-import io.wisoft.capstonedesign.domain.user.persistence.UserRepository;
 import io.wisoft.capstonedesign.domain.user.persistence.User;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -35,10 +31,6 @@ import static org.junit.jupiter.api.Assertions.*;
 @Rollback(value = false)
 public class DonateOrderServiceTest {
 
-    @Autowired DonateOrderRepository donateOrderRepository;
-    @Autowired UserRepository userRepository;
-    @Autowired DonateRepository donateRepository;
-    @Autowired InformationRepository informationRepository;
     @Autowired DonateOrderService donateOrderService;
     @Autowired UserService userService;
     @Autowired DonateService donateService;
@@ -60,7 +52,7 @@ public class DonateOrderServiceTest {
         Long savedId = donateOrderService.save(request3);
 
         // then
-        assertEquals(request3.getText(), donateOrderRepository.findOne(savedId).getText());
+        assertEquals(request3.getText(), donateOrderService.findOne(savedId).getText());
     }
 
     @Test

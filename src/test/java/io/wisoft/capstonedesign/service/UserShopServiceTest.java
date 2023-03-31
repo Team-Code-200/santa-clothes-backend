@@ -6,13 +6,9 @@ import io.wisoft.capstonedesign.domain.usershop.web.dto.CreateOrderRequest;
 import io.wisoft.capstonedesign.domain.usershop.web.dto.UpdateOrderRequest;
 import io.wisoft.capstonedesign.global.enumerated.Role;
 import io.wisoft.capstonedesign.domain.information.application.InformationService;
-import io.wisoft.capstonedesign.domain.information.persistence.InformationRepository;
 import io.wisoft.capstonedesign.domain.shop.application.ShopService;
-import io.wisoft.capstonedesign.domain.shop.persistence.ShopRepository;
 import io.wisoft.capstonedesign.domain.user.application.UserService;
-import io.wisoft.capstonedesign.domain.user.persistence.UserRepository;
 import io.wisoft.capstonedesign.domain.usershop.application.UserShopService;
-import io.wisoft.capstonedesign.domain.usershop.persistence.UserShopRepository;
 import io.wisoft.capstonedesign.domain.user.persistence.User;
 import io.wisoft.capstonedesign.domain.usershop.persistence.UserShop;
 import org.junit.Test;
@@ -34,10 +30,6 @@ import static org.junit.jupiter.api.Assertions.*;
 @Rollback(value = false)
 public class UserShopServiceTest {
 
-    @Autowired UserShopRepository userShopRepository;
-    @Autowired UserRepository userRepository;
-    @Autowired ShopRepository shopRepository;
-    @Autowired InformationRepository informationRepository;
     @Autowired UserShopService userShopService;
     @Autowired UserService userService;
     @Autowired ShopService shopService;
@@ -59,7 +51,7 @@ public class UserShopServiceTest {
         Long savedId = userShopService.save(request3);
 
         // then
-        assertEquals(request3.getText(), userShopRepository.findOne(savedId).getText());
+        assertEquals(request3.getText(), userShopService.findOne(savedId).getText());
     }
 
     @Test
