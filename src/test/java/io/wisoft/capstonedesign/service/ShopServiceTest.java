@@ -7,6 +7,7 @@ import io.wisoft.capstonedesign.domain.shop.application.ShopService;
 import io.wisoft.capstonedesign.domain.shop.persistence.Shop;
 import io.wisoft.capstonedesign.domain.user.application.UserService;
 import io.wisoft.capstonedesign.domain.user.persistence.User;
+import io.wisoft.capstonedesign.global.exception.service.PostNotFoundException;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.opentest4j.AssertionFailedError;
@@ -23,7 +24,6 @@ import static org.junit.jupiter.api.Assertions.*;
 @RunWith(SpringRunner.class)
 @SpringBootTest
 @Transactional
-@Rollback(value = false)
 public class ShopServiceTest {
 
     @Autowired ShopService shopService;
@@ -96,7 +96,7 @@ public class ShopServiceTest {
         assertEquals(2000, updateShop.getPrice());
     }
 
-    @Test(expected = AssertionFailedError.class)
+    @Test(expected = PostNotFoundException.class)
     public void 물품_삭제() throws Exception {
 
         // given

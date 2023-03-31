@@ -11,6 +11,7 @@ import io.wisoft.capstonedesign.domain.user.application.UserService;
 import io.wisoft.capstonedesign.domain.usershop.application.UserShopService;
 import io.wisoft.capstonedesign.domain.user.persistence.User;
 import io.wisoft.capstonedesign.domain.usershop.persistence.UserShop;
+import io.wisoft.capstonedesign.global.exception.service.OrderNotFoundException;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.opentest4j.AssertionFailedError;
@@ -27,7 +28,6 @@ import static org.junit.jupiter.api.Assertions.*;
 @RunWith(SpringRunner.class)
 @SpringBootTest
 @Transactional
-@Rollback(value = false)
 public class UserShopServiceTest {
 
     @Autowired UserShopService userShopService;
@@ -141,7 +141,7 @@ public class UserShopServiceTest {
         assertEquals("경비실에 맡겨주세요", updateOrder.getText());
     }
 
-    @Test(expected = AssertionFailedError.class)
+    @Test(expected = OrderNotFoundException.class)
     public void 주문내역_삭제() throws Exception {
 
         // given

@@ -8,6 +8,7 @@ import io.wisoft.capstonedesign.global.enumerated.Role;
 import io.wisoft.capstonedesign.global.enumerated.Tag;
 import io.wisoft.capstonedesign.domain.user.application.UserService;
 import io.wisoft.capstonedesign.domain.user.persistence.User;
+import io.wisoft.capstonedesign.global.exception.service.PostNotFoundException;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.opentest4j.AssertionFailedError;
@@ -24,7 +25,6 @@ import static org.junit.jupiter.api.Assertions.*;
 @RunWith(SpringRunner.class)
 @SpringBootTest
 @Transactional
-@Rollback(value = false)
 public class DonateServiceTest {
 
     @Autowired DonateService donateService;
@@ -140,7 +140,7 @@ public class DonateServiceTest {
         System.out.println(updateDonate.getView()); // 조회수 확인
     }
 
-    @Test(expected = AssertionFailedError.class)
+    @Test(expected = PostNotFoundException.class)
     public void 게시글_삭제() throws Exception {
 
         // given
