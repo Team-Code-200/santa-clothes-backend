@@ -29,7 +29,7 @@ public class DonateOrderController {
             @RequestBody @Valid final UpdateOrderRequest request) {
 
         donateOrderService.updateBody(request);
-        DonateOrder updateOrder = donateOrderService.findOne(id);
+        DonateOrder updateOrder = donateOrderService.findById(id);
         return new UpdateOrderResponse(
                 id,
                 updateOrder.getText()

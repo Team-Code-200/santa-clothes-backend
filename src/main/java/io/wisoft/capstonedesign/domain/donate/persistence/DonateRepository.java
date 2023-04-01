@@ -2,50 +2,15 @@ package io.wisoft.capstonedesign.domain.donate.persistence;
 
 import io.wisoft.capstonedesign.global.enumerated.Tag;
 import io.wisoft.capstonedesign.domain.user.persistence.User;
-import jakarta.persistence.EntityManager;
-import jakarta.persistence.PersistenceContext;
-import org.springframework.stereotype.Repository;
+import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;
-import java.util.Optional;
 
-@Repository
-public class DonateRepository {
+public interface DonateRepository extends JpaRepository<Donate, Long> {
 
-    @PersistenceContext
-    private EntityManager em;
+    List<Donate> findByUser(final User user);
 
-    public void save(final Donate donate) {
-        em.persist(donate);
-    }
+    List<Donate> findAllByOrderByCreatedDateDesc();
 
-    public Optional<Donate> findOne(final Long id) {
-        return Optional.ofNullable(em.find(Donate.class, id));
-    }
-
-    public List<Donate> findAll() {
-        return em.createQuery("select d from Donate d", Donate.class)
-                .getResultList();
-    }
-
-    public List<Donate> findByUser(final User user) {
-        return em.createQuery("select d from Donate d where d.user = :user", Donate.class)
-                .setParameter("user", user)
-                .getResultList();
-    }
-
-    public List<Donate> findByCreatedDateDESC() {
-        return em.createQuery("select d from Donate d order by d.createdDate desc", Donate.class)
-                .getResultList();
-    }
-
-    public List<Donate> findByTag(final Tag tag) {
-        return em.createQuery("select d from Donate d where d.tag = :tag", Donate.class)
-                .setParameter("tag", tag)
-                .getResultList();
-    }
-
-    public void delete(final Donate donate) {
-        em.remove(donate);
-    }
+    List<Donate> findByTag(final Tag tag);
 }

@@ -47,8 +47,8 @@ public class UserService {
     /**
      * 단 건 조회
      */
-    public User findOne(final Long userId) {
-        return userRepository.findOne(userId)
+    public User findById(final Long userId) {
+        return userRepository.findById(userId)
                 .orElseThrow(() -> new UserNotFoundException(NOT_FOUND_ACCOUNT));
     }
 
@@ -57,7 +57,7 @@ public class UserService {
      */
     @Transactional
     public void updateNickname(final Long userId, final String nickname) {
-        User user = userRepository.findOne(userId)
+        User user = userRepository.findById(userId)
                 .orElseThrow(() -> new UserNotFoundException(NOT_FOUND_ACCOUNT));
         validateNickname(nickname);
         user.updateNickname(nickname);
@@ -74,7 +74,7 @@ public class UserService {
      */
     @Transactional
     public void deleteUser(final Long userId) {
-        User user = userRepository.findOne(userId).orElseThrow(() -> new UserNotFoundException(NOT_FOUND_ACCOUNT));
+        User user = userRepository.findById(userId).orElseThrow(() -> new UserNotFoundException(NOT_FOUND_ACCOUNT));
         userRepository.delete(user);
     }
 }

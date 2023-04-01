@@ -13,7 +13,6 @@ import org.junit.Test;
 import org.opentest4j.AssertionFailedError;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.annotation.Rollback;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -41,7 +40,7 @@ public class InformationServiceTest {
         Long savedId = informationService.save(request);
 
         // then
-        assertEquals(request.getAddress(), informationService.findOne(savedId).getAddress());
+        assertEquals(request.getAddress(), informationService.findById(savedId).getAddress());
     }
 
     @Test
@@ -102,7 +101,7 @@ public class InformationServiceTest {
 
         UpdateInformationRequest updateRequest = UpdateInformationRequest.newInstance("윤진원", "대전광역시 서구", "010-1111-1111", 1L);
         informationService.updateAll(updateRequest);
-        Information updateInfo = informationService.findOne(savedId);
+        Information updateInfo = informationService.findById(savedId);
 
         // then
         assertEquals("대전광역시 서구", updateInfo.getAddress());
@@ -120,7 +119,7 @@ public class InformationServiceTest {
         Long savedId = informationService.save(request);
 
         informationService.deleteInformation(savedId);
-        Information deleteInfo = informationService.findOne(savedId);
+        Information deleteInfo = informationService.findById(savedId);
 
         // then
         assertEquals(request, deleteInfo);

@@ -29,7 +29,7 @@ public class FindController {
             @RequestBody @Valid final UpdateFindRequest request) {
 
         findService.updateAll(request);
-        Find updateFind = findService.findOne(id);
+        Find updateFind = findService.findById(id);
         return new UpdateFindResponse(
                 id,
                 updateFind.getTitle(),

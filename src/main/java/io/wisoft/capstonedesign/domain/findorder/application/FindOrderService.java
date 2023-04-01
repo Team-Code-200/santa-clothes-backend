@@ -10,7 +10,6 @@ import io.wisoft.capstonedesign.domain.information.persistence.Information;
 import io.wisoft.capstonedesign.domain.information.persistence.InformationRepository;
 import io.wisoft.capstonedesign.domain.user.persistence.User;
 import io.wisoft.capstonedesign.domain.user.persistence.UserRepository;
-import io.wisoft.capstonedesign.global.exception.ErrorCode;
 import io.wisoft.capstonedesign.global.exception.service.InfoNotFoundException;
 import io.wisoft.capstonedesign.global.exception.service.OrderNotFoundException;
 import io.wisoft.capstonedesign.global.exception.service.PostNotFoundException;
@@ -39,11 +38,11 @@ public class FindOrderService {
     @Transactional
     public Long save(final CreateOrderRequest request) {
 
-        User user = userRepository.findOne(request.getUserId())
+        User user = userRepository.findById(request.getUserId())
                 .orElseThrow(() -> new UserNotFoundException(NOT_FOUND_ACCOUNT));
-        Information information = informationRepository.findOne(request.getInfoId())
+        Information information = informationRepository.findById(request.getInfoId())
                 .orElseThrow(() -> new InfoNotFoundException(NOT_FOUND_INFO));
-        Find find = findRepository.findOne(request.getFindId())
+        Find find = findRepository.findById(request.getFindId())
                 .orElseThrow(() -> new PostNotFoundException(NOT_FOUND_POST));
 
         FindOrder findOrder = FindOrder.createFindOrder(
@@ -67,8 +66,8 @@ public class FindOrderService {
     /**
      * 단 건 조회
      */
-    public FindOrder findOne(final Long id) {
-        return findOrderRepository.findOne(id)
+    public FindOrder findById(final Long id) {
+        return findOrderRepository.findById(id)
                 .orElseThrow(() -> new OrderNotFoundException(NOT_FOUND_ORDER));
     }
 
@@ -76,14 +75,14 @@ public class FindOrderService {
      * 특정 사용자의 주문 내역 최근순으로 조회 - 기본값
      */
     public List<FindOrder> findByUserDESC(final User user) {
-        return findOrderRepository.findByUserDESC(user);
+        return findOrderRepository.findAllByUserOrderBySendDateDesc(user);
     }
 
     /**
      * 모든 주문 내역 최근순으로 조회
      */
     public List<FindOrder> findByCreatedDateDESC() {
-        return findOrderRepository.findByCreatedDateDESC();
+        return findOrderRepository.findAllByOrderBySendDateDesc();
     }
 
     /**
@@ -91,7 +90,7 @@ public class FindOrderService {
      */
     @Transactional
     public void updateBody(final UpdateOrderRequest request) {
-        FindOrder findOrder = findOrderRepository.findOne(request.getOrderId())
+        FindOrder findOrder = findOrderRepository.findById(request.getOrderId())
                 .orElseThrow(() -> new OrderNotFoundException(NOT_FOUND_ORDER));
         findOrder.update(request.getText());
     }
@@ -101,7 +100,7 @@ public class FindOrderService {
      */
     @Transactional
     public void deleteOrder(final Long orderId) {
-        FindOrder findOrder = findOrderRepository.findOne(orderId)
+        FindOrder findOrder = findOrderRepository.findById(orderId)
                 .orElseThrow(() -> new OrderNotFoundException(NOT_FOUND_ORDER));
         findOrderRepository.delete(findOrder);
     }

@@ -7,9 +7,7 @@ import io.wisoft.capstonedesign.domain.user.persistence.User;
 import io.wisoft.capstonedesign.domain.user.persistence.UserRepository;
 import io.wisoft.capstonedesign.global.enumerated.Tag;
 import io.wisoft.capstonedesign.domain.donate.persistence.DonateRepository;
-import io.wisoft.capstonedesign.global.exception.ErrorCode;
 import io.wisoft.capstonedesign.global.exception.service.PostNotFoundException;
-import io.wisoft.capstonedesign.global.exception.service.UnAuthorizedAccessException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -32,7 +30,7 @@ public class DonateService {
     @Transactional
     public Long join(final CreateDonateRequest request) {
 
-        User user = userRepository.findOne(request.getUserId())
+        User user = userRepository.findById(request.getUserId())
                 .orElseThrow(() -> new PostNotFoundException(NOT_FOUND_POST));
         Donate donate = Donate.createDonate(
                 request.getTitle(),
@@ -57,8 +55,8 @@ public class DonateService {
     /**
      * 단 건 조회
      */
-    public Donate findOne(final Long id) {
-        return donateRepository.findOne(id)
+    public Donate findById(final Long id) {
+        return donateRepository.findById(id)
                 .orElseThrow(() -> new PostNotFoundException(NOT_FOUND_POST));
     }
 
@@ -66,7 +64,7 @@ public class DonateService {
      * 모든 게시글 최근순으로 조회 - 기본값
      */
     public List<Donate> findByCreatedDateDESC() {
-        return donateRepository.findByCreatedDateDESC();
+        return donateRepository.findAllByOrderByCreatedDateDesc();
     }
 
     /**
@@ -81,7 +79,7 @@ public class DonateService {
      */
     @Transactional
     public void updateAll(final UpdateDonateRequest request) {
-        Donate donate = findOne(request.getDonateId());
+        Donate donate = findById(request.getDonateId());
         validateDonate(request.getTitle(), request.getImage(), request.getText(), Tag.valueOf(request.getTag()));
         donate.update(request.getTitle(), request.getImage(), request.getText(), Tag.valueOf(request.getTag()));
     }
@@ -97,7 +95,7 @@ public class DonateService {
      */
     @Transactional
     public void deleteDonate(final Long donateId) {
-        Donate donate = donateRepository.findOne(donateId)
+        Donate donate = donateRepository.findById(donateId)
                 .orElseThrow(() -> new PostNotFoundException(NOT_FOUND_POST));
         donateRepository.delete(donate);
     }

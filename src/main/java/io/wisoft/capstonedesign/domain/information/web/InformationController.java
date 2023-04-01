@@ -29,7 +29,7 @@ public class InformationController {
             @RequestBody @Valid final UpdateInformationRequest request) {
 
         informationService.updateAll(request);
-        Information updateInfo = informationService.findOne(id);
+        Information updateInfo = informationService.findById(id);
         return new UpdateInformationResponse(
                 id,
                 updateInfo.getUsername(),

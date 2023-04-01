@@ -17,7 +17,6 @@ import org.junit.runner.RunWith;
 import org.opentest4j.AssertionFailedError;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.annotation.Rollback;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -51,7 +50,7 @@ public class UserShopServiceTest {
         Long savedId = userShopService.save(request3);
 
         // then
-        assertEquals(request3.getText(), userShopService.findOne(savedId).getText());
+        assertEquals(request3.getText(), userShopService.findById(savedId).getText());
     }
 
     @Test
@@ -68,7 +67,7 @@ public class UserShopServiceTest {
         shopService.save(request1);
         informationService.save(request2);
         Long savedId = userShopService.save(request3);
-        UserShop savedOrder = userShopService.findOne(savedId);
+        UserShop savedOrder = userShopService.findById(savedId);
 
         // then
         assertEquals(request3.getText(), savedOrder.getText());
@@ -135,7 +134,7 @@ public class UserShopServiceTest {
 
         UpdateOrderRequest updateRequest = UpdateOrderRequest.newInstance("경비실에 맡겨주세요", 1L);
         userShopService.updateBody(updateRequest);
-        UserShop updateOrder = userShopService.findOne(savedId);
+        UserShop updateOrder = userShopService.findById(savedId);
 
         // then
         assertEquals("경비실에 맡겨주세요", updateOrder.getText());
@@ -157,7 +156,7 @@ public class UserShopServiceTest {
         Long savedId = userShopService.save(request3);
 
         userShopService.deleteOrder(savedId);
-        UserShop deleteOrder = userShopService.findOne(savedId);
+        UserShop deleteOrder = userShopService.findById(savedId);
 
         // then
         assertEquals(request3, deleteOrder);

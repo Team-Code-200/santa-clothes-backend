@@ -29,7 +29,7 @@ public class ShopController {
             @RequestBody @Valid final UpdateShopRequest request) {
 
         shopService.updateAll(request);
-        Shop updateShop = shopService.findOne(id);
+        Shop updateShop = shopService.findById(id);
         return new UpdateShopResponse(
                 id,
                 updateShop.getTitle(),

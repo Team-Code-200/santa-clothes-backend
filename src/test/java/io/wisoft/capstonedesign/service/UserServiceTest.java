@@ -3,13 +3,13 @@ package io.wisoft.capstonedesign.service;
 import io.wisoft.capstonedesign.global.enumerated.Role;
 import io.wisoft.capstonedesign.domain.user.application.UserService;
 import io.wisoft.capstonedesign.domain.user.persistence.User;
+import io.wisoft.capstonedesign.global.exception.service.UserDuplicateException;
 import io.wisoft.capstonedesign.global.exception.service.UserNotFoundException;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.opentest4j.AssertionFailedError;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.annotation.Rollback;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -34,10 +34,10 @@ public class UserServiceTest {
         Long saveId = userService.join(user);
 
         // then
-        assertEquals(user, userService.findOne(saveId));
+        assertEquals(user, userService.findById(saveId));
     }
 
-    @Test(expected = IllegalStateException.class)
+    @Test(expected = UserDuplicateException.class)
     public void 중복_회원_검사() throws Exception {
 
         // given
@@ -60,7 +60,7 @@ public class UserServiceTest {
 
         // when
         Long userId = userService.join(user);
-        User savedUser = userService.findOne(userId);
+        User savedUser = userService.findById(userId);
 
         // then
         assertEquals(user, savedUser);
@@ -106,7 +106,7 @@ public class UserServiceTest {
         // when
         Long userId = userService.join(user);
         userService.deleteUser(userId);
-        User deletedUser = userService.findOne(userId);
+        User deletedUser = userService.findById(userId);
 
         // then
         assertEquals(user, deletedUser);
