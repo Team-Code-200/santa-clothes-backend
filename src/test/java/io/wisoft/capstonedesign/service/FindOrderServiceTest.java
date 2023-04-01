@@ -18,7 +18,6 @@ import org.junit.runner.RunWith;
 import org.opentest4j.AssertionFailedError;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.annotation.Rollback;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -52,7 +51,7 @@ public class FindOrderServiceTest {
         Long savedId = findOrderService.save(request3);
 
         // then
-        assertEquals(request3.getText(), findOrderService.findOne(savedId).getText());
+        assertEquals(request3.getText(), findOrderService.findById(savedId).getText());
     }
 
     @Test
@@ -69,7 +68,7 @@ public class FindOrderServiceTest {
         findService.join(request1);
         informationService.save(request2);
         Long savedId = findOrderService.save(request3);
-        FindOrder savedOrder = findOrderService.findOne(savedId);
+        FindOrder savedOrder = findOrderService.findById(savedId);
 
         // then
         assertEquals(request3.getText(), savedOrder.getText());
@@ -136,7 +135,7 @@ public class FindOrderServiceTest {
 
         UpdateOrderRequest updateRequest = UpdateOrderRequest.newInstance("경비실에 맡겨주세요", 1L);
         findOrderService.updateBody(updateRequest);
-        FindOrder updateOrder = findOrderService.findOne(savedId);
+        FindOrder updateOrder = findOrderService.findById(savedId);
 
         // then
         assertEquals("경비실에 맡겨주세요", updateOrder.getText());
@@ -158,7 +157,7 @@ public class FindOrderServiceTest {
         Long savedId = findOrderService.save(request3);
 
         findOrderService.deleteOrder(savedId);
-        FindOrder deleteOrder = findOrderService.findOne(savedId);
+        FindOrder deleteOrder = findOrderService.findById(savedId);
 
         // then
         assertEquals(request3, deleteOrder);

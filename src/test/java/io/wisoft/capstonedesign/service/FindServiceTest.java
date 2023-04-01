@@ -14,7 +14,6 @@ import org.junit.runner.RunWith;
 import org.opentest4j.AssertionFailedError;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.annotation.Rollback;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -42,7 +41,7 @@ public class FindServiceTest {
         Long savedId = findService.join(request);
 
         // then
-        assertEquals(request.getTitle(), findService.findOne(savedId).getTitle());
+        assertEquals(request.getTitle(), findService.findById(savedId).getTitle());
     }
 
     @Test
@@ -55,7 +54,7 @@ public class FindServiceTest {
         // when
         userService.join(user);
         Long savedId = findService.join(request);
-        Find savedFind = findService.findOne(savedId);
+        Find savedFind = findService.findById(savedId);
 
         // then
         assertEquals(request.getTitle(), savedFind.getTitle());
@@ -132,7 +131,7 @@ public class FindServiceTest {
 
         UpdateFindRequest updateRequest = UpdateFindRequest.newInstance("바지 찾아봅니다", "image.png", "안 입는 바지 기부받아요", String.valueOf(Tag.PANTS), 1L);
         findService.updateAll(updateRequest);
-        Find updateFind = findService.findOne(findId);
+        Find updateFind = findService.findById(findId);
 
         // then
         assertEquals("바지 찾아봅니다", updateFind.getTitle());
@@ -151,7 +150,7 @@ public class FindServiceTest {
         Long findId = findService.join(request);
 
         findService.deleteFind(findId);
-        Find deletedFind = findService.findOne(findId);
+        Find deletedFind = findService.findById(findId);
 
         // then
         assertEquals(request, deletedFind);

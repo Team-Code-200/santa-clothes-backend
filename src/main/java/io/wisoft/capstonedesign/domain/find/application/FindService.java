@@ -7,7 +7,6 @@ import io.wisoft.capstonedesign.domain.find.web.dto.UpdateFindRequest;
 import io.wisoft.capstonedesign.domain.user.persistence.User;
 import io.wisoft.capstonedesign.domain.user.persistence.UserRepository;
 import io.wisoft.capstonedesign.global.enumerated.Tag;
-import io.wisoft.capstonedesign.global.exception.ErrorCode;
 import io.wisoft.capstonedesign.global.exception.service.PostNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -31,7 +30,7 @@ public class FindService {
     @Transactional
     public Long join(final CreateFindRequest request) {
 
-        User user = userRepository.findOne(request.getUserId())
+        User user = userRepository.findById(request.getUserId())
                 .orElseThrow(() -> new PostNotFoundException(NOT_FOUND_POST));
         Find find = Find.createFind(
                 request.getTitle(),
@@ -56,8 +55,8 @@ public class FindService {
     /**
      * 단 건 조회
      */
-    public Find findOne(final Long id) {
-        return findRepository.findOne(id)
+    public Find findById(final Long id) {
+        return findRepository.findById(id)
                 .orElseThrow(() -> new PostNotFoundException(NOT_FOUND_POST));
     }
 
@@ -65,7 +64,7 @@ public class FindService {
      * 모든 게시글 최근순으로 조회 - 기본값
      */
     public List<Find> findByCreatedDateDESC() {
-        return findRepository.findByCreatedDateDESC();
+        return findRepository.findAllByOrderByCreatedDateDesc();
     }
 
     /**
@@ -80,7 +79,7 @@ public class FindService {
      */
     @Transactional
     public void updateAll(final UpdateFindRequest request) {
-        Find find = findRepository.findOne(request.getFindId())
+        Find find = findRepository.findById(request.getFindId())
                 .orElseThrow(() -> new PostNotFoundException(NOT_FOUND_POST));
         validateFind(request.getTitle(), request.getImage(), request.getText(), Tag.valueOf(request.getTag()));
         find.update(request.getTitle(), request.getImage(), request.getText(), Tag.valueOf(request.getTag()));
@@ -97,7 +96,7 @@ public class FindService {
      */
     @Transactional
     public void deleteFind(final Long findId) {
-        Find find = findRepository.findOne(findId)
+        Find find = findRepository.findById(findId)
                 .orElseThrow(() -> new PostNotFoundException(NOT_FOUND_POST));
         findRepository.delete(find);
     }

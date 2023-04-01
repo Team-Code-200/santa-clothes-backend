@@ -29,7 +29,7 @@ public class FindOrderController {
             @RequestBody @Valid final UpdateOrderRequest request) {
 
         findOrderService.updateBody(request);
-        FindOrder updateOrder = findOrderService.findOne(id);
+        FindOrder updateOrder = findOrderService.findById(id);
         return new UpdateOrderResponse(
                 id,
                 updateOrder.getText()

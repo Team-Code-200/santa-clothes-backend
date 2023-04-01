@@ -29,7 +29,7 @@ public class DonateController {
             @RequestBody @Valid final UpdateDonateRequest request) {
 
         donateService.updateAll(request);
-        Donate updateDonate = donateService.findOne(id);
+        Donate updateDonate = donateService.findById(id);
         return new UpdateDonateResponse(
                 id,
                 updateDonate.getTitle(),

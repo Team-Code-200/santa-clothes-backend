@@ -38,7 +38,7 @@ public class UserController {
             @RequestBody @Valid final UpdateUserRequest request) {
 
         userService.updateNickname(id, request.getNickname());
-        User findUser = userService.findOne(id);
+        User findUser = userService.findById(id);
         return new UpdateUserResponse(findUser.getId(), findUser.getNickname());
     }
 

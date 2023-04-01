@@ -29,7 +29,7 @@ public class UserShopController {
             @RequestBody @Valid final UpdateOrderRequest request) {
 
         userShopService.updateBody(request);
-        UserShop updateOrder = userShopService.findOne(id);
+        UserShop updateOrder = userShopService.findById(id);
         return new UpdateOrderResponse(
                 id,
                 updateOrder.getText()

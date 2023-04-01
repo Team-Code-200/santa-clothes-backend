@@ -10,7 +10,6 @@ import io.wisoft.capstonedesign.domain.information.persistence.Information;
 import io.wisoft.capstonedesign.domain.information.persistence.InformationRepository;
 import io.wisoft.capstonedesign.domain.user.persistence.User;
 import io.wisoft.capstonedesign.domain.user.persistence.UserRepository;
-import io.wisoft.capstonedesign.global.exception.ErrorCode;
 import io.wisoft.capstonedesign.global.exception.service.InfoNotFoundException;
 import io.wisoft.capstonedesign.global.exception.service.OrderNotFoundException;
 import io.wisoft.capstonedesign.global.exception.service.PostNotFoundException;
@@ -39,11 +38,11 @@ public class DonateOrderService {
     @Transactional
     public Long save(final CreateOrderRequest request) {
 
-        User user = userRepository.findOne(request.getUserId())
+        User user = userRepository.findById(request.getUserId())
                 .orElseThrow(() -> new UserNotFoundException(NOT_FOUND_ACCOUNT));
-        Information information = informationRepository.findOne(request.getInfoId())
+        Information information = informationRepository.findById(request.getInfoId())
                 .orElseThrow(() -> new InfoNotFoundException(NOT_FOUND_INFO));
-        Donate donate = donateRepository.findOne(request.getDonateId())
+        Donate donate = donateRepository.findById(request.getDonateId())
                 .orElseThrow(() -> new PostNotFoundException(NOT_FOUND_POST));
 
         DonateOrder donateOrder = DonateOrder.createDonateOrder(
@@ -67,8 +66,8 @@ public class DonateOrderService {
     /**
      * 단 건 조회
      */
-    public DonateOrder findOne(final Long id) {
-        return donateOrderRepository.findOne(id)
+    public DonateOrder findById(final Long id) {
+        return donateOrderRepository.findById(id)
                 .orElseThrow(() -> new OrderNotFoundException(NOT_FOUND_ORDER));
     }
 
@@ -76,14 +75,14 @@ public class DonateOrderService {
      * 특정 사용자의 주문 내역 최근순으로 조회 - 기본값
      */
     public List<DonateOrder> findByUserDESC(final User user) {
-        return donateOrderRepository.findByUserDESC(user);
+        return donateOrderRepository.findAllByUserOrderBySendDateDesc(user);
     }
 
     /**
      * 모든 주문 내역 최근순으로 조회
      */
     public List<DonateOrder> findByCreatedDateDESC() {
-        return donateOrderRepository.findByCreatedDateDESC();
+        return donateOrderRepository.findAllByOrderBySendDateDesc();
     }
 
     /**
@@ -91,7 +90,7 @@ public class DonateOrderService {
      */
     @Transactional
     public void updateBody(final UpdateOrderRequest request) {
-        DonateOrder donateOrder = donateOrderRepository.findOne(request.getOrderId())
+        DonateOrder donateOrder = donateOrderRepository.findById(request.getOrderId())
                 .orElseThrow(() -> new OrderNotFoundException(NOT_FOUND_ORDER));
         donateOrder.update(request.getText());
     }
@@ -101,7 +100,7 @@ public class DonateOrderService {
      */
     @Transactional
     public void deleteOrder(final Long orderId) {
-        DonateOrder donateOrder = donateOrderRepository.findOne(orderId)
+        DonateOrder donateOrder = donateOrderRepository.findById(orderId)
                 .orElseThrow(() -> new OrderNotFoundException(NOT_FOUND_ORDER));
         donateOrderRepository.delete(donateOrder);
     }

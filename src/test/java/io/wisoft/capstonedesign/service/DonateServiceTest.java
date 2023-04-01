@@ -14,7 +14,6 @@ import org.junit.runner.RunWith;
 import org.opentest4j.AssertionFailedError;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.annotation.Rollback;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -42,7 +41,7 @@ public class DonateServiceTest {
         Long savedId = donateService.join(request);
 
         // then
-        assertEquals(request.getTitle(), donateService.findOne(savedId).getTitle());
+        assertEquals(request.getTitle(), donateService.findById(savedId).getTitle());
     }
 
     @Test
@@ -55,7 +54,7 @@ public class DonateServiceTest {
         // when
         userService.join(user);
         Long savedId = donateService.join(request);
-        Donate savedDonate = donateService.findOne(savedId);
+        Donate savedDonate = donateService.findById(savedId);
 
         // then
         assertEquals(request.getTitle(), savedDonate.getTitle());
@@ -133,7 +132,7 @@ public class DonateServiceTest {
 
         UpdateDonateRequest updateRequest = UpdateDonateRequest.newInstance("바지 나눔합니다", "image.png", "안 입은 바지 기부해요", String.valueOf(Tag.PANTS), 1L);
         donateService.updateAll(updateRequest);
-        Donate updateDonate = donateService.findOne(donateId);
+        Donate updateDonate = donateService.findById(donateId);
 
         // then
         assertEquals("바지 나눔합니다", updateDonate.getTitle());
@@ -152,7 +151,7 @@ public class DonateServiceTest {
         Long donateId = donateService.join(request);
 
         donateService.deleteDonate(donateId);
-        Donate deletedDonate = donateService.findOne(donateId);
+        Donate deletedDonate = donateService.findById(donateId);
 
         // then
         assertEquals(request, deletedDonate);

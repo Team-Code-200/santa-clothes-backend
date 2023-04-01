@@ -4,14 +4,12 @@ import io.wisoft.capstonedesign.domain.information.persistence.Information;
 import io.wisoft.capstonedesign.domain.information.persistence.InformationRepository;
 import io.wisoft.capstonedesign.domain.shop.persistence.Shop;
 import io.wisoft.capstonedesign.domain.shop.persistence.ShopRepository;
-import io.wisoft.capstonedesign.domain.user.application.UserService;
 import io.wisoft.capstonedesign.domain.user.persistence.UserRepository;
 import io.wisoft.capstonedesign.domain.usershop.persistence.UserShopRepository;
 import io.wisoft.capstonedesign.domain.user.persistence.User;
 import io.wisoft.capstonedesign.domain.usershop.persistence.UserShop;
 import io.wisoft.capstonedesign.domain.usershop.web.dto.CreateOrderRequest;
 import io.wisoft.capstonedesign.domain.usershop.web.dto.UpdateOrderRequest;
-import io.wisoft.capstonedesign.global.exception.ErrorCode;
 import io.wisoft.capstonedesign.global.exception.service.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -38,11 +36,11 @@ public class UserShopService {
     @Transactional
     public Long save(final CreateOrderRequest request) {
 
-        User user = userRepository.findOne(request.getUserId())
+        User user = userRepository.findById(request.getUserId())
                 .orElseThrow(() -> new UserNotFoundException(NOT_FOUND_ACCOUNT));
-        Information information = informationRepository.findOne(request.getInfoId())
+        Information information = informationRepository.findById(request.getInfoId())
                 .orElseThrow(() -> new InfoNotFoundException(NOT_FOUND_INFO));
-        Shop shop = shopRepository.findOne(request.getShopId())
+        Shop shop = shopRepository.findById(request.getShopId())
                 .orElseThrow(() -> new PostNotFoundException(NOT_FOUND_POST));
 
         UserShop userShop = UserShop.createUserShop(
@@ -66,8 +64,8 @@ public class UserShopService {
     /**
      * 단 건 조회
      */
-    public UserShop findOne(final Long id) {
-        return userShopRepository.findOne(id)
+    public UserShop findById(final Long id) {
+        return userShopRepository.findById(id)
                 .orElseThrow(() -> new OrderNotFoundException(NOT_FOUND_ORDER));
     }
 
@@ -75,14 +73,14 @@ public class UserShopService {
      * 특정 사용자의 주문 내역 최근순으로 조회 - 기본값
      */
     public List<UserShop> findByUserDESC(final User user) {
-        return userShopRepository.findByUserDESC(user);
+        return userShopRepository.findAllByUserOrderByCreatedDateDesc(user);
     }
 
     /**
      * 모든 주문 내역 최근순으로 조회
      */
     public List<UserShop> findByCreatedDateDESC() {
-        return userShopRepository.findByCreatedDateDESC();
+        return userShopRepository.findAllByOrderByCreatedDateDesc();
     }
 
     /**
@@ -90,7 +88,7 @@ public class UserShopService {
      */
     @Transactional
     public void updateBody(final UpdateOrderRequest request) {
-        UserShop userShop = userShopRepository.findOne(request.getOrderId())
+        UserShop userShop = userShopRepository.findById(request.getOrderId())
                 .orElseThrow(() -> new OrderNotFoundException(NOT_FOUND_ORDER));
         userShop.update(request.getText());
     }
@@ -100,7 +98,7 @@ public class UserShopService {
      */
     @Transactional
     public void deleteOrder(final Long orderId) {
-        UserShop userShop = userShopRepository.findOne(orderId)
+        UserShop userShop = userShopRepository.findById(orderId)
                 .orElseThrow(() -> new OrderNotFoundException(NOT_FOUND_ORDER));
         userShopRepository.delete(userShop);
     }

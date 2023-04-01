@@ -6,7 +6,6 @@ import io.wisoft.capstonedesign.domain.information.web.dto.UpdateInformationRequ
 import io.wisoft.capstonedesign.domain.user.persistence.User;
 import io.wisoft.capstonedesign.domain.information.persistence.InformationRepository;
 import io.wisoft.capstonedesign.domain.user.persistence.UserRepository;
-import io.wisoft.capstonedesign.global.exception.ErrorCode;
 import io.wisoft.capstonedesign.global.exception.service.InfoNotFoundException;
 import io.wisoft.capstonedesign.global.exception.service.UserNotFoundException;
 import lombok.RequiredArgsConstructor;
@@ -31,7 +30,7 @@ public class InformationService {
     @Transactional
     public Long save(final CreateInformationRequest request) {
 
-        User user = userRepository.findOne(request.getUserId())
+        User user = userRepository.findById(request.getUserId())
                 .orElseThrow(() -> new UserNotFoundException(DUPLICATE_USER));
         Information information = Information.createInformation(
                 request.getUsername(),
@@ -54,8 +53,8 @@ public class InformationService {
     /**
      * 단 건 조회
      */
-    public Information findOne(final Long id) {
-        return informationRepository.findOne(id)
+    public Information findById(final Long id) {
+        return informationRepository.findById(id)
                 .orElseThrow(() -> new InfoNotFoundException(NOT_FOUND_INFO));
     }
 
@@ -71,7 +70,7 @@ public class InformationService {
      */
     @Transactional
     public void updateAll(final UpdateInformationRequest request) {
-        Information information = informationRepository.findOne(request.getInfoId())
+        Information information = informationRepository.findById(request.getInfoId())
                 .orElseThrow(() -> new InfoNotFoundException(NOT_FOUND_INFO));
         validateInformation(request.getUsername(), request.getAddress(), request.getPhoneNumber());
         information.update(request.getUsername(), request.getAddress(), request.getPhoneNumber());
@@ -88,7 +87,7 @@ public class InformationService {
      */
     @Transactional
     public void deleteInformation(final Long informationId) {
-        Information information = informationRepository.findOne(informationId)
+        Information information = informationRepository.findById(informationId)
                 .orElseThrow(() -> new InfoNotFoundException(NOT_FOUND_INFO));
         informationRepository.delete(information);
     }

@@ -4,9 +4,6 @@ import io.wisoft.capstonedesign.domain.shop.persistence.Shop;
 import io.wisoft.capstonedesign.domain.shop.persistence.ShopRepository;
 import io.wisoft.capstonedesign.domain.shop.web.dto.CreateShopRequest;
 import io.wisoft.capstonedesign.domain.shop.web.dto.UpdateShopRequest;
-import io.wisoft.capstonedesign.domain.user.persistence.User;
-import io.wisoft.capstonedesign.domain.user.persistence.UserRepository;
-import io.wisoft.capstonedesign.global.exception.ErrorCode;
 import io.wisoft.capstonedesign.global.exception.service.PostNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -50,8 +47,8 @@ public class ShopService {
     /**
      * 단 건 조회
      */
-    public Shop findOne(final Long id) {
-        return shopRepository.findOne(id)
+    public Shop findById(final Long id) {
+        return shopRepository.findById(id)
                 .orElseThrow(() -> new PostNotFoundException(NOT_FOUND_POST));
     }
 
@@ -66,7 +63,7 @@ public class ShopService {
      * 산타샵 물품 최근순으로 조회 - 기본값
      */
     public List<Shop> findByCreatedDateDESC() {
-        return shopRepository.findByCreatedDateDESC();
+        return shopRepository.findAllByOrderByCreatedDateDesc();
     }
 
     /**
@@ -74,7 +71,7 @@ public class ShopService {
      */
     @Transactional
     public void updateAll(final UpdateShopRequest request) {
-        Shop shop = shopRepository.findOne(request.getShopId())
+        Shop shop = shopRepository.findById(request.getShopId())
                 .orElseThrow(() -> new PostNotFoundException(NOT_FOUND_POST));
         shop.update(request.getTitle(), request.getPrice(), request.getImage(), request.getBody());
     }
@@ -84,7 +81,7 @@ public class ShopService {
      */
     @Transactional
     public void deleteShop(final Long shopId) {
-        Shop shop = shopRepository.findOne(shopId)
+        Shop shop = shopRepository.findById(shopId)
                 .orElseThrow(() -> new PostNotFoundException(NOT_FOUND_POST));
         shopRepository.delete(shop);
     }

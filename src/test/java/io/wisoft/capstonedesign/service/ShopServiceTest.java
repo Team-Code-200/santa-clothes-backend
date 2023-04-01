@@ -10,10 +10,8 @@ import io.wisoft.capstonedesign.domain.user.persistence.User;
 import io.wisoft.capstonedesign.global.exception.service.PostNotFoundException;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.opentest4j.AssertionFailedError;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.annotation.Rollback;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -41,7 +39,7 @@ public class ShopServiceTest {
         Long savedId = shopService.save(request);
 
         // then
-        assertEquals(request.getTitle(), shopService.findOne(savedId).getTitle());
+        assertEquals(request.getTitle(), shopService.findById(savedId).getTitle());
     }
 
     @Test
@@ -90,7 +88,7 @@ public class ShopServiceTest {
 
         UpdateShopRequest updateRequest = UpdateShopRequest.newInstance("쌀 10kg", 2000, "rice.png", "포인트로 든든한 쌀 밥 가져가세요!", 1L);
         shopService.updateAll(updateRequest);
-        Shop updateShop = shopService.findOne(savedId);
+        Shop updateShop = shopService.findById(savedId);
 
         // then
         assertEquals(2000, updateShop.getPrice());
@@ -108,7 +106,7 @@ public class ShopServiceTest {
         Long savedId = shopService.save(request);
 
         shopService.deleteShop(savedId);
-        Shop deleteShop = shopService.findOne(savedId);
+        Shop deleteShop = shopService.findById(savedId);
 
         // then
         assertEquals(request, deleteShop);
