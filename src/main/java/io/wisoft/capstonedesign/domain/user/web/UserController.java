@@ -53,6 +53,13 @@ public class UserController {
         return new Result(collect);
     }
 
+    @GetMapping("/api/users/{id}")
+    public GetUserResponse getUser(@PathVariable("id") final Long id) {
+
+        User findUser = userService.findById(id);
+        return new GetUserResponse(findUser.getNickname(), findUser.getPoint(), findUser.getProfileImage());
+    }
+
     @DeleteMapping("/api/users/{id}")
     public DeleteUserResponse deleteUser(@PathVariable("id") final Long id) {
 
