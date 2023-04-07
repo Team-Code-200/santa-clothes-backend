@@ -3,6 +3,7 @@ package io.wisoft.capstonedesign.domain.find.web;
 import io.wisoft.capstonedesign.domain.find.application.FindService;
 import io.wisoft.capstonedesign.domain.find.persistence.Find;
 import io.wisoft.capstonedesign.domain.find.web.dto.*;
+import io.wisoft.capstonedesign.global.enumerated.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
@@ -42,10 +43,80 @@ public class FindController {
 
     @GetMapping("/api/finds")
     public Result findFinds() {
-        List<Find> findFinds = findService.findFinds();
+        List<Find> findFinds = findService.findByCreatedDateDESC();
 
         List<FindDto> collect = findFinds.stream()
-                .map(f -> new FindDto(f.getTitle(), String.valueOf(f.getTag())))
+                .map(f -> new FindDto(f.getTitle(), String.valueOf(f.getTag()), f.getUser().getNickname(), f.getCreatedDate()))
+                .collect(Collectors.toList());
+
+        return new Result(collect);
+    }
+
+    @GetMapping("/api/finds/{id}")
+    public GetFindResponse getFind(@PathVariable("id") final Long id) {
+
+        Find findFind = findService.findById(id);
+        return new GetFindResponse(
+                String.valueOf(findFind.getTag()),
+                findFind.getView(),
+                findFind.getTitle(),
+                findFind.getUser().getNickname(),
+                findFind.getCreatedDate(),
+                findFind.getText(),
+                findFind.getImage());
+    }
+
+    @GetMapping("/api/finds/author/{id}")
+    public Result getFindsByUser(@PathVariable("id") final Long userId) {
+
+        List<Find> byUser = findService.findByUser(userId);
+
+        List<GetFindResponse> collect = byUser.stream()
+                .map(f -> new GetFindResponse(String.valueOf(f.getTag()), f.getView(), f.getTitle(), f.getUser().getNickname(), f.getCreatedDate(), f.getText(), f.getImage()))
+                .collect(Collectors.toList());
+
+        return new Result(collect);
+    }
+
+    @GetMapping("/api/finds/top")
+    public Result getFindsByTop() {
+        List<Find> byTag = findService.findByTag(Tag.TOP);
+
+        List<FindDto> collect = byTag.stream()
+                .map(f -> new FindDto(f.getTitle(), String.valueOf(f.getTag()), f.getUser().getNickname(), f.getCreatedDate()))
+                .collect(Collectors.toList());
+
+        return new Result(collect);
+    }
+
+    @GetMapping("/api/finds/pants")
+    public Result getFindsByPants() {
+        List<Find> byTag = findService.findByTag(Tag.PANTS);
+
+        List<FindDto> collect = byTag.stream()
+                .map(f -> new FindDto(f.getTitle(), String.valueOf(f.getTag()), f.getUser().getNickname(), f.getCreatedDate()))
+                .collect(Collectors.toList());
+
+        return new Result(collect);
+    }
+
+    @GetMapping("/api/finds/shoes")
+    public Result getFindsByShoes() {
+        List<Find> byTag = findService.findByTag(Tag.SHOES);
+
+        List<FindDto> collect = byTag.stream()
+                .map(f -> new FindDto(f.getTitle(), String.valueOf(f.getTag()), f.getUser().getNickname(), f.getCreatedDate()))
+                .collect(Collectors.toList());
+
+        return new Result(collect);
+    }
+
+    @GetMapping("/api/finds/etc")
+    public Result getFindsByEtc() {
+        List<Find> byTag = findService.findByTag(Tag.ETC);
+
+        List<FindDto> collect = byTag.stream()
+                .map(f -> new FindDto(f.getTitle(), String.valueOf(f.getTag()), f.getUser().getNickname(), f.getCreatedDate()))
                 .collect(Collectors.toList());
 
         return new Result(collect);

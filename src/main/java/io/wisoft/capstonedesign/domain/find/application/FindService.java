@@ -68,6 +68,13 @@ public class FindService {
     }
 
     /**
+     * 특정 사용자의 게시글 조회
+     */
+    public List<Find> findByUser(final Long userId) {
+        return findRepository.findByUser(userId);
+    }
+
+    /**
      * 모든 게시글 태그 종류별 조회
      */
     public List<Find> findByTag(final Tag tag) {

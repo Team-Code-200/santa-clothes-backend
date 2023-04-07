@@ -5,16 +5,21 @@ import lombok.Data;
 
 import java.time.LocalDateTime;
 
-
 @Data
 @AllArgsConstructor
-public class DonateDto {
-
-    private String title;
+public class GetDonateResponse {
 
     private String tag;
+
+    private int view;
+
+    private String title;
 
     private String nickname;
 
     private LocalDateTime createdDate;
+
+    private String text;
+
+    private String image;
 }
