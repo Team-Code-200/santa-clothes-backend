@@ -68,6 +68,13 @@ public class DonateService {
     }
 
     /**
+     * 특정 사용자의 게시글 조회
+     */
+    public List<Donate> findByUser(final Long userId) {
+        return donateRepository.findByUser(userId);
+    }
+
+    /**
      * 모든 게시글 태그 종류별 조회
      */
     public List<Donate> findByTag(final Tag tag) {
