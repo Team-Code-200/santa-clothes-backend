@@ -31,14 +31,7 @@ public class FindController {
 
         findService.updateAll(request);
         Find updateFind = findService.findById(id);
-        return new UpdateFindResponse(
-                id,
-                updateFind.getTitle(),
-                updateFind.getImage(),
-                updateFind.getText(),
-                updateFind.getView(),
-                String.valueOf(updateFind.getTag())
-        );
+        return new UpdateFindResponse(updateFind);
     }
 
     @GetMapping("/api/finds")
@@ -46,7 +39,7 @@ public class FindController {
         List<Find> findFinds = findService.findByCreatedDateDESC();
 
         List<FindDto> collect = findFinds.stream()
-                .map(f -> new FindDto(f.getTitle(), String.valueOf(f.getTag()), f.getUser().getNickname(), f.getCreatedDate()))
+                .map(FindDto::new)
                 .collect(Collectors.toList());
 
         return new Result(collect);
@@ -56,14 +49,7 @@ public class FindController {
     public GetFindResponse getFind(@PathVariable("id") final Long id) {
 
         Find findFind = findService.findById(id);
-        return new GetFindResponse(
-                String.valueOf(findFind.getTag()),
-                findFind.getView(),
-                findFind.getTitle(),
-                findFind.getUser().getNickname(),
-                findFind.getCreatedDate(),
-                findFind.getText(),
-                findFind.getImage());
+        return new GetFindResponse(findFind);
     }
 
     @GetMapping("/api/finds/author/{id}")
@@ -72,7 +58,7 @@ public class FindController {
         List<Find> byUser = findService.findByUser(userId);
 
         List<GetFindResponse> collect = byUser.stream()
-                .map(f -> new GetFindResponse(String.valueOf(f.getTag()), f.getView(), f.getTitle(), f.getUser().getNickname(), f.getCreatedDate(), f.getText(), f.getImage()))
+                .map(GetFindResponse::new)
                 .collect(Collectors.toList());
 
         return new Result(collect);
@@ -83,7 +69,7 @@ public class FindController {
         List<Find> byTag = findService.findByTag(Tag.TOP);
 
         List<FindDto> collect = byTag.stream()
-                .map(f -> new FindDto(f.getTitle(), String.valueOf(f.getTag()), f.getUser().getNickname(), f.getCreatedDate()))
+                .map(FindDto::new)
                 .collect(Collectors.toList());
 
         return new Result(collect);
@@ -94,7 +80,7 @@ public class FindController {
         List<Find> byTag = findService.findByTag(Tag.PANTS);
 
         List<FindDto> collect = byTag.stream()
-                .map(f -> new FindDto(f.getTitle(), String.valueOf(f.getTag()), f.getUser().getNickname(), f.getCreatedDate()))
+                .map(FindDto::new)
                 .collect(Collectors.toList());
 
         return new Result(collect);
@@ -105,7 +91,7 @@ public class FindController {
         List<Find> byTag = findService.findByTag(Tag.SHOES);
 
         List<FindDto> collect = byTag.stream()
-                .map(f -> new FindDto(f.getTitle(), String.valueOf(f.getTag()), f.getUser().getNickname(), f.getCreatedDate()))
+                .map(FindDto::new)
                 .collect(Collectors.toList());
 
         return new Result(collect);
@@ -116,7 +102,7 @@ public class FindController {
         List<Find> byTag = findService.findByTag(Tag.ETC);
 
         List<FindDto> collect = byTag.stream()
-                .map(f -> new FindDto(f.getTitle(), String.valueOf(f.getTag()), f.getUser().getNickname(), f.getCreatedDate()))
+                .map(FindDto::new)
                 .collect(Collectors.toList());
 
         return new Result(collect);

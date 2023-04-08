@@ -31,14 +31,7 @@ public class DonateController {
 
         donateService.updateAll(request);
         Donate updateDonate = donateService.findById(id);
-        return new UpdateDonateResponse(
-                id,
-                updateDonate.getTitle(),
-                updateDonate.getImage(),
-                updateDonate.getText(),
-                updateDonate.getView(),
-                String.valueOf(updateDonate.getTag())
-        );
+        return new UpdateDonateResponse(updateDonate);
     }
 
     @GetMapping("/api/donates")
@@ -46,7 +39,7 @@ public class DonateController {
         List<Donate> findDonates = donateService.findByCreatedDateDESC();
 
         List<DonateDto> collect = findDonates.stream()
-                .map(d -> new DonateDto(d.getTitle(), String.valueOf(d.getTag()), d.getUser().getNickname(), d.getCreatedDate()))
+                .map(DonateDto::new)
                 .collect(Collectors.toList());
 
         return new Result(collect);
@@ -56,14 +49,7 @@ public class DonateController {
     public GetDonateResponse getDonate(@PathVariable("id") final Long id) {
 
         Donate findDonate = donateService.findById(id);
-        return new GetDonateResponse(
-                String.valueOf(findDonate.getTag()),
-                findDonate.getView(),
-                findDonate.getTitle(),
-                findDonate.getUser().getNickname(),
-                findDonate.getCreatedDate(),
-                findDonate.getText(),
-                findDonate.getImage());
+        return new GetDonateResponse(findDonate);
     }
 
     @GetMapping("/api/donates/author/{id}")
@@ -72,7 +58,7 @@ public class DonateController {
         List<Donate> byUser = donateService.findByUser(userId);
 
         List<GetDonateResponse> collect = byUser.stream()
-                .map(d -> new GetDonateResponse(String.valueOf(d.getTag()), d.getView(), d.getTitle(), d.getUser().getNickname(), d.getCreatedDate(), d.getText(), d.getImage()))
+                .map(GetDonateResponse::new)
                 .collect(Collectors.toList());
 
         return new Result(collect);
@@ -83,7 +69,7 @@ public class DonateController {
         List<Donate> byTag = donateService.findByTag(Tag.TOP);
 
         List<DonateDto> collect = byTag.stream()
-                .map(d -> new DonateDto(d.getTitle(), String.valueOf(d.getTag()), d.getUser().getNickname(), d.getCreatedDate()))
+                .map(DonateDto::new)
                 .collect(Collectors.toList());
 
         return new Result(collect);
@@ -94,7 +80,7 @@ public class DonateController {
         List<Donate> byTag = donateService.findByTag(Tag.PANTS);
 
         List<DonateDto> collect = byTag.stream()
-                .map(d -> new DonateDto(d.getTitle(), String.valueOf(d.getTag()), d.getUser().getNickname(), d.getCreatedDate()))
+                .map(DonateDto::new)
                 .collect(Collectors.toList());
 
         return new Result(collect);
@@ -105,7 +91,7 @@ public class DonateController {
         List<Donate> byTag = donateService.findByTag(Tag.SHOES);
 
         List<DonateDto> collect = byTag.stream()
-                .map(d -> new DonateDto(d.getTitle(), String.valueOf(d.getTag()), d.getUser().getNickname(), d.getCreatedDate()))
+                .map(DonateDto::new)
                 .collect(Collectors.toList());
 
         return new Result(collect);
@@ -116,7 +102,7 @@ public class DonateController {
         List<Donate> byTag = donateService.findByTag(Tag.ETC);
 
         List<DonateDto> collect = byTag.stream()
-                .map(d -> new DonateDto(d.getTitle(), String.valueOf(d.getTag()), d.getUser().getNickname(), d.getCreatedDate()))
+                .map(DonateDto::new)
                 .collect(Collectors.toList());
 
         return new Result(collect);
