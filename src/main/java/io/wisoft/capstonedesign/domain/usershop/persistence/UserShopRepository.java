@@ -1,13 +1,15 @@
 package io.wisoft.capstonedesign.domain.usershop.persistence;
 
-import io.wisoft.capstonedesign.domain.user.persistence.User;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 
 import java.util.List;
 
 public interface UserShopRepository extends JpaRepository<UserShop, Long> {
 
-    List<UserShop> findAllByUserOrderByCreatedDateDesc(final User user);
+    @Query("select s from UserShop s join fetch s.user u where u.id = :id order by s.createdDate desc")
+    List<UserShop> findByUser(@Param("id") final Long userId);
 
     List<UserShop> findAllByOrderByCreatedDateDesc();
 }

@@ -74,8 +74,8 @@ public class DonateOrderService {
     /**
      * 특정 사용자의 주문 내역 최근순으로 조회 - 기본값
      */
-    public List<DonateOrder> findByUserDESC(final User user) {
-        return donateOrderRepository.findAllByUserOrderBySendDateDesc(user);
+    public List<DonateOrder> findByUser(final Long userId) {
+        return donateOrderRepository.findByUser(userId);
     }
 
     /**

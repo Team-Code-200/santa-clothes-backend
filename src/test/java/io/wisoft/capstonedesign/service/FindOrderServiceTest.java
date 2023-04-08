@@ -107,12 +107,12 @@ public class FindOrderServiceTest {
         CreateOrderRequest request4 = CreateOrderRequest.newInstance("경비실에 맡겨주세요", 1L, 1L, 1L);
 
         // when
-        userService.join(user);
+        Long userId = userService.join(user);
         findService.join(request1);
         informationService.save(request2);
         findOrderService.save(request3);
         findOrderService.save(request4);
-        List<FindOrder> orderDESC = findOrderService.findByUserDESC(user);
+        List<FindOrder> orderDESC = findOrderService.findByUser(userId);
 
         // then
         assertEquals(request4.getText(), orderDESC.get(0).getText());

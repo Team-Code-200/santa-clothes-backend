@@ -35,10 +35,29 @@ public class DonateOrderController {
 
     @GetMapping("/api/donate-orders")
     public Result findOrders() {
-        List<DonateOrder> findOrders = donateOrderService.findDonateOrders();
+        List<DonateOrder> findOrders = donateOrderService.findByCreatedDateDESC();
 
         List<OrderDto> collect = findOrders.stream()
                 .map(OrderDto::new)
+                .collect(Collectors.toList());
+
+        return new Result(collect);
+    }
+
+    @GetMapping("/api/donate-orders/{id}")
+    public GetOrderDto getOrder(@PathVariable("id") final Long id) {
+
+        DonateOrder findOrder = donateOrderService.findById(id);
+        return new GetOrderDto(findOrder);
+    }
+
+    @GetMapping("/api/donate-orders/user/{id}")
+    public Result getOrderByUser(@PathVariable("id") final Long userId) {
+
+        List<DonateOrder> byUser = donateOrderService.findByUser(userId);
+
+        List<GetOrderDto> collect = byUser.stream()
+                .map(GetOrderDto::new)
                 .collect(Collectors.toList());
 
         return new Result(collect);

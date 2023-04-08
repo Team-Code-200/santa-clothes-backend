@@ -35,10 +35,29 @@ public class UserShopController {
 
     @GetMapping("/api/shop-orders")
     public Result findOrders() {
-        List<UserShop> findOrders = userShopService.findShopOrders();
+        List<UserShop> findOrders = userShopService.findByCreatedDateDESC();
 
         List<OrderDto> collect = findOrders.stream()
                 .map(OrderDto::new)
+                .collect(Collectors.toList());
+
+        return new Result(collect);
+    }
+
+    @GetMapping("/api/shop-orders/{id}")
+    public GetOrderDto getOrder(@PathVariable("id") final Long id) {
+
+        UserShop findOrder = userShopService.findById(id);
+        return new GetOrderDto(findOrder);
+    }
+
+    @GetMapping("/api/shop-orders/user/{id}")
+    public Result getOrderByUser(@PathVariable("id") final Long userId) {
+
+        List<UserShop> byUser = userShopService.findByUser(userId);
+
+        List<GetOrderDto> collect = byUser.stream()
+                .map(GetOrderDto::new)
                 .collect(Collectors.toList());
 
         return new Result(collect);

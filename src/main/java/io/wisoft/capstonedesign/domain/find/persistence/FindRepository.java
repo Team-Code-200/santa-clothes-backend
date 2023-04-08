@@ -10,7 +10,7 @@ import java.util.List;
 
 public interface FindRepository extends JpaRepository<Find, Long> {
 
-    @Query("select f from Find f join fetch f.user u where u.id = :id")
+    @Query("select f from Find f join fetch f.user u where u.id = :id order by f.createdDate desc")
     List<Find> findByUser(@Param("id") final Long userId);
 
     List<Find> findAllByOrderByCreatedDateDesc();

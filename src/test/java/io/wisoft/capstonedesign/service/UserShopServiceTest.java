@@ -106,12 +106,12 @@ public class UserShopServiceTest {
         CreateOrderRequest request4 = CreateOrderRequest.newInstance("경비실에 맡겨주세요", 1L, 1L, 1L);
 
         // when
-        userService.join(user);
+        Long userId = userService.join(user);
         shopService.save(request1);
         informationService.save(request2);
         userShopService.save(request3);
         userShopService.save(request4);
-        List<UserShop> orderDESC = userShopService.findByUserDESC(user);
+        List<UserShop> orderDESC = userShopService.findByUser(userId);
 
         // then
         assertEquals(request4.getText(), orderDESC.get(0).getText());

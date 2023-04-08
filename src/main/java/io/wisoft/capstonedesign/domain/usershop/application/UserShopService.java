@@ -72,8 +72,8 @@ public class UserShopService {
     /**
      * 특정 사용자의 주문 내역 최근순으로 조회 - 기본값
      */
-    public List<UserShop> findByUserDESC(final User user) {
-        return userShopRepository.findAllByUserOrderByCreatedDateDesc(user);
+    public List<UserShop> findByUser(final Long userId) {
+        return userShopRepository.findByUser(userId);
     }
 
     /**

@@ -54,12 +54,12 @@ public class InformationServiceTest {
         CreateInformationRequest request3 = CreateInformationRequest.newInstance("서동권", "대전광역시 덕명동", "010-1111-1111", 2L);
 
         // when
-        userService.join(user1);
+        Long userId = userService.join(user1);
         userService.join(user2);
         informationService.save(request1);
         informationService.save(request2);
         informationService.save(request3);
-        List<Information> savedInfo = informationService.findInformationByUser(user1);
+        List<Information> savedInfo = informationService.findByUser(userId);
 
         // then
         assertEquals(2, savedInfo.size());
