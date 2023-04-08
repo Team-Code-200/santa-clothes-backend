@@ -1,5 +1,6 @@
 package io.wisoft.capstonedesign.domain.donate.web.dto;
 
+import io.wisoft.capstonedesign.domain.donate.persistence.Donate;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -20,4 +21,13 @@ public class UpdateDonateResponse {
     private int view;
 
     private String tag;
+
+    public UpdateDonateResponse(Donate donate) {
+        this.id = donate.getId();
+        this.title = donate.getTitle();
+        this.image = donate.getImage();
+        this.text = donate.getText();
+        this.view = donate.getView();
+        this.tag = String.valueOf(donate.getTag());
+    }
 }

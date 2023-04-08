@@ -30,13 +30,7 @@ public class ShopController {
 
         shopService.updateAll(request);
         Shop updateShop = shopService.findById(id);
-        return new UpdateShopResponse(
-                id,
-                updateShop.getTitle(),
-                updateShop.getPrice(),
-                updateShop.getImage(),
-                updateShop.getBody()
-        );
+        return new UpdateShopResponse(updateShop);
     }
 
     @GetMapping("/api/shops")
@@ -44,7 +38,7 @@ public class ShopController {
         List<Shop> findShops = shopService.findShopList();
 
         List<ShopDto> collect = findShops.stream()
-                .map(s -> new ShopDto(s.getTitle(), s.getPrice(), s.getImage(), s.getBody()))
+                .map(ShopDto::new)
                 .collect(Collectors.toList());
 
         return new Result(collect);

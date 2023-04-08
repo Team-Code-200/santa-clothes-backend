@@ -30,12 +30,7 @@ public class InformationController {
 
         informationService.updateAll(request);
         Information updateInfo = informationService.findById(id);
-        return new UpdateInformationResponse(
-                id,
-                updateInfo.getUsername(),
-                updateInfo.getAddress(),
-                updateInfo.getPhoneNumber()
-        );
+        return new UpdateInformationResponse(updateInfo);
     }
 
     @GetMapping("/api/informations")
@@ -43,7 +38,7 @@ public class InformationController {
         List<Information> findInfos = informationService.findInformations();
 
         List<InformationDto> collect = findInfos.stream()
-                .map(i -> new InformationDto(i.getUsername(), i.getAddress(), i.getPhoneNumber()))
+                .map(InformationDto::new)
                 .collect(Collectors.toList());
 
         return new Result(collect);

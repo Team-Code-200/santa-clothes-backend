@@ -39,7 +39,7 @@ public class UserController {
 
         userService.updateNickname(id, request.getNickname());
         User findUser = userService.findById(id);
-        return new UpdateUserResponse(findUser.getId(), findUser.getNickname());
+        return new UpdateUserResponse(findUser);
     }
 
     @GetMapping("/api/users")
@@ -47,7 +47,7 @@ public class UserController {
         List<User> findUsers = userService.findUsers();
 
         List<UserDto> collect = findUsers.stream()
-                .map(m -> new UserDto(m.getNickname()))
+                .map(UserDto::new)
                 .collect(Collectors.toList());
 
         return new Result(collect);
@@ -57,7 +57,7 @@ public class UserController {
     public GetUserResponse getUser(@PathVariable("id") final Long id) {
 
         User findUser = userService.findById(id);
-        return new GetUserResponse(findUser.getNickname(), findUser.getPoint(), findUser.getProfileImage());
+        return new GetUserResponse(findUser);
     }
 
     @DeleteMapping("/api/users/{id}")

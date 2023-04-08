@@ -30,10 +30,7 @@ public class FindOrderController {
 
         findOrderService.updateBody(request);
         FindOrder updateOrder = findOrderService.findById(id);
-        return new UpdateOrderResponse(
-                id,
-                updateOrder.getText()
-        );
+        return new UpdateOrderResponse(updateOrder);
     }
 
     @GetMapping("/api/find-orders")
@@ -41,7 +38,7 @@ public class FindOrderController {
         List<FindOrder> findOrders = findOrderService.findFindOrders();
 
         List<OrderDto> collect = findOrders.stream()
-                .map(o -> new OrderDto(o.getText(), o.getUser().getNickname(), o.getInformation().getPhoneNumber(), o.getFind().getTitle()))
+                .map(OrderDto::new)
                 .collect(Collectors.toList());
 
         return new Result(collect);

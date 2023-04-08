@@ -30,10 +30,7 @@ public class DonateOrderController {
 
         donateOrderService.updateBody(request);
         DonateOrder updateOrder = donateOrderService.findById(id);
-        return new UpdateOrderResponse(
-                id,
-                updateOrder.getText()
-        );
+        return new UpdateOrderResponse(updateOrder);
     }
 
     @GetMapping("/api/donate-orders")
@@ -41,7 +38,7 @@ public class DonateOrderController {
         List<DonateOrder> findOrders = donateOrderService.findDonateOrders();
 
         List<OrderDto> collect = findOrders.stream()
-                .map(o -> new OrderDto(o.getText(), o.getUser().getNickname(), o.getInformation().getPhoneNumber(), o.getDonate().getTitle()))
+                .map(OrderDto::new)
                 .collect(Collectors.toList());
 
         return new Result(collect);

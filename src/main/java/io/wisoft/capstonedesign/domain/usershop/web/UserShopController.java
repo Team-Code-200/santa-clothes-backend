@@ -30,10 +30,7 @@ public class UserShopController {
 
         userShopService.updateBody(request);
         UserShop updateOrder = userShopService.findById(id);
-        return new UpdateOrderResponse(
-                id,
-                updateOrder.getText()
-        );
+        return new UpdateOrderResponse(updateOrder);
     }
 
     @GetMapping("/api/shop-orders")
@@ -41,7 +38,7 @@ public class UserShopController {
         List<UserShop> findOrders = userShopService.findShopOrders();
 
         List<OrderDto> collect = findOrders.stream()
-                .map(o -> new OrderDto(o.getText(), o.getUser().getNickname(), o.getInformation().getPhoneNumber(), o.getShop().getTitle()))
+                .map(OrderDto::new)
                 .collect(Collectors.toList());
 
         return new Result(collect);
