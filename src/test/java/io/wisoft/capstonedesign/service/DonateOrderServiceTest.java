@@ -107,12 +107,12 @@ public class DonateOrderServiceTest {
         CreateOrderRequest request4 = CreateOrderRequest.newInstance("경비실에 맡겨주세요", 1L, 1L, 1L);
 
         // when
-        userService.join(user);
+        Long userId = userService.join(user);
         donateService.join(request1);
         informationService.save(request2);
         donateOrderService.save(request3);
         donateOrderService.save(request4);
-        List<DonateOrder> orderDESC = donateOrderService.findByUserDESC(user);
+        List<DonateOrder> orderDESC = donateOrderService.findByUser(userId);
 
         // then
         assertEquals(request4.getText(), orderDESC.get(0).getText());
