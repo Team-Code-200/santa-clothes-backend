@@ -59,10 +59,10 @@ public class InformationService {
     }
 
     /**
-     * 회원별 배송 정보 조회
+     * 특정 사용자의 배송 정보 조회
      */
-    public List<Information> findInformationByUser(final User user) {
-        return informationRepository.findByUser(user);
+    public List<Information> findByUser(final Long userId) {
+        return informationRepository.findByUser(userId);
     }
 
     /**

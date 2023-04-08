@@ -44,6 +44,25 @@ public class InformationController {
         return new Result(collect);
     }
 
+    @GetMapping("/api/informations/{id}")
+    public GetInfoResponse getInfo(@PathVariable("id") final Long id) {
+
+        Information findInfo = informationService.findById(id);
+        return new GetInfoResponse(findInfo);
+    }
+
+    @GetMapping("/api/informations/user/{id}")
+    public Result getInfoByUser(@PathVariable("id") final Long userId) {
+
+        List<Information> byUser = informationService.findByUser(userId);
+
+        List<GetInfoResponse> collect = byUser.stream()
+                .map(GetInfoResponse::new)
+                .collect(Collectors.toList());
+
+        return new Result(collect);
+    }
+
     @DeleteMapping("/api/informations/{id}")
     public DeleteInformationResponse deleteInfo(@PathVariable("id") final Long id) {
 

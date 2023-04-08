@@ -74,8 +74,8 @@ public class FindOrderService {
     /**
      * 특정 사용자의 주문 내역 최근순으로 조회 - 기본값
      */
-    public List<FindOrder> findByUserDESC(final User user) {
-        return findOrderRepository.findAllByUserOrderBySendDateDesc(user);
+    public List<FindOrder> findByUser(final Long userId) {
+        return findOrderRepository.findByUser(userId);
     }
 
     /**

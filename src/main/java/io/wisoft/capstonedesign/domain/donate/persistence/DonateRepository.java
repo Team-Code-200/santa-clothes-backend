@@ -9,7 +9,7 @@ import java.util.List;
 
 public interface DonateRepository extends JpaRepository<Donate, Long> {
 
-    @Query("select d from Donate d join fetch d.user u where u.id = :id")
+    @Query("select d from Donate d join fetch d.user u where u.id = :id order by d.createdDate desc")
     List<Donate> findByUser(@Param("id") final Long userId);
 
     List<Donate> findAllByOrderByCreatedDateDesc();
