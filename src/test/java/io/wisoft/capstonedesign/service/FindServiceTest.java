@@ -33,7 +33,7 @@ public class FindServiceTest {
     public void 게시글_작성() throws Exception {
 
         // given
-        User user = User.newInstance("1", "jinwon@gmail.com", "profile.png", 1000, "jinwon", Role.GENERAL);
+        User user = User.newInstance(1L, "jinwon@gmail.com", "profile.png", 1000, "jinwon", Role.GENERAL);
         CreateFindRequest request = CreateFindRequest.newInstance("패딩 찾아봅니다", "image.png", "안 입는 패딩 기부받아요", String.valueOf(Tag.TOP), 1L);
 
         // when
@@ -48,7 +48,7 @@ public class FindServiceTest {
     public void 게시글_조회() throws Exception {
 
         // given
-        User user = User.newInstance("1", "jinwon@gmail.com", "profile.png", 1000, "jinwon", Role.GENERAL);
+        User user = User.newInstance(1L, "jinwon@gmail.com", "profile.png", 1000, "jinwon", Role.GENERAL);
         CreateFindRequest request = CreateFindRequest.newInstance("패딩 찾아봅니다", "image.png", "안 입는 패딩 기부받아요", String.valueOf(Tag.TOP), 1L);
 
         // when
@@ -64,7 +64,7 @@ public class FindServiceTest {
     public void 전체_게시글_조회() throws Exception {
 
         // given
-        User user = User.newInstance("1", "jinwon@gmail.com", "profile.png", 1000, "jinwon", Role.GENERAL);
+        User user = User.newInstance(1L, "jinwon@gmail.com", "profile.png", 1000, "jinwon", Role.GENERAL);
         CreateFindRequest request1 = CreateFindRequest.newInstance("패딩 찾아봅니다", "image.png", "안 입는 패딩 기부받아요", String.valueOf(Tag.TOP), 1L);
         CreateFindRequest request2 = CreateFindRequest.newInstance("바지 찾아봅니다", "image.png", "안 입는 바지 기부받아요", String.valueOf(Tag.PANTS), 1L);
 
@@ -83,8 +83,8 @@ public class FindServiceTest {
     public void 전체_게시글_최근순_조회() throws Exception {
 
         // given
-        User user1 = User.newInstance("1", "jinwon@gmail.com", "profile.png", 1000, "jinwon", Role.GENERAL);
-        User user2 = User.newInstance("2", "donggwon@gmail.com", "profile.png", 2000, "donggwon", Role.GENERAL);
+        User user1 = User.newInstance(1L, "jinwon@gmail.com", "profile.png", 1000, "jinwon", Role.GENERAL);
+        User user2 = User.newInstance(2L, "donggwon@gmail.com", "profile.png", 2000, "donggwon", Role.GENERAL);
         CreateFindRequest request1 = CreateFindRequest.newInstance("패딩 찾아봅니다", "image.png", "안 입는 패딩 기부받아요", String.valueOf(Tag.TOP), 1L);
         CreateFindRequest request2 = CreateFindRequest.newInstance("바지 찾아봅니다", "image.png", "안 입는 바지 기부받아요", String.valueOf(Tag.PANTS), 2L);
 
@@ -103,7 +103,7 @@ public class FindServiceTest {
     public void 전체_게시글_태그별_조회() throws Exception {
 
         // given
-        User user = User.newInstance("1", "jinwon@gmail.com", "profile.png", 1000, "jinwon", Role.GENERAL);
+        User user = User.newInstance(1L, "jinwon@gmail.com", "profile.png", 1000, "jinwon", Role.GENERAL);
         CreateFindRequest request1 = CreateFindRequest.newInstance("패딩 찾아봅니다", "image.png", "안 입는 패딩 기부받아요", String.valueOf(Tag.TOP), 1L);
         CreateFindRequest request2 = CreateFindRequest.newInstance("청바지 찾아봅니다", "image.png", "안 입는 바지 기부받아요", String.valueOf(Tag.PANTS), 1L);
         CreateFindRequest request3 = CreateFindRequest.newInstance("트레이닝 바지 찾아봅니다", "image.png", "안 입는 바지 기부받아요", String.valueOf(Tag.PANTS), 1L);
@@ -123,7 +123,7 @@ public class FindServiceTest {
     public void 게시글_전체_수정() throws Exception {
 
         // given
-        User user = User.newInstance("1", "jinwon@gmail.com", "profile.png", 1000, "jinwon", Role.GENERAL);
+        User user = User.newInstance(1L, "jinwon@gmail.com", "profile.png", 1000, "jinwon", Role.GENERAL);
         CreateFindRequest request = CreateFindRequest.newInstance("패딩 찾아봅니다", "image.png", "안 입는 패딩 기부받아요", String.valueOf(Tag.TOP), 1L);
         // when
         userService.join(user);
@@ -142,7 +142,7 @@ public class FindServiceTest {
     public void 게시글_삭제() throws Exception {
 
         // given
-        User user = User.newInstance("1", "jinwon@gmail.com", "profile1.png", 1000, "jinwon", Role.GENERAL);
+        User user = User.newInstance(1L, "jinwon@gmail.com", "profile1.png", 1000, "jinwon", Role.GENERAL);
         CreateFindRequest request = CreateFindRequest.newInstance("패딩 찾아봅니다", "image.png", "안 입는 패딩 기부받아요", String.valueOf(Tag.TOP), 1L);
 
         // when

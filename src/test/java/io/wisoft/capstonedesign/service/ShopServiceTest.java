@@ -31,7 +31,7 @@ public class ShopServiceTest {
     public void 산타샵_물품_생성() throws Exception {
 
         // given
-        User user = User.newInstance("1", "jinwon@gmail.com", "profile.png", 1000, "jinwon", Role.ADMIN);
+        User user = User.newInstance(1L, "jinwon@gmail.com", "profile.png", 1000, "jinwon", Role.ADMIN);
         CreateShopRequest request = CreateShopRequest.newInstance("라면 한 박스", 1000, "ramen.jpg", "포인트로 뜨끈한 라면 한 박스 가져가세요!", 1L);
 
         // when
@@ -46,7 +46,7 @@ public class ShopServiceTest {
     public void 물품_이름으로_조회() throws Exception {
 
         // given
-        User user = User.newInstance("1", "jinwon@gmail.com", "profile.png", 1000, "jinwon", Role.ADMIN);
+        User user = User.newInstance(1L, "jinwon@gmail.com", "profile.png", 1000, "jinwon", Role.ADMIN);
         CreateShopRequest request = CreateShopRequest.newInstance("라면 한 박스", 1000, "ramen.jpg", "포인트로 뜨끈한 라면 한 박스 가져가세요!", 1L);
 
         // when
@@ -61,7 +61,7 @@ public class ShopServiceTest {
     public void 물품_내림차순_조회() throws Exception {
 
         // given
-        User user = User.newInstance("1", "jinwon@gmail.com", "profile.png", 1000, "jinwon", Role.ADMIN);
+        User user = User.newInstance(1L, "jinwon@gmail.com", "profile.png", 1000, "jinwon", Role.ADMIN);
         CreateShopRequest request1 = CreateShopRequest.newInstance("라면 한 박스", 1000, "ramen.jpg", "포인트로 뜨끈한 라면 한 박스 가져가세요!", 1L);
         CreateShopRequest request2 = CreateShopRequest.newInstance("쌀 10kg", 2000, "rice.jpg", "포인트로 든든한 쌀 밥 가져가세요!", 1L);
 
@@ -79,7 +79,7 @@ public class ShopServiceTest {
     public void 물품_전체_수정() throws Exception {
 
         // given
-        User user = User.newInstance("1", "jinwon@gmail.com", "profile.png", 1000, "jinwon", Role.ADMIN);
+        User user = User.newInstance(1L, "jinwon@gmail.com", "profile.png", 1000, "jinwon", Role.ADMIN);
         CreateShopRequest request = CreateShopRequest.newInstance("라면 한 박스", 1000, "ramen.jpg", "포인트로 뜨끈한 라면 한 박스 가져가세요!", 1L);
 
         // when
@@ -98,7 +98,7 @@ public class ShopServiceTest {
     public void 물품_삭제() throws Exception {
 
         // given
-        User user = User.newInstance("1", "jinwon@gmail.com", "profile.png", 1000, "jinwon", Role.ADMIN);
+        User user = User.newInstance(1L, "jinwon@gmail.com", "profile.png", 1000, "jinwon", Role.ADMIN);
         CreateShopRequest request = CreateShopRequest.newInstance("라면 한 박스", 1000, "ramen.jpg", "포인트로 뜨끈한 라면 한 박스 가져가세요!", 1L);
 
         // when

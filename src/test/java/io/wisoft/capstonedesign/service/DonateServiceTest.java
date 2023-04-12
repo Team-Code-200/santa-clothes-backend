@@ -33,7 +33,7 @@ public class DonateServiceTest {
     public void 게시글_작성() throws Exception {
 
         // given
-        User user = User.newInstance("1", "jinwon@gmail.com", "profile.png", 1000, "jinwon", Role.GENERAL);
+        User user = User.newInstance(1L, "jinwon@gmail.com", "profile.png", 1000, "jinwon", Role.GENERAL);
         CreateDonateRequest request = CreateDonateRequest.newInstance("패딩 나눔합니다", "image.png", "안 입는 패딩 기부해요", String.valueOf(Tag.TOP), 1L);
 
         // when
@@ -48,7 +48,7 @@ public class DonateServiceTest {
     public void 게시글_조회() throws Exception {
 
         // given
-        User user = User.newInstance("1", "jinwon@gmail.com", "profile.png", 1000, "jinwon", Role.GENERAL);
+        User user = User.newInstance(1L, "jinwon@gmail.com", "profile.png", 1000, "jinwon", Role.GENERAL);
         CreateDonateRequest request = CreateDonateRequest.newInstance("패딩 나눔합니다", "image.png", "안 입는 패딩 기부해요", String.valueOf(Tag.TOP), 1L);
 
         // when
@@ -64,7 +64,7 @@ public class DonateServiceTest {
     public void 전체_게시글_조회() throws Exception {
 
         // given
-        User user = User.newInstance("1", "jinwon@gmail.com", "profile.png", 1000, "jinwon", Role.GENERAL);
+        User user = User.newInstance(1L, "jinwon@gmail.com", "profile.png", 1000, "jinwon", Role.GENERAL);
         CreateDonateRequest request1 = CreateDonateRequest.newInstance("패딩 나눔합니다", "image.png", "안 입는 패딩 기부해요", String.valueOf(Tag.TOP), 1L);
         CreateDonateRequest request2 = CreateDonateRequest.newInstance("바지 나눔합니다", "image.png", "안 입는 바지 기부해요", String.valueOf(Tag.PANTS), 1L);
 
@@ -83,8 +83,8 @@ public class DonateServiceTest {
     public void 전체_게시글_최근순_조회() throws Exception {
 
         // given
-        User user1 = User.newInstance("1", "jinwon@gmail.com", "profile.png", 1000, "jinwon", Role.GENERAL);
-        User user2 = User.newInstance("2", "donggwon@gmail.com", "profile.png", 2000, "donggwon", Role.GENERAL);
+        User user1 = User.newInstance(1L, "jinwon@gmail.com", "profile.png", 1000, "jinwon", Role.GENERAL);
+        User user2 = User.newInstance(2L, "donggwon@gmail.com", "profile.png", 2000, "donggwon", Role.GENERAL);
         CreateDonateRequest request1 = CreateDonateRequest.newInstance("패딩 나눔합니다", "image.png", "안 입는 패딩 기부해요", String.valueOf(Tag.TOP), 1L);
         CreateDonateRequest request2 = CreateDonateRequest.newInstance("바지 나눔합니다", "image.png", "안 입는 바지 기부해요", String.valueOf(Tag.PANTS), 2L);
 
@@ -103,7 +103,7 @@ public class DonateServiceTest {
     public void 전체_게시글_태그별_조회() throws Exception {
 
         // given
-        User user = User.newInstance("1", "jinwon@gmail.com", "profile.png", 1000, "jinwon", Role.GENERAL);
+        User user = User.newInstance(1L, "jinwon@gmail.com", "profile.png", 1000, "jinwon", Role.GENERAL);
         CreateDonateRequest request1 = CreateDonateRequest.newInstance("패딩 나눔합니다", "image.png", "안 입는 패딩 기부해요", String.valueOf(Tag.TOP), 1L);
         CreateDonateRequest request2 = CreateDonateRequest.newInstance("바지 나눔합니다", "image.png", "안 입는 바지 기부해요", String.valueOf(Tag.PANTS), 1L);
         CreateDonateRequest request3 = CreateDonateRequest.newInstance("후드티 나눔합니다", "image.png", "안 입는 후드티 기부해요", String.valueOf(Tag.TOP), 1L);
@@ -123,7 +123,7 @@ public class DonateServiceTest {
     public void 게시글_전체_수정() throws Exception {
 
         // given
-        User user = User.newInstance("1", "jinwon@gmail.com", "profile.png", 1000, "jinwon", Role.GENERAL);
+        User user = User.newInstance(1L, "jinwon@gmail.com", "profile.png", 1000, "jinwon", Role.GENERAL);
         CreateDonateRequest request = CreateDonateRequest.newInstance("패딩 나눔합니다", "image.png", "안 입는 패딩 기부해요", String.valueOf(Tag.TOP), 1L);
 
         // when
@@ -143,7 +143,7 @@ public class DonateServiceTest {
     public void 게시글_삭제() throws Exception {
 
         // given
-        User user = User.newInstance("1", "jinwon@gmail.com", "profile.png", 1000, "jinwon", Role.GENERAL);
+        User user = User.newInstance(1L, "jinwon@gmail.com", "profile.png", 1000, "jinwon", Role.GENERAL);
         CreateDonateRequest request = CreateDonateRequest.newInstance("패딩 나눔합니다", "image.png", "안 입는 패딩 기부해요", String.valueOf(Tag.TOP), 1L);
 
         // when
