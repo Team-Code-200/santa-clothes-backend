@@ -28,7 +28,7 @@ public class UserServiceTest {
     public void 회원가입() throws Exception {
 
         // given
-        User user = User.newInstance(1L, "jinwon@gmail.com", "profile.png", 1000, "jinwon", Role.GENERAL);
+        User user = User.newInstance("1", "jinwon@gmail.com", "profile.png", 1000, "jinwon", Role.GENERAL);
 
         // when
         Long saveId = userService.join(user);
@@ -41,8 +41,8 @@ public class UserServiceTest {
     public void 중복_회원_검사() throws Exception {
 
         // given
-        User user1 = User.newInstance(1L, "jinwon@gmail.com", "profile.png", 1000, "jinwon", Role.GENERAL);
-        User user2 = User.newInstance(1L, "jinwon@gmail.com", "profile.png", 1000, "jinwon", Role.GENERAL);
+        User user1 = User.newInstance("1", "jinwon@gmail.com", "profile.png", 1000, "jinwon", Role.GENERAL);
+        User user2 = User.newInstance("1", "jinwon@gmail.com", "profile.png", 1000, "jinwon", Role.GENERAL);
 
         // when
         userService.join(user1);
@@ -56,7 +56,7 @@ public class UserServiceTest {
     public void 회원_조회() throws Exception {
 
         // given
-        User user = User.newInstance(1L, "jinwon@gmail.com", "profile.png", 1000, "jinwon", Role.GENERAL);
+        User user = User.newInstance("1", "jinwon@gmail.com", "profile.png", 1000, "jinwon", Role.GENERAL);
 
         // when
         Long userId = userService.join(user);
@@ -70,8 +70,8 @@ public class UserServiceTest {
     public void 전체_회원_조회() throws Exception {
 
         // given
-        User user1 = User.newInstance(1L, "jinwon@gmail.com", "profile1.png", 1000, "jinwon", Role.GENERAL);
-        User user2 = User.newInstance(2L, "minseok@gmail.com", "profile2.png", 1000, "minseok", Role.GENERAL);
+        User user1 = User.newInstance("1", "jinwon@gmail.com", "profile1.png", 1000, "jinwon", Role.GENERAL);
+        User user2 = User.newInstance("2", "minseok@gmail.com", "profile2.png", 1000, "minseok", Role.GENERAL);
 
         // when
         userService.join(user1);
@@ -87,7 +87,7 @@ public class UserServiceTest {
     public void 회원_닉네임_수정() throws Exception {
 
         // given
-        User user1 = User.newInstance(1L, "jinwon@gmail.com", "profile1.png", 1000, "jinwon", Role.GENERAL);
+        User user1 = User.newInstance("1", "jinwon@gmail.com", "profile1.png", 1000, "jinwon", Role.GENERAL);
 
         // when
         Long userId = userService.join(user1);
@@ -101,7 +101,7 @@ public class UserServiceTest {
     public void 회원_탈퇴() throws Exception {
 
         // given
-        User user = User.newInstance(1L, "jinwon@gmail.com", "profile1.png", 1000, "jinwon", Role.GENERAL);
+        User user = User.newInstance("1", "jinwon@gmail.com", "profile1.png", 1000, "jinwon", Role.GENERAL);
 
         // when
         Long userId = userService.join(user);
