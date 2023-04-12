@@ -8,7 +8,7 @@ import lombok.Data;
 public class CreateUserRequest {
 
     @NotEmpty
-    private String oauthId;
+    private Long oauthId;
 
     @Email
     @NotEmpty

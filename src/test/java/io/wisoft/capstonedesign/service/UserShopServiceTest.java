@@ -38,7 +38,7 @@ public class UserShopServiceTest {
     public void 주문내역_생성() throws Exception {
 
         // given
-        User user = User.newInstance("2", "donggwon@gmail.com", "profile.png", 1000, "donggwon", Role.GENERAL);
+        User user = User.newInstance(2L, "donggwon@gmail.com", "profile.png", 1000, "donggwon", Role.GENERAL);
         CreateShopRequest request1 = CreateShopRequest.newInstance("라면 한 박스", 1000, "ramen.jpg", "포인트로 뜨끈한 라면 한 박스 가져가세요!", 1L);
         CreateInformationRequest request2 = CreateInformationRequest.newInstance("윤진원", "대전광역시 유성구", "010-0000-0000", 1L);
         CreateOrderRequest request3 = CreateOrderRequest.newInstance("배송 전 문자 부탁드립니다", 1L, 1L, 1L);
@@ -57,7 +57,7 @@ public class UserShopServiceTest {
     public void 주문내역_조회() throws Exception {
 
         // given
-        User user = User.newInstance("2", "donggwon@gmail.com", "profile.png", 1000, "donggwon", Role.GENERAL);
+        User user = User.newInstance(2L, "donggwon@gmail.com", "profile.png", 1000, "donggwon", Role.GENERAL);
         CreateShopRequest request1 = CreateShopRequest.newInstance("라면 한 박스", 1000, "ramen.jpg", "포인트로 뜨끈한 라면 한 박스 가져가세요!", 1L);
         CreateInformationRequest request2 = CreateInformationRequest.newInstance("윤진원", "대전광역시 유성구", "010-0000-0000", 1L);
         CreateOrderRequest request3 = CreateOrderRequest.newInstance("배송 전 문자 부탁드립니다", 1L, 1L, 1L);
@@ -77,7 +77,7 @@ public class UserShopServiceTest {
     public void 전체_주문내역_조회() throws Exception {
 
         // given
-        User user = User.newInstance("2", "donggwon@gmail.com", "profile.png", 1000, "donggwon", Role.GENERAL);
+        User user = User.newInstance(2L, "donggwon@gmail.com", "profile.png", 1000, "donggwon", Role.GENERAL);
         CreateShopRequest request1 = CreateShopRequest.newInstance("라면 한 박스", 1000, "ramen.jpg", "포인트로 뜨끈한 라면 한 박스 가져가세요!", 1L);
         CreateInformationRequest request2 = CreateInformationRequest.newInstance("윤진원", "대전광역시 유성구", "010-0000-0000", 1L);
         CreateOrderRequest request3 = CreateOrderRequest.newInstance("배송 전 문자 부탁드립니다", 1L, 1L, 1L);
@@ -99,7 +99,7 @@ public class UserShopServiceTest {
     public void 개별_주문내역_최근순_조회() throws Exception {
 
         // given
-        User user = User.newInstance("2", "donggwon@gmail.com", "profile.png", 1000, "donggwon", Role.GENERAL);
+        User user = User.newInstance(2L, "donggwon@gmail.com", "profile.png", 1000, "donggwon", Role.GENERAL);
         CreateShopRequest request1 = CreateShopRequest.newInstance("라면 한 박스", 1000, "ramen.jpg", "포인트로 뜨끈한 라면 한 박스 가져가세요!", 1L);
         CreateInformationRequest request2 = CreateInformationRequest.newInstance("윤진원", "대전광역시 유성구", "010-0000-0000", 1L);
         CreateOrderRequest request3 = CreateOrderRequest.newInstance("배송 전 문자 부탁드립니다", 1L, 1L, 1L);
@@ -121,7 +121,7 @@ public class UserShopServiceTest {
     public void 주문내역_기타사항_수정() throws Exception {
 
         // given
-        User user = User.newInstance("2", "donggwon@gmail.com", "profile.png", 1000, "donggwon", Role.GENERAL);
+        User user = User.newInstance(2L, "donggwon@gmail.com", "profile.png", 1000, "donggwon", Role.GENERAL);
         CreateShopRequest request1 = CreateShopRequest.newInstance("라면 한 박스", 1000, "ramen.jpg", "포인트로 뜨끈한 라면 한 박스 가져가세요!", 1L);
         CreateInformationRequest request2 = CreateInformationRequest.newInstance("윤진원", "대전광역시 유성구", "010-0000-0000", 1L);
         CreateOrderRequest request3 = CreateOrderRequest.newInstance("배송 전 문자 부탁드립니다", 1L, 1L, 1L);
@@ -144,7 +144,7 @@ public class UserShopServiceTest {
     public void 주문내역_삭제() throws Exception {
 
         // given
-        User user = User.newInstance("2", "donggwon@gmail.com", "profile.png", 1000, "donggwon", Role.GENERAL);
+        User user = User.newInstance(2L, "donggwon@gmail.com", "profile.png", 1000, "donggwon", Role.GENERAL);
         CreateShopRequest request1 = CreateShopRequest.newInstance("라면 한 박스", 1000, "ramen.jpg", "포인트로 뜨끈한 라면 한 박스 가져가세요!", 1L);
         CreateInformationRequest request2 = CreateInformationRequest.newInstance("윤진원", "대전광역시 유성구", "010-0000-0000", 1L);
         CreateOrderRequest request3 = CreateOrderRequest.newInstance("배송 전 문자 부탁드립니다", 1L, 1L, 1L);

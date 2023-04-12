@@ -34,7 +34,7 @@ public class User {
     private Long id;
 
     @Column(name = "oauth_id", nullable = false)
-    private String oauthId;
+    private Long oauthId;
 
     @Column(name = "email", nullable = false)
     private String email;
@@ -84,7 +84,7 @@ public class User {
      * 정적 생성자 메소드
      */
     public static User newInstance(
-            final String oauthId,
+            final Long oauthId,
             final String email,
             final String profileImage,
             final int point,
