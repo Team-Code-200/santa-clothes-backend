@@ -15,6 +15,7 @@
 HELP.md
 
 *.yml
+*.html
 
 # AWS User-specific
 .idea/**/aws.xml
