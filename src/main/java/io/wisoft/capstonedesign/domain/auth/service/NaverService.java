@@ -20,44 +20,44 @@ import org.springframework.web.client.RestTemplate;
 
 @Service
 @RequiredArgsConstructor
-public class KakaoService {
+public class NaverService {
 
     private final UserRepository userRepository;
 
-    @Value("${oauth.kakao.client_id}")
+    @Value("${oauth.naver.client_id}")
     private String clientId;
 
-    @Value("${oauth.kakao.redirect_uri}")
+    @Value("${oauth.naver.redirect_uri}")
     private String redirectUri;
 
-    @Value("${oauth.kakao.client_secret}")
+    @Value("${oauth.naver.client_secret}")
     private String clientSecret;
 
-    @Value("${oauth.kakao.auth_uri}")
+    @Value("${oauth.naver.auth_uri}")
     private String authUri;
 
-    @Value("${oauth.kakao.info_uri}")
+    @Value("${oauth.naver.info_uri}")
     private String infoUri;
 
     /**
      * 로그인 프로세스
      */
-    public void kakaoLogin(String code) throws JsonProcessingException {
+    public void naverLogin(final String code) throws JsonProcessingException {
 
         // 1. 인가 코드로 액세스 토큰 요청
         String accessToken = getAccessToken(code);
 
         // 2. 토큰으로 카카오 API 호출
-        OauthUserInfoDto kakaoUserInfo = getKakaoUserInfo(accessToken);
+        OauthUserInfoDto oauthUserInfo = getNaverUserInfo(accessToken);
 
         // 3. 필요시 회원 가입
-        registerKakaoUserIfNeeded(kakaoUserInfo);
+        registerNaverUserIfNeeded(oauthUserInfo);
     }
 
     /**
      * 토큰 획득
      */
-    public String getAccessToken(String code) throws JsonProcessingException {
+    public String getAccessToken(final String code) throws JsonProcessingException {
 
         // HTTP 헤더 생성
         HttpHeaders headers = new HttpHeaders();
@@ -72,12 +72,12 @@ public class KakaoService {
         body.add("client_secret", clientSecret);
 
         // HTTP 요청 보내기
-        HttpEntity<MultiValueMap<String, String>> kakaoTokenRequest = new HttpEntity<>(body, headers);
+        HttpEntity<MultiValueMap<String, String>> naverTokenRequest = new HttpEntity<>(body, headers);
         RestTemplate template = new RestTemplate();
         ResponseEntity<String> response = template.exchange(
                 authUri,
                 HttpMethod.POST,
-                kakaoTokenRequest,
+                naverTokenRequest,
                 String.class
         );
 
@@ -90,9 +90,9 @@ public class KakaoService {
     }
 
     /**
-     * 카카오 유저 정보 가져오기
+     * 네이버 유저 정보 가져오기
      */
-    private OauthUserInfoDto getKakaoUserInfo(String accessToken) throws JsonProcessingException {
+    private OauthUserInfoDto getNaverUserInfo(final String accessToken) throws JsonProcessingException {
 
         // HTTP 헤더 생성
         HttpHeaders headers = new HttpHeaders();
@@ -100,12 +100,12 @@ public class KakaoService {
         headers.add("Content-type", "application/x-www-form-urlencoded;charset=utf-8");
 
         // HTTP 요청 보내기
-        HttpEntity<MultiValueMap<String, String>> kakaoUserInfoRequest = new HttpEntity<>(headers);
+        HttpEntity<MultiValueMap<String, String>> naverUserInfoRequest = new HttpEntity<>(headers);
         RestTemplate template = new RestTemplate();
         ResponseEntity<String> response = template.exchange(
                 infoUri,
                 HttpMethod.POST,
-                kakaoUserInfoRequest,
+                naverUserInfoRequest,
                 String.class
         );
 
@@ -114,10 +114,10 @@ public class KakaoService {
         JsonNode jsonNode = objectMapper.readTree(responseBody);
 
         // 프로퍼티를 이용해 정보 가져오기
-        String id = jsonNode.get("id").asText();
-        String nickname = jsonNode.get("kakao_account").get("profile").get("nickname").asText();
-        String email = jsonNode.get("kakao_account").get("email").asText();
-        String profileImage = jsonNode.get("kakao_account").get("profile").get("profile_image_url").asText();
+        String id = jsonNode.get("response").get("id").asText();
+        String nickname = jsonNode.get("response").get("nickname").asText();
+        String email = jsonNode.get("response").get("email").asText();
+        String profileImage = jsonNode.get("response").get("profile_image").asText();
 
         return new OauthUserInfoDto(nickname, id, email, profileImage);
     }
@@ -125,21 +125,18 @@ public class KakaoService {
     /**
      * id 체크 및 필요시 회원가입 과정
      */
-    private User registerKakaoUserIfNeeded(OauthUserInfoDto kakaoUserInfo) {
+    private User registerNaverUserIfNeeded(OauthUserInfoDto oauthUserInfo) {
 
         // DB에 중복된 Kakao Id가 있는지 확인
-        String kakaoId = kakaoUserInfo.getOauthId();
-        User kakaoUser = userRepository.findByOauthId(kakaoId).orElse(null);
+        String naverId = oauthUserInfo.getOauthId();
+        User naverUser = userRepository.findByOauthId(naverId).orElse(null);
 
-        if (kakaoUser == null) {
+        if (naverUser == null) {
 
-            // 회원 가입
-//            String nickname = "KAKAO" + UUID.randomUUID().toString().substring(0, 8);
-
-            kakaoUser = User.newInstance(kakaoId, kakaoUserInfo.getEmail(), kakaoUserInfo.getProfileImage(), 0, kakaoUserInfo.getNickname(), Role.GENERAL);
-            userRepository.save(kakaoUser);
+            naverUser = User.newInstance(naverId, oauthUserInfo.getEmail(), oauthUserInfo.getProfileImage(), 0, oauthUserInfo.getNickname(), Role.GENERAL);
+            userRepository.save(naverUser);
         }
 
-        return kakaoUser;
+        return naverUser;
     }
 }
