@@ -5,10 +5,10 @@ import lombok.Data;
 
 @Data
 @AllArgsConstructor
-public class KakaoUserInfoDto {
+public class OauthUserInfoDto {
 
     private String nickname;
-    private Long kakaoId;
+    private String oauthId;
 
     private String email;
 

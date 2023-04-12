@@ -3,7 +3,7 @@ package io.wisoft.capstonedesign.domain.auth.service;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import io.wisoft.capstonedesign.domain.auth.web.dto.KakaoUserInfoDto;
+import io.wisoft.capstonedesign.domain.auth.web.dto.OauthUserInfoDto;
 import io.wisoft.capstonedesign.domain.user.persistence.User;
 import io.wisoft.capstonedesign.domain.user.persistence.UserRepository;
 import io.wisoft.capstonedesign.global.enumerated.Role;
@@ -17,8 +17,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestTemplate;
-
-import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
@@ -50,7 +48,7 @@ public class KakaoService {
         String accessToken = getAccessToken(code);
 
         // 2. 토큰으로 카카오 API 호출
-        KakaoUserInfoDto kakaoUserInfo = getKakaoUserInfo(accessToken);
+        OauthUserInfoDto kakaoUserInfo = getKakaoUserInfo(accessToken);
 
         // 3. 필요시 회원 가입
         registerKakaoUserIfNeeded(kakaoUserInfo);
@@ -94,7 +92,7 @@ public class KakaoService {
     /**
      * 카카오 유저 정보 가져오기
      */
-    private KakaoUserInfoDto getKakaoUserInfo(String accessToken) throws JsonProcessingException {
+    private OauthUserInfoDto getKakaoUserInfo(String accessToken) throws JsonProcessingException {
 
         // HTTP 헤더 생성
         HttpHeaders headers = new HttpHeaders();
@@ -116,21 +114,21 @@ public class KakaoService {
         JsonNode jsonNode = objectMapper.readTree(responseBody);
 
         // 프로퍼티를 이용해 정보 가져오기
-        Long id = jsonNode.get("id").asLong();
+        String id = jsonNode.get("id").asText();
         String nickname = jsonNode.get("kakao_account").get("profile").get("nickname").asText();
         String email = jsonNode.get("kakao_account").get("email").asText();
         String profileImage = jsonNode.get("kakao_account").get("profile").get("profile_image_url").asText();
 
-        return new KakaoUserInfoDto(nickname, id, email, profileImage);
+        return new OauthUserInfoDto(nickname, id, email, profileImage);
     }
 
     /**
      * id 체크 및 필요시 회원가입 과정
      */
-    private User registerKakaoUserIfNeeded(KakaoUserInfoDto kakaoUserInfo) {
+    private User registerKakaoUserIfNeeded(OauthUserInfoDto kakaoUserInfo) {
 
         // DB에 중복된 Kakao Id가 있는지 확인
-        Long kakaoId = kakaoUserInfo.getKakaoId();
+        String kakaoId = kakaoUserInfo.getOauthId();
         User kakaoUser = userRepository.findByOauthId(kakaoId).orElse(null);
 
         if (kakaoUser == null) {
