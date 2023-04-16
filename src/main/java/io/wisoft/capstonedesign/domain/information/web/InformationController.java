@@ -28,7 +28,7 @@ public class InformationController {
             @PathVariable("id") final Long id,
             @RequestBody @Valid final UpdateInformationRequest request) {
 
-        informationService.updateAll(request);
+        informationService.updateAll(id, request);
         Information updateInfo = informationService.findById(id);
         return new UpdateInformationResponse(updateInfo);
     }

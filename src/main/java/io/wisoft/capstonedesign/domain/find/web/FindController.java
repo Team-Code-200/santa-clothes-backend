@@ -29,7 +29,7 @@ public class FindController {
             @PathVariable("id") final Long id,
             @RequestBody @Valid final UpdateFindRequest request) {
 
-        findService.updateAll(request);
+        findService.updateAll(id, request);
         Find updateFind = findService.findById(id);
         return new UpdateFindResponse(updateFind);
     }

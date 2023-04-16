@@ -1,13 +1,13 @@
 package io.wisoft.capstonedesign.domain.find.web.dto;
 
 import io.wisoft.capstonedesign.domain.find.persistence.Find;
-import lombok.AllArgsConstructor;
-import lombok.Data;
+import lombok.*;
 
 import java.time.LocalDateTime;
 
-@Data
+@Getter
 @AllArgsConstructor
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class FindDto {
 
     private String title;

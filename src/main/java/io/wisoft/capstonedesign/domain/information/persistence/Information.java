@@ -5,6 +5,7 @@ import io.wisoft.capstonedesign.domain.donateorder.persistence.DonateOrder;
 import io.wisoft.capstonedesign.domain.findorder.persistence.FindOrder;
 import io.wisoft.capstonedesign.domain.user.persistence.User;
 import jakarta.persistence.*;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -50,6 +51,7 @@ public class Information {
     /**
      * 정적 생성자 메소드
      */
+    @Builder
     public static Information createInformation(
             final String username,
             final String address,
@@ -60,7 +62,7 @@ public class Information {
         information.username = username;
         information.address = address;
         information.phoneNumber = phoneNumber;
-        information.user = user;
+        information.setUser(user);
         return information;
     }
 

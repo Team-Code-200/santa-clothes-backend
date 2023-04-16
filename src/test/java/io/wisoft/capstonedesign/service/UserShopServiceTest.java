@@ -2,6 +2,7 @@ package io.wisoft.capstonedesign.service;
 
 import io.wisoft.capstonedesign.domain.information.web.dto.CreateInformationRequest;
 import io.wisoft.capstonedesign.domain.shop.web.dto.CreateShopRequest;
+import io.wisoft.capstonedesign.domain.user.web.dto.CreateUserRequest;
 import io.wisoft.capstonedesign.domain.usershop.web.dto.CreateOrderRequest;
 import io.wisoft.capstonedesign.domain.usershop.web.dto.UpdateOrderRequest;
 import io.wisoft.capstonedesign.global.enumerated.Role;
@@ -38,57 +39,57 @@ public class UserShopServiceTest {
     public void 주문내역_생성() throws Exception {
 
         // given
-        User user = User.newInstance("2", "donggwon@gmail.com", "profile.png", 1000, "donggwon", Role.GENERAL);
-        CreateShopRequest request1 = CreateShopRequest.newInstance("라면 한 박스", 1000, "ramen.jpg", "포인트로 뜨끈한 라면 한 박스 가져가세요!", 1L);
-        CreateInformationRequest request2 = CreateInformationRequest.newInstance("윤진원", "대전광역시 유성구", "010-0000-0000", 1L);
-        CreateOrderRequest request3 = CreateOrderRequest.newInstance("배송 전 문자 부탁드립니다", 1L, 1L, 1L);
+        CreateUserRequest request1 = new CreateUserRequest("1", "jinwon@gmail.com", "profile.png", 1000, "jinwon", String.valueOf(Role.GENERAL));
+        CreateShopRequest request2 = new CreateShopRequest("라면 한 박스", 1000, "ramen.jpg", "포인트로 뜨끈한 라면 한 박스 가져가세요!", 1L);
+        CreateInformationRequest request3 = new CreateInformationRequest("윤진원", "대전광역시 유성구", "010-0000-0000", 1L);
+        CreateOrderRequest request4 = new CreateOrderRequest("배송 전 문자 부탁드립니다", 1L, 1L, 1L);
 
         // when
-        userService.join(user);
-        shopService.save(request1);
-        informationService.save(request2);
-        Long savedId = userShopService.save(request3);
+        userService.join(request1);
+        shopService.save(request2);
+        informationService.save(request3);
+        Long savedId = userShopService.save(request4);
 
         // then
-        assertEquals(request3.getText(), userShopService.findById(savedId).getText());
+        assertEquals(request4.getText(), userShopService.findById(savedId).getText());
     }
 
     @Test
     public void 주문내역_조회() throws Exception {
 
         // given
-        User user = User.newInstance("2", "donggwon@gmail.com", "profile.png", 1000, "donggwon", Role.GENERAL);
-        CreateShopRequest request1 = CreateShopRequest.newInstance("라면 한 박스", 1000, "ramen.jpg", "포인트로 뜨끈한 라면 한 박스 가져가세요!", 1L);
-        CreateInformationRequest request2 = CreateInformationRequest.newInstance("윤진원", "대전광역시 유성구", "010-0000-0000", 1L);
-        CreateOrderRequest request3 = CreateOrderRequest.newInstance("배송 전 문자 부탁드립니다", 1L, 1L, 1L);
+        CreateUserRequest request1 = new CreateUserRequest("1", "jinwon@gmail.com", "profile.png", 1000, "jinwon", String.valueOf(Role.GENERAL));
+        CreateShopRequest request2 = new CreateShopRequest("라면 한 박스", 1000, "ramen.jpg", "포인트로 뜨끈한 라면 한 박스 가져가세요!", 1L);
+        CreateInformationRequest request3 = new CreateInformationRequest("윤진원", "대전광역시 유성구", "010-0000-0000", 1L);
+        CreateOrderRequest request4 = new CreateOrderRequest("배송 전 문자 부탁드립니다", 1L, 1L, 1L);
 
         // when
-        userService.join(user);
-        shopService.save(request1);
-        informationService.save(request2);
-        Long savedId = userShopService.save(request3);
+        userService.join(request1);
+        shopService.save(request2);
+        informationService.save(request3);
+        Long savedId = userShopService.save(request4);
         UserShop savedOrder = userShopService.findById(savedId);
 
         // then
-        assertEquals(request3.getText(), savedOrder.getText());
+        assertEquals(request4.getText(), savedOrder.getText());
     }
 
     @Test(expected = AssertionFailedError.class)
     public void 전체_주문내역_조회() throws Exception {
 
         // given
-        User user = User.newInstance("2", "donggwon@gmail.com", "profile.png", 1000, "donggwon", Role.GENERAL);
-        CreateShopRequest request1 = CreateShopRequest.newInstance("라면 한 박스", 1000, "ramen.jpg", "포인트로 뜨끈한 라면 한 박스 가져가세요!", 1L);
-        CreateInformationRequest request2 = CreateInformationRequest.newInstance("윤진원", "대전광역시 유성구", "010-0000-0000", 1L);
-        CreateOrderRequest request3 = CreateOrderRequest.newInstance("배송 전 문자 부탁드립니다", 1L, 1L, 1L);
-        CreateOrderRequest request4 = CreateOrderRequest.newInstance("경비실에 맡겨주세요", 1L, 1L, 1L);
+        CreateUserRequest request1 = new CreateUserRequest("1", "jinwon@gmail.com", "profile.png", 1000, "jinwon", String.valueOf(Role.GENERAL));
+        CreateShopRequest request2 = new CreateShopRequest("라면 한 박스", 1000, "ramen.jpg", "포인트로 뜨끈한 라면 한 박스 가져가세요!", 1L);
+        CreateInformationRequest request3 = new CreateInformationRequest("윤진원", "대전광역시 유성구", "010-0000-0000", 1L);
+        CreateOrderRequest request4 = new CreateOrderRequest("배송 전 문자 부탁드립니다", 1L, 1L, 1L);
+        CreateOrderRequest request5 = new CreateOrderRequest("경비실에 맡겨주세요", 1L, 1L, 1L);
 
         // when
-        userService.join(user);
-        shopService.save(request1);
-        informationService.save(request2);
-        userShopService.save(request3);
+        userService.join(request1);
+        shopService.save(request2);
+        informationService.save(request3);
         userShopService.save(request4);
+        userShopService.save(request5);
         List<UserShop> shopOrders = userShopService.findShopOrders();
 
         // then
@@ -99,41 +100,41 @@ public class UserShopServiceTest {
     public void 개별_주문내역_최근순_조회() throws Exception {
 
         // given
-        User user = User.newInstance("2", "donggwon@gmail.com", "profile.png", 1000, "donggwon", Role.GENERAL);
-        CreateShopRequest request1 = CreateShopRequest.newInstance("라면 한 박스", 1000, "ramen.jpg", "포인트로 뜨끈한 라면 한 박스 가져가세요!", 1L);
-        CreateInformationRequest request2 = CreateInformationRequest.newInstance("윤진원", "대전광역시 유성구", "010-0000-0000", 1L);
-        CreateOrderRequest request3 = CreateOrderRequest.newInstance("배송 전 문자 부탁드립니다", 1L, 1L, 1L);
-        CreateOrderRequest request4 = CreateOrderRequest.newInstance("경비실에 맡겨주세요", 1L, 1L, 1L);
+        CreateUserRequest request1 = new CreateUserRequest("1", "jinwon@gmail.com", "profile.png", 1000, "jinwon", String.valueOf(Role.GENERAL));
+        CreateShopRequest request2 = new CreateShopRequest("라면 한 박스", 1000, "ramen.jpg", "포인트로 뜨끈한 라면 한 박스 가져가세요!", 1L);
+        CreateInformationRequest request3 = new CreateInformationRequest("윤진원", "대전광역시 유성구", "010-0000-0000", 1L);
+        CreateOrderRequest request4 = new CreateOrderRequest("배송 전 문자 부탁드립니다", 1L, 1L, 1L);
+        CreateOrderRequest request5 = new CreateOrderRequest("경비실에 맡겨주세요", 1L, 1L, 1L);
 
         // when
-        Long userId = userService.join(user);
-        shopService.save(request1);
-        informationService.save(request2);
-        userShopService.save(request3);
+        Long userId = userService.join(request1);
+        shopService.save(request2);
+        informationService.save(request3);
         userShopService.save(request4);
+        userShopService.save(request5);
         List<UserShop> orderDESC = userShopService.findByUser(userId);
 
         // then
-        assertEquals(request4.getText(), orderDESC.get(0).getText());
+        assertEquals(request5.getText(), orderDESC.get(0).getText());
     }
 
     @Test
     public void 주문내역_기타사항_수정() throws Exception {
 
         // given
-        User user = User.newInstance("2", "donggwon@gmail.com", "profile.png", 1000, "donggwon", Role.GENERAL);
-        CreateShopRequest request1 = CreateShopRequest.newInstance("라면 한 박스", 1000, "ramen.jpg", "포인트로 뜨끈한 라면 한 박스 가져가세요!", 1L);
-        CreateInformationRequest request2 = CreateInformationRequest.newInstance("윤진원", "대전광역시 유성구", "010-0000-0000", 1L);
-        CreateOrderRequest request3 = CreateOrderRequest.newInstance("배송 전 문자 부탁드립니다", 1L, 1L, 1L);
+        CreateUserRequest request1 = new CreateUserRequest("1", "jinwon@gmail.com", "profile.png", 1000, "jinwon", String.valueOf(Role.GENERAL));
+        CreateShopRequest request2 = new CreateShopRequest("라면 한 박스", 1000, "ramen.jpg", "포인트로 뜨끈한 라면 한 박스 가져가세요!", 1L);
+        CreateInformationRequest request3 = new CreateInformationRequest("윤진원", "대전광역시 유성구", "010-0000-0000", 1L);
+        CreateOrderRequest request4 = new CreateOrderRequest("배송 전 문자 부탁드립니다", 1L, 1L, 1L);
 
         // when
-        userService.join(user);
-        shopService.save(request1);
-        informationService.save(request2);
-        Long savedId = userShopService.save(request3);
+        userService.join(request1);
+        shopService.save(request2);
+        informationService.save(request3);
+        Long savedId = userShopService.save(request4);
 
-        UpdateOrderRequest updateRequest = UpdateOrderRequest.newInstance("경비실에 맡겨주세요", 1L);
-        userShopService.updateBody(updateRequest);
+        UpdateOrderRequest updateRequest = new UpdateOrderRequest("경비실에 맡겨주세요", 1L);
+        userShopService.updateBody(savedId, updateRequest);
         UserShop updateOrder = userShopService.findById(savedId);
 
         // then
@@ -144,21 +145,21 @@ public class UserShopServiceTest {
     public void 주문내역_삭제() throws Exception {
 
         // given
-        User user = User.newInstance("2", "donggwon@gmail.com", "profile.png", 1000, "donggwon", Role.GENERAL);
-        CreateShopRequest request1 = CreateShopRequest.newInstance("라면 한 박스", 1000, "ramen.jpg", "포인트로 뜨끈한 라면 한 박스 가져가세요!", 1L);
-        CreateInformationRequest request2 = CreateInformationRequest.newInstance("윤진원", "대전광역시 유성구", "010-0000-0000", 1L);
-        CreateOrderRequest request3 = CreateOrderRequest.newInstance("배송 전 문자 부탁드립니다", 1L, 1L, 1L);
+        CreateUserRequest request1 = new CreateUserRequest("1", "jinwon@gmail.com", "profile.png", 1000, "jinwon", String.valueOf(Role.GENERAL));
+        CreateShopRequest request2 = new CreateShopRequest("라면 한 박스", 1000, "ramen.jpg", "포인트로 뜨끈한 라면 한 박스 가져가세요!", 1L);
+        CreateInformationRequest request3 = new CreateInformationRequest("윤진원", "대전광역시 유성구", "010-0000-0000", 1L);
+        CreateOrderRequest request4 = new CreateOrderRequest("배송 전 문자 부탁드립니다", 1L, 1L, 1L);
 
         // when
-        userService.join(user);
-        shopService.save(request1);
-        informationService.save(request2);
-        Long savedId = userShopService.save(request3);
+        userService.join(request1);
+        shopService.save(request2);
+        informationService.save(request3);
+        Long savedId = userShopService.save(request4);
 
         userShopService.deleteOrder(savedId);
         UserShop deleteOrder = userShopService.findById(savedId);
 
         // then
-        assertEquals(request3, deleteOrder);
+        assertEquals(request4, deleteOrder);
     }
 }

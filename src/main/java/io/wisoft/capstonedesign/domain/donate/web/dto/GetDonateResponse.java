@@ -1,13 +1,13 @@
 package io.wisoft.capstonedesign.domain.donate.web.dto;
 
 import io.wisoft.capstonedesign.domain.donate.persistence.Donate;
-import lombok.AllArgsConstructor;
-import lombok.Data;
+import lombok.*;
 
 import java.time.LocalDateTime;
 
-@Data
+@Getter
 @AllArgsConstructor
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class GetDonateResponse {
 
     private String tag;

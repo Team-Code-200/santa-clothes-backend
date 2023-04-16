@@ -1,12 +1,10 @@
 package io.wisoft.capstonedesign.domain.information.web.dto;
 
 import jakarta.validation.constraints.NotEmpty;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
-@Data
-@NoArgsConstructor
+@Getter
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
 public class UpdateInformationRequest {
 
@@ -20,19 +18,4 @@ public class UpdateInformationRequest {
     private String phoneNumber;
 
     private Long infoId;
-
-    public static UpdateInformationRequest newInstance(
-            final String username,
-            final String address,
-            final String phoneNumber,
-            final Long infoId
-    ) {
-        UpdateInformationRequest request = new UpdateInformationRequest();
-        request.username = username;
-        request.address = address;
-        request.phoneNumber = phoneNumber;
-        request.infoId = infoId;
-
-        return request;
-    }
 }

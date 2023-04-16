@@ -43,12 +43,12 @@ public class UserShopService {
         Shop shop = shopRepository.findById(request.getShopId())
                 .orElseThrow(() -> new PostNotFoundException(NOT_FOUND_POST));
 
-        UserShop userShop = UserShop.createUserShop(
-                request.getText(),
-                user,
-                shop,
-                information
-        );
+        UserShop userShop = UserShop.builder()
+                .text(request.getText())
+                .user(user)
+                .shop(shop)
+                .information(information)
+                .build();
 
         userShopRepository.save(userShop);
         return userShop.getId();
@@ -87,7 +87,7 @@ public class UserShopService {
      * 주문 내역 기타 사항 수정
      */
     @Transactional
-    public void updateBody(final UpdateOrderRequest request) {
+    public void updateBody(final Long id, final UpdateOrderRequest request) {
         UserShop userShop = userShopRepository.findById(request.getOrderId())
                 .orElseThrow(() -> new OrderNotFoundException(NOT_FOUND_ORDER));
         userShop.update(request.getText());

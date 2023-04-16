@@ -2,6 +2,7 @@ package io.wisoft.capstonedesign.domain.shop.persistence;
 
 import io.wisoft.capstonedesign.domain.usershop.persistence.UserShop;
 import jakarta.persistence.*;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -44,6 +45,7 @@ public class Shop {
     /**
      * 정적 생성자 메소드
      */
+    @Builder
     public static Shop createShop(
             final String title,
             final int price,

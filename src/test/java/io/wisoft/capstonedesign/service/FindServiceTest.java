@@ -4,6 +4,7 @@ import io.wisoft.capstonedesign.domain.find.application.FindService;
 import io.wisoft.capstonedesign.domain.find.persistence.Find;
 import io.wisoft.capstonedesign.domain.find.web.dto.CreateFindRequest;
 import io.wisoft.capstonedesign.domain.find.web.dto.UpdateFindRequest;
+import io.wisoft.capstonedesign.domain.user.web.dto.CreateUserRequest;
 import io.wisoft.capstonedesign.global.enumerated.Role;
 import io.wisoft.capstonedesign.global.enumerated.Tag;
 import io.wisoft.capstonedesign.domain.user.application.UserService;
@@ -33,45 +34,45 @@ public class FindServiceTest {
     public void 게시글_작성() throws Exception {
 
         // given
-        User user = User.newInstance("1", "jinwon@gmail.com", "profile.png", 1000, "jinwon", Role.GENERAL);
-        CreateFindRequest request = CreateFindRequest.newInstance("패딩 찾아봅니다", "image.png", "안 입는 패딩 기부받아요", String.valueOf(Tag.TOP), 1L);
+        CreateUserRequest request1 = new CreateUserRequest("1", "jinwon@gmail.com", "profile.png", 1000, "jinwon", String.valueOf(Role.GENERAL));
+        CreateFindRequest request2 = new CreateFindRequest("패딩 찾아봅니다", "image.png", "안 입는 패딩 기부받아요", String.valueOf(Tag.TOP), 1L);
 
         // when
-        userService.join(user);
-        Long savedId = findService.join(request);
+        userService.join(request1);
+        Long savedId = findService.join(request2);
 
         // then
-        assertEquals(request.getTitle(), findService.findById(savedId).getTitle());
+        assertEquals(request2.getTitle(), findService.findById(savedId).getTitle());
     }
 
     @Test
     public void 게시글_조회() throws Exception {
 
         // given
-        User user = User.newInstance("1", "jinwon@gmail.com", "profile.png", 1000, "jinwon", Role.GENERAL);
-        CreateFindRequest request = CreateFindRequest.newInstance("패딩 찾아봅니다", "image.png", "안 입는 패딩 기부받아요", String.valueOf(Tag.TOP), 1L);
+        CreateUserRequest request1 = new CreateUserRequest("1", "jinwon@gmail.com", "profile.png", 1000, "jinwon", String.valueOf(Role.GENERAL));
+        CreateFindRequest request2 = new CreateFindRequest("패딩 찾아봅니다", "image.png", "안 입는 패딩 기부받아요", String.valueOf(Tag.TOP), 1L);
 
         // when
-        userService.join(user);
-        Long savedId = findService.join(request);
+        userService.join(request1);
+        Long savedId = findService.join(request2);
         Find savedFind = findService.findById(savedId);
 
         // then
-        assertEquals(request.getTitle(), savedFind.getTitle());
+        assertEquals(request2.getTitle(), savedFind.getTitle());
     }
 
     @Test(expected = AssertionFailedError.class)
     public void 전체_게시글_조회() throws Exception {
 
         // given
-        User user = User.newInstance("1", "jinwon@gmail.com", "profile.png", 1000, "jinwon", Role.GENERAL);
-        CreateFindRequest request1 = CreateFindRequest.newInstance("패딩 찾아봅니다", "image.png", "안 입는 패딩 기부받아요", String.valueOf(Tag.TOP), 1L);
-        CreateFindRequest request2 = CreateFindRequest.newInstance("바지 찾아봅니다", "image.png", "안 입는 바지 기부받아요", String.valueOf(Tag.PANTS), 1L);
+        CreateUserRequest request1 = new CreateUserRequest("1", "jinwon@gmail.com", "profile.png", 1000, "jinwon", String.valueOf(Role.GENERAL));
+        CreateFindRequest request2 = new CreateFindRequest("패딩 찾아봅니다", "image.png", "안 입는 패딩 기부받아요", String.valueOf(Tag.TOP), 1L);
+        CreateFindRequest request3 = new CreateFindRequest("바지 찾아봅니다", "image.png", "안 입는 바지 기부받아요", String.valueOf(Tag.PANTS), 1L);
 
         // when
-        userService.join(user);
-        findService.join(request1);
+        userService.join(request1);
         findService.join(request2);
+        findService.join(request3);
         List<Find> finds = findService.findFinds();
 
         // then
@@ -83,36 +84,36 @@ public class FindServiceTest {
     public void 전체_게시글_최근순_조회() throws Exception {
 
         // given
-        User user1 = User.newInstance("1", "jinwon@gmail.com", "profile.png", 1000, "jinwon", Role.GENERAL);
-        User user2 = User.newInstance("2", "donggwon@gmail.com", "profile.png", 2000, "donggwon", Role.GENERAL);
-        CreateFindRequest request1 = CreateFindRequest.newInstance("패딩 찾아봅니다", "image.png", "안 입는 패딩 기부받아요", String.valueOf(Tag.TOP), 1L);
-        CreateFindRequest request2 = CreateFindRequest.newInstance("바지 찾아봅니다", "image.png", "안 입는 바지 기부받아요", String.valueOf(Tag.PANTS), 2L);
+        CreateUserRequest request1 = new CreateUserRequest("1", "jinwon@gmail.com", "profile.png", 1000, "jinwon", String.valueOf(Role.GENERAL));
+        CreateUserRequest request2 = new CreateUserRequest("2", "donggwon@gmail.com", "profile.png", 2000, "donggwon", String.valueOf(Role.GENERAL));
+        CreateFindRequest request3 = new CreateFindRequest("패딩 찾아봅니다", "image.png", "안 입는 패딩 기부받아요", String.valueOf(Tag.TOP), 1L);
+        CreateFindRequest request4 = new CreateFindRequest("바지 찾아봅니다", "image.png", "안 입는 바지 기부받아요", String.valueOf(Tag.PANTS), 2L);
 
         // when
-        userService.join(user1);
-        userService.join(user2);
-        findService.join(request1);
-        findService.join(request2);
+        userService.join(request1);
+        userService.join(request2);
+        findService.join(request3);
+        findService.join(request4);
         List<Find> findListDESC = findService.findByCreatedDateDESC();
 
         // then
-        assertEquals(request2.getTitle(), findListDESC.get(0).getTitle());
+        assertEquals(request4.getTitle(), findListDESC.get(0).getTitle());
     }
 
     @Test
     public void 전체_게시글_태그별_조회() throws Exception {
 
         // given
-        User user = User.newInstance("1", "jinwon@gmail.com", "profile.png", 1000, "jinwon", Role.GENERAL);
-        CreateFindRequest request1 = CreateFindRequest.newInstance("패딩 찾아봅니다", "image.png", "안 입는 패딩 기부받아요", String.valueOf(Tag.TOP), 1L);
-        CreateFindRequest request2 = CreateFindRequest.newInstance("청바지 찾아봅니다", "image.png", "안 입는 바지 기부받아요", String.valueOf(Tag.PANTS), 1L);
-        CreateFindRequest request3 = CreateFindRequest.newInstance("트레이닝 바지 찾아봅니다", "image.png", "안 입는 바지 기부받아요", String.valueOf(Tag.PANTS), 1L);
+        CreateUserRequest request1 = new CreateUserRequest("1", "jinwon@gmail.com", "profile.png", 1000, "jinwon", String.valueOf(Role.GENERAL));
+        CreateFindRequest request2 = new CreateFindRequest("패딩 찾아봅니다", "image.png", "안 입는 패딩 기부받아요", String.valueOf(Tag.TOP), 1L);
+        CreateFindRequest request3 = new CreateFindRequest("청바지 찾아봅니다", "image.png", "안 입는 바지 기부받아요", String.valueOf(Tag.PANTS), 1L);
+        CreateFindRequest request4 = new CreateFindRequest("트레이닝 바지 찾아봅니다", "image.png", "안 입는 바지 기부받아요", String.valueOf(Tag.PANTS), 1L);
 
         // when
-        userService.join(user);
-        findService.join(request1);
+        userService.join(request1);
         findService.join(request2);
         findService.join(request3);
+        findService.join(request4);
         List<Find> byTag = findService.findByTag(Tag.PANTS);
 
         // then
@@ -123,14 +124,15 @@ public class FindServiceTest {
     public void 게시글_전체_수정() throws Exception {
 
         // given
-        User user = User.newInstance("1", "jinwon@gmail.com", "profile.png", 1000, "jinwon", Role.GENERAL);
-        CreateFindRequest request = CreateFindRequest.newInstance("패딩 찾아봅니다", "image.png", "안 입는 패딩 기부받아요", String.valueOf(Tag.TOP), 1L);
-        // when
-        userService.join(user);
-        Long findId = findService.join(request);
+        CreateUserRequest request1 = new CreateUserRequest("1", "jinwon@gmail.com", "profile.png", 1000, "jinwon", String.valueOf(Role.GENERAL));
+        CreateFindRequest request2 = new CreateFindRequest("패딩 찾아봅니다", "image.png", "안 입는 패딩 기부받아요", String.valueOf(Tag.TOP), 1L);
 
-        UpdateFindRequest updateRequest = UpdateFindRequest.newInstance("바지 찾아봅니다", "image.png", "안 입는 바지 기부받아요", String.valueOf(Tag.PANTS), 1L);
-        findService.updateAll(updateRequest);
+        // when
+        userService.join(request1);
+        Long findId = findService.join(request2);
+
+        UpdateFindRequest updateRequest = new UpdateFindRequest("바지 찾아봅니다", "image.png", "안 입는 바지 기부받아요", String.valueOf(Tag.PANTS), 1L);
+        findService.updateAll(findId, updateRequest);
         Find updateFind = findService.findById(findId);
 
         // then
@@ -142,17 +144,17 @@ public class FindServiceTest {
     public void 게시글_삭제() throws Exception {
 
         // given
-        User user = User.newInstance("1", "jinwon@gmail.com", "profile1.png", 1000, "jinwon", Role.GENERAL);
-        CreateFindRequest request = CreateFindRequest.newInstance("패딩 찾아봅니다", "image.png", "안 입는 패딩 기부받아요", String.valueOf(Tag.TOP), 1L);
+        CreateUserRequest request1 = new CreateUserRequest("1", "jinwon@gmail.com", "profile.png", 1000, "jinwon", String.valueOf(Role.GENERAL));
+        CreateFindRequest request2 = new CreateFindRequest("패딩 찾아봅니다", "image.png", "안 입는 패딩 기부받아요", String.valueOf(Tag.TOP), 1L);
 
         // when
-        userService.join(user);
-        Long findId = findService.join(request);
+        userService.join(request1);
+        Long findId = findService.join(request2);
 
         findService.deleteFind(findId);
         Find deletedFind = findService.findById(findId);
 
         // then
-        assertEquals(request, deletedFind);
+        assertEquals(request2, deletedFind);
     }
 }

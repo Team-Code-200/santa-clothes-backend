@@ -1,11 +1,11 @@
 package io.wisoft.capstonedesign.domain.user.web.dto;
 
 import io.wisoft.capstonedesign.domain.user.persistence.User;
-import lombok.AllArgsConstructor;
-import lombok.Data;
+import lombok.*;
 
-@Data
+@Getter
 @AllArgsConstructor
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class GetUserResponse {
 
     private String nickname;

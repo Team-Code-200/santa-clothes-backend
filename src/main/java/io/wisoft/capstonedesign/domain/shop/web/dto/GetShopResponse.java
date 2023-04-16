@@ -1,13 +1,13 @@
 package io.wisoft.capstonedesign.domain.shop.web.dto;
 
 import io.wisoft.capstonedesign.domain.shop.persistence.Shop;
-import lombok.AllArgsConstructor;
-import lombok.Data;
+import lombok.*;
 
 import java.time.LocalDateTime;
 
-@Data
+@Getter
 @AllArgsConstructor
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class GetShopResponse {
 
     private String title;

@@ -1,11 +1,11 @@
 package io.wisoft.capstonedesign.domain.donateorder.web.dto;
 
 import io.wisoft.capstonedesign.domain.donateorder.persistence.DonateOrder;
-import lombok.AllArgsConstructor;
-import lombok.Data;
+import lombok.*;
 
-@Data
+@Getter
 @AllArgsConstructor
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class OrderDto {
 
     private String text;

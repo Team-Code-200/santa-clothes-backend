@@ -10,6 +10,7 @@ import io.wisoft.capstonedesign.domain.userchat.persistence.UserChat;
 import io.wisoft.capstonedesign.domain.usershop.persistence.UserShop;
 import io.wisoft.capstonedesign.global.enumerated.Role;
 import jakarta.persistence.*;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -83,6 +84,7 @@ public class User {
     /**
      * 정적 생성자 메소드
      */
+    @Builder
     public static User newInstance(
             final String oauthId,
             final String email,

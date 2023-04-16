@@ -29,7 +29,7 @@ public class DonateController {
             @PathVariable("id") final Long id,
             @RequestBody @Valid final UpdateDonateRequest request) {
 
-        donateService.updateAll(request);
+        donateService.updateAll(id, request);
         Donate updateDonate = donateService.findById(id);
         return new UpdateDonateResponse(updateDonate);
     }

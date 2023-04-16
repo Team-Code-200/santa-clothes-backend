@@ -4,6 +4,7 @@ import io.wisoft.capstonedesign.domain.information.persistence.Information;
 import io.wisoft.capstonedesign.domain.user.persistence.User;
 import io.wisoft.capstonedesign.domain.find.persistence.Find;
 import jakarta.persistence.*;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -44,6 +45,7 @@ public class FindOrder {
     /**
      * 정적 생성자 메소드
      */
+    @Builder
     public static FindOrder createFindOrder(
             final String text,
             final Information information,

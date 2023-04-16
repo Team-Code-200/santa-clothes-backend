@@ -4,6 +4,7 @@ import io.wisoft.capstonedesign.domain.donateorder.persistence.DonateOrder;
 import io.wisoft.capstonedesign.global.enumerated.Tag;
 import io.wisoft.capstonedesign.domain.user.persistence.User;
 import jakarta.persistence.*;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -54,6 +55,7 @@ public class Donate {
     /**
      * 정적 생성자 메소드
      */
+    @Builder
     public static Donate createDonate(
             final String title,
             final String image,

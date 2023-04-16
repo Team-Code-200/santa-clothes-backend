@@ -1,13 +1,13 @@
 package io.wisoft.capstonedesign.domain.findorder.web.dto;
 
 import io.wisoft.capstonedesign.domain.findorder.persistence.FindOrder;
-import lombok.AllArgsConstructor;
-import lombok.Data;
+import lombok.*;
 
 import java.time.LocalDateTime;
 
-@Data
+@Getter
 @AllArgsConstructor
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class GetOrderDto {
 
     private Long id;
