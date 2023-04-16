@@ -1,5 +1,7 @@
 package io.wisoft.capstonedesign.service;
 
+import io.wisoft.capstonedesign.domain.user.web.dto.CreateUserRequest;
+import io.wisoft.capstonedesign.domain.user.web.dto.UpdateUserRequest;
 import io.wisoft.capstonedesign.global.enumerated.Role;
 import io.wisoft.capstonedesign.domain.user.application.UserService;
 import io.wisoft.capstonedesign.domain.user.persistence.User;
@@ -28,25 +30,25 @@ public class UserServiceTest {
     public void 회원가입() throws Exception {
 
         // given
-        User user = User.newInstance("1", "jinwon@gmail.com", "profile.png", 1000, "jinwon", Role.GENERAL);
+        CreateUserRequest request = new CreateUserRequest("1", "jinwon@gmail.com", "profile.png", 1000, "jinwon", String.valueOf(Role.GENERAL));
 
         // when
-        Long saveId = userService.join(user);
+        Long saveId = userService.join(request);
 
         // then
-        assertEquals(user, userService.findById(saveId));
+        assertEquals(request.getNickname(), userService.findById(saveId).getNickname());
     }
 
     @Test(expected = UserDuplicateException.class)
     public void 중복_회원_검사() throws Exception {
 
         // given
-        User user1 = User.newInstance("1", "jinwon@gmail.com", "profile.png", 1000, "jinwon", Role.GENERAL);
-        User user2 = User.newInstance("1", "jinwon@gmail.com", "profile.png", 1000, "jinwon", Role.GENERAL);
+        CreateUserRequest request1 = new CreateUserRequest("1", "jinwon@gmail.com", "profile.png", 1000, "jinwon", String.valueOf(Role.GENERAL));
+        CreateUserRequest request2 = new CreateUserRequest("1", "jinwon@gmail.com", "profile.png", 1000, "jinwon", String.valueOf(Role.GENERAL));
 
         // when
-        userService.join(user1);
-        userService.join(user2);
+        userService.join(request1);
+        userService.join(request2);
 
         // then
         fail("예외가 발생해야 한다!");
@@ -56,26 +58,26 @@ public class UserServiceTest {
     public void 회원_조회() throws Exception {
 
         // given
-        User user = User.newInstance("1", "jinwon@gmail.com", "profile.png", 1000, "jinwon", Role.GENERAL);
+        CreateUserRequest request = new CreateUserRequest("1", "jinwon@gmail.com", "profile.png", 1000, "jinwon", String.valueOf(Role.GENERAL));
 
         // when
-        Long userId = userService.join(user);
+        Long userId = userService.join(request);
         User savedUser = userService.findById(userId);
 
         // then
-        assertEquals(user, savedUser);
+        assertEquals(request.getNickname(), savedUser.getNickname());
     }
 
     @Test(expected = AssertionFailedError.class)
     public void 전체_회원_조회() throws Exception {
 
         // given
-        User user1 = User.newInstance("1", "jinwon@gmail.com", "profile1.png", 1000, "jinwon", Role.GENERAL);
-        User user2 = User.newInstance("2", "minseok@gmail.com", "profile2.png", 1000, "minseok", Role.GENERAL);
+        CreateUserRequest request1 = new CreateUserRequest("1", "jinwon@gmail.com", "profile1.png", 1000, "jinwon", String.valueOf(Role.GENERAL));
+        CreateUserRequest request2 = new CreateUserRequest("2", "minseok@gmail.com", "profile2.png", 1000, "minseok", String.valueOf(Role.GENERAL));
 
         // when
-        userService.join(user1);
-        userService.join(user2);
+        userService.join(request1);
+        userService.join(request2);
         List<User> users = userService.findUsers();
 
         // then
@@ -87,28 +89,30 @@ public class UserServiceTest {
     public void 회원_닉네임_수정() throws Exception {
 
         // given
-        User user1 = User.newInstance("1", "jinwon@gmail.com", "profile1.png", 1000, "jinwon", Role.GENERAL);
+        CreateUserRequest request = new CreateUserRequest("1", "jinwon@gmail.com", "profile.png", 1000, "jinwon", String.valueOf(Role.GENERAL));
 
         // when
-        Long userId = userService.join(user1);
-        userService.updateNickname(userId, "jinony");
+        UpdateUserRequest request1 = new UpdateUserRequest("jinony");
+        Long userId = userService.join(request);
+        userService.updateNickname(userId, request1);
+        User updateUser = userService.findById(userId);
 
         // then
-        assertEquals("jinony", user1.getNickname());
+        assertEquals("jinony", updateUser.getNickname());
     }
 
     @Test(expected = UserNotFoundException.class)
     public void 회원_탈퇴() throws Exception {
 
         // given
-        User user = User.newInstance("1", "jinwon@gmail.com", "profile1.png", 1000, "jinwon", Role.GENERAL);
+        CreateUserRequest request = new CreateUserRequest("1", "jinwon@gmail.com", "profile.png", 1000, "jinwon", String.valueOf(Role.GENERAL));
 
         // when
-        Long userId = userService.join(user);
+        Long userId = userService.join(request);
         userService.deleteUser(userId);
         User deletedUser = userService.findById(userId);
 
         // then
-        assertEquals(user, deletedUser);
+        assertEquals(request.getNickname(), deletedUser.getNickname());
     }
 }
