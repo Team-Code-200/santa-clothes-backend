@@ -2,7 +2,6 @@ package io.wisoft.capstonedesign.domain.user.web;
 
 import io.wisoft.capstonedesign.domain.user.persistence.User;
 import io.wisoft.capstonedesign.domain.user.web.dto.*;
-import io.wisoft.capstonedesign.global.enumerated.Role;
 import io.wisoft.capstonedesign.domain.user.application.UserService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -20,15 +19,7 @@ public class UserController {
     @PostMapping("/api/auth/signup")
     public CreateUserResponse saveUser(@RequestBody @Valid final CreateUserRequest request) {
 
-        User user = User.newInstance(
-                request.getOauthId(),
-                request.getEmail(),
-                request.getProfileImage(),
-                request.getPoint(),
-                request.getNickname(),
-                Role.valueOf(request.getUserRole()));
-
-        Long id = userService.join(user);
+        Long id = userService.join(request);
         return new CreateUserResponse(id);
     }
 
@@ -37,7 +28,7 @@ public class UserController {
             @PathVariable("id") final Long id,
             @RequestBody @Valid final UpdateUserRequest request) {
 
-        userService.updateNickname(id, request.getNickname());
+        userService.updateNickname(id, request);
         User findUser = userService.findById(id);
         return new UpdateUserResponse(findUser);
     }

@@ -28,7 +28,7 @@ public class FindOrderController {
             @PathVariable("id") final Long id,
             @RequestBody @Valid final UpdateOrderRequest request) {
 
-        findOrderService.updateBody(request);
+        findOrderService.updateBody(id, request);
         FindOrder updateOrder = findOrderService.findById(id);
         return new UpdateOrderResponse(updateOrder);
     }

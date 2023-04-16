@@ -45,12 +45,12 @@ public class DonateOrderService {
         Donate donate = donateRepository.findById(request.getDonateId())
                 .orElseThrow(() -> new PostNotFoundException(NOT_FOUND_POST));
 
-        DonateOrder donateOrder = DonateOrder.createDonateOrder(
-                request.getText(),
-                information,
-                donate,
-                user
-        );
+        DonateOrder donateOrder = DonateOrder.builder()
+                .text(request.getText())
+                .information(information)
+                .donate(donate)
+                .user(user)
+                .build();
 
         donateOrderRepository.save(donateOrder);
         return donateOrder.getId();
@@ -89,8 +89,8 @@ public class DonateOrderService {
      * 주문 내역 기타 사항 수정
      */
     @Transactional
-    public void updateBody(final UpdateOrderRequest request) {
-        DonateOrder donateOrder = donateOrderRepository.findById(request.getOrderId())
+    public void updateBody(final Long id, final UpdateOrderRequest request) {
+        DonateOrder donateOrder = donateOrderRepository.findById(id)
                 .orElseThrow(() -> new OrderNotFoundException(NOT_FOUND_ORDER));
         donateOrder.update(request.getText());
     }

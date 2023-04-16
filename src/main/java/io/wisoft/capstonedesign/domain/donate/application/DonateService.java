@@ -32,14 +32,15 @@ public class DonateService {
 
         User user = userRepository.findById(request.getUserId())
                 .orElseThrow(() -> new PostNotFoundException(NOT_FOUND_POST));
-        Donate donate = Donate.createDonate(
-                request.getTitle(),
-                request.getImage(),
-                request.getText(),
-                request.getView(),
-                Tag.valueOf(request.getTag()),
-                user
-        );
+
+        Donate donate = Donate.builder()
+                .title(request.getTitle())
+                .image(request.getImage())
+                .text(request.getText())
+                .view(0)
+                .tag(Tag.valueOf(request.getTag()))
+                .user(user)
+                .build();
 
         donateRepository.save(donate);
         return donate.getId();
@@ -85,8 +86,10 @@ public class DonateService {
      * 게시글 제목, 본문 및 태그 수정
      */
     @Transactional
-    public void updateAll(final UpdateDonateRequest request) {
-        Donate donate = findById(request.getDonateId());
+    public void updateAll(final Long id, final UpdateDonateRequest request) {
+        Donate donate = donateRepository.findById(id)
+                .orElseThrow(() -> new PostNotFoundException(NOT_FOUND_POST));
+
         validateDonate(request.getTitle(), request.getImage(), request.getText(), Tag.valueOf(request.getTag()));
         donate.update(request.getTitle(), request.getImage(), request.getText(), Tag.valueOf(request.getTag()));
     }
@@ -104,6 +107,7 @@ public class DonateService {
     public void deleteDonate(final Long donateId) {
         Donate donate = donateRepository.findById(donateId)
                 .orElseThrow(() -> new PostNotFoundException(NOT_FOUND_POST));
+
         donateRepository.delete(donate);
     }
 }

@@ -28,7 +28,7 @@ public class DonateOrderController {
             @PathVariable("id") final Long id,
             @RequestBody @Valid final UpdateOrderRequest request) {
 
-        donateOrderService.updateBody(request);
+        donateOrderService.updateBody(id, request);
         DonateOrder updateOrder = donateOrderService.findById(id);
         return new UpdateOrderResponse(updateOrder);
     }

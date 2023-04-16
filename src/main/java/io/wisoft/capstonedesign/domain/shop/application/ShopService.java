@@ -26,12 +26,12 @@ public class ShopService {
     @Transactional
     public Long save(final CreateShopRequest request) {
 
-        Shop shop = Shop.createShop(
-                request.getTitle(),
-                request.getPrice(),
-                request.getImage(),
-                request.getBody()
-        );
+        Shop shop = Shop.builder()
+                .title(request.getTitle())
+                .price(request.getPrice())
+                .image(request.getImage())
+                .body(request.getBody())
+                .build();
 
         shopRepository.save(shop);
         return shop.getId();
@@ -70,9 +70,10 @@ public class ShopService {
      * 산타샵 물품 정보 수정
      */
     @Transactional
-    public void updateAll(final UpdateShopRequest request) {
-        Shop shop = shopRepository.findById(request.getShopId())
+    public void updateAll(final Long id, final UpdateShopRequest request) {
+        Shop shop = shopRepository.findById(id)
                 .orElseThrow(() -> new PostNotFoundException(NOT_FOUND_POST));
+
         shop.update(request.getTitle(), request.getPrice(), request.getImage(), request.getBody());
     }
 

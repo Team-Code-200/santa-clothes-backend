@@ -28,7 +28,7 @@ public class UserShopController {
             @PathVariable("id") final Long id,
             @RequestBody @Valid final UpdateOrderRequest request) {
 
-        userShopService.updateBody(request);
+        userShopService.updateBody(id, request);
         UserShop updateOrder = userShopService.findById(id);
         return new UpdateOrderResponse(updateOrder);
     }

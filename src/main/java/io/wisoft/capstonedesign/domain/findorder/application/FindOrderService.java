@@ -45,12 +45,12 @@ public class FindOrderService {
         Find find = findRepository.findById(request.getFindId())
                 .orElseThrow(() -> new PostNotFoundException(NOT_FOUND_POST));
 
-        FindOrder findOrder = FindOrder.createFindOrder(
-                request.getText(),
-                information,
-                find,
-                user
-        );
+        FindOrder findOrder = FindOrder.builder()
+                .text(request.getText())
+                .information(information)
+                .find(find)
+                .user(user)
+                .build();
 
         findOrderRepository.save(findOrder);
         return findOrder.getId();
@@ -89,8 +89,8 @@ public class FindOrderService {
      * 주문 내역 기타 사항 수정
      */
     @Transactional
-    public void updateBody(final UpdateOrderRequest request) {
-        FindOrder findOrder = findOrderRepository.findById(request.getOrderId())
+    public void updateBody(final Long id, final UpdateOrderRequest request) {
+        FindOrder findOrder = findOrderRepository.findById(id)
                 .orElseThrow(() -> new OrderNotFoundException(NOT_FOUND_ORDER));
         findOrder.update(request.getText());
     }

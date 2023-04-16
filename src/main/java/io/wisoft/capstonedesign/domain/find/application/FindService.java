@@ -32,14 +32,15 @@ public class FindService {
 
         User user = userRepository.findById(request.getUserId())
                 .orElseThrow(() -> new PostNotFoundException(NOT_FOUND_POST));
-        Find find = Find.createFind(
-                request.getTitle(),
-                request.getImage(),
-                request.getText(),
-                request.getView(),
-                Tag.valueOf(request.getTag()),
-                user
-        );
+
+        Find find = Find.builder()
+                .title(request.getTitle())
+                .image(request.getImage())
+                .text(request.getText())
+                .view(0)
+                .tag(Tag.valueOf(request.getTag()))
+                .user(user)
+                .build();
 
         findRepository.save(find);
         return find.getId();
@@ -85,9 +86,10 @@ public class FindService {
      * 게시글 제목, 본문 및 태그 수정
      */
     @Transactional
-    public void updateAll(final UpdateFindRequest request) {
-        Find find = findRepository.findById(request.getFindId())
+    public void updateAll(final Long id, final UpdateFindRequest request) {
+        Find find = findRepository.findById(id)
                 .orElseThrow(() -> new PostNotFoundException(NOT_FOUND_POST));
+
         validateFind(request.getTitle(), request.getImage(), request.getText(), Tag.valueOf(request.getTag()));
         find.update(request.getTitle(), request.getImage(), request.getText(), Tag.valueOf(request.getTag()));
     }
@@ -105,6 +107,7 @@ public class FindService {
     public void deleteFind(final Long findId) {
         Find find = findRepository.findById(findId)
                 .orElseThrow(() -> new PostNotFoundException(NOT_FOUND_POST));
+
         findRepository.delete(find);
     }
 }

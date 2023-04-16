@@ -32,12 +32,13 @@ public class InformationService {
 
         User user = userRepository.findById(request.getUserId())
                 .orElseThrow(() -> new UserNotFoundException(DUPLICATE_USER));
-        Information information = Information.createInformation(
-                request.getUsername(),
-                request.getAddress(),
-                request.getPhoneNumber(),
-                user
-        );
+
+        Information information = Information.builder()
+                .username(request.getUsername())
+                .address(request.getAddress())
+                .phoneNumber(request.getPhoneNumber())
+                .user(user)
+                .build();
 
         informationRepository.save(information);
         return information.getId();
@@ -69,9 +70,10 @@ public class InformationService {
      * 배송 정보 수정
      */
     @Transactional
-    public void updateAll(final UpdateInformationRequest request) {
-        Information information = informationRepository.findById(request.getInfoId())
+    public void updateAll(final Long id, final UpdateInformationRequest request) {
+        Information information = informationRepository.findById(id)
                 .orElseThrow(() -> new InfoNotFoundException(NOT_FOUND_INFO));
+
         validateInformation(request.getUsername(), request.getAddress(), request.getPhoneNumber());
         information.update(request.getUsername(), request.getAddress(), request.getPhoneNumber());
     }

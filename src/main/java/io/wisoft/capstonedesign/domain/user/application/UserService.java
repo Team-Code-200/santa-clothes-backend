@@ -2,6 +2,9 @@ package io.wisoft.capstonedesign.domain.user.application;
 
 import io.wisoft.capstonedesign.domain.user.persistence.User;
 import io.wisoft.capstonedesign.domain.user.persistence.UserRepository;
+import io.wisoft.capstonedesign.domain.user.web.dto.CreateUserRequest;
+import io.wisoft.capstonedesign.domain.user.web.dto.UpdateUserRequest;
+import io.wisoft.capstonedesign.global.enumerated.Role;
 import io.wisoft.capstonedesign.global.exception.service.UserDuplicateException;
 import io.wisoft.capstonedesign.global.exception.service.UserNotFoundException;
 import lombok.RequiredArgsConstructor;
@@ -23,8 +26,18 @@ public class UserService {
      * 회원 저장
      */
     @Transactional
-    public Long join(final User user) {
-        validateDuplicateUser(user);
+    public Long join(final CreateUserRequest request) {
+        validateDuplicateUser(request);
+
+        User user = User.builder()
+                .oauthId(request.getOauthId())
+                .email(request.getEmail())
+                .profileImage(request.getProfileImage())
+                .point(request.getPoint())
+                .nickname(request.getNickname())
+                .userRole(Role.valueOf(request.getUserRole()))
+                .build();
+
         userRepository.save(user);
         return user.getId();
     }
@@ -32,8 +45,8 @@ public class UserService {
     /**
      * 이메일 중복 검사
      */
-    private void validateDuplicateUser(final User user) {
-        List<User> findUsers = userRepository.findByEmail(user.getEmail());
+    private void validateDuplicateUser(final CreateUserRequest request) {
+        List<User> findUsers = userRepository.findByEmail(request.getEmail());
         if (!findUsers.isEmpty()) throw new UserDuplicateException(DUPLICATE_USER);
     }
 
@@ -56,11 +69,12 @@ public class UserService {
      * 닉네임 수정
      */
     @Transactional
-    public void updateNickname(final Long userId, final String nickname) {
+    public void updateNickname(final Long userId, final UpdateUserRequest request) {
         User user = userRepository.findById(userId)
                 .orElseThrow(() -> new UserNotFoundException(NOT_FOUND_ACCOUNT));
-        validateNickname(nickname);
-        user.updateNickname(nickname);
+
+        validateNickname(request.getNickname());
+        user.updateNickname(request.getNickname());
     }
 
     private void validateNickname(final String nickname) {

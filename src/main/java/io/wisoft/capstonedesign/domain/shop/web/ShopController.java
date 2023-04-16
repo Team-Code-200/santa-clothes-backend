@@ -28,7 +28,7 @@ public class ShopController {
             @PathVariable("id") final Long id,
             @RequestBody @Valid final UpdateShopRequest request) {
 
-        shopService.updateAll(request);
+        shopService.updateAll(id, request);
         Shop updateShop = shopService.findById(id);
         return new UpdateShopResponse(updateShop);
     }
