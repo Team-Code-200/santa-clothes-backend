@@ -1,12 +1,10 @@
 package io.wisoft.capstonedesign.domain.findorder.web.dto;
 
 import io.wisoft.capstonedesign.domain.findorder.persistence.FindOrder;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
-@Data
-@NoArgsConstructor
+@Getter
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
 public class UpdateOrderResponse {
 

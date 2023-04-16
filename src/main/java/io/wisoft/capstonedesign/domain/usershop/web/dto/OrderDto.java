@@ -1,11 +1,11 @@
 package io.wisoft.capstonedesign.domain.usershop.web.dto;
 
 import io.wisoft.capstonedesign.domain.usershop.persistence.UserShop;
-import lombok.AllArgsConstructor;
-import lombok.Data;
+import lombok.*;
 
-@Data
+@Getter
 @AllArgsConstructor
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class OrderDto {
 
     private String text;

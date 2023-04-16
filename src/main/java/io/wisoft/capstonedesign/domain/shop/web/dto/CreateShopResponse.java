@@ -1,10 +1,10 @@
 package io.wisoft.capstonedesign.domain.shop.web.dto;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
+import lombok.*;
 
-@Data
+@Getter
 @AllArgsConstructor
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class CreateShopResponse {
 
     private Long id;

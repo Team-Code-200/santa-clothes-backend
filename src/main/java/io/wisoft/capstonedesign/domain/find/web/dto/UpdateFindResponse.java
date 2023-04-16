@@ -1,12 +1,10 @@
 package io.wisoft.capstonedesign.domain.find.web.dto;
 
 import io.wisoft.capstonedesign.domain.find.persistence.Find;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
-@Data
-@NoArgsConstructor
+@Getter
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
 public class UpdateFindResponse {
 

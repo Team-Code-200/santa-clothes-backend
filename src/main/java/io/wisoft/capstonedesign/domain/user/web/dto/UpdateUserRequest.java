@@ -1,9 +1,11 @@
 package io.wisoft.capstonedesign.domain.user.web.dto;
 
 import jakarta.validation.constraints.NotEmpty;
-import lombok.Data;
+import lombok.*;
 
-@Data
+@Getter
+@AllArgsConstructor
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class UpdateUserRequest {
 
     @NotEmpty

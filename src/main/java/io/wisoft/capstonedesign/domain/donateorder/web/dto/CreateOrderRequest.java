@@ -1,9 +1,11 @@
 package io.wisoft.capstonedesign.domain.donateorder.web.dto;
 
 import jakarta.validation.constraints.NotEmpty;
-import lombok.Data;
+import lombok.*;
 
-@Data
+@Getter
+@AllArgsConstructor
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class CreateOrderRequest {
 
     @NotEmpty
@@ -14,19 +16,4 @@ public class CreateOrderRequest {
     private Long donateId;
 
     private Long userId;
-
-    public static CreateOrderRequest newInstance(
-            final String text,
-            final Long infoId,
-            final Long donateId,
-            final Long userId
-    ) {
-        CreateOrderRequest request = new CreateOrderRequest();
-        request.text = text;
-        request.infoId = infoId;
-        request.donateId = donateId;
-        request.userId = userId;
-
-        return request;
-    }
 }

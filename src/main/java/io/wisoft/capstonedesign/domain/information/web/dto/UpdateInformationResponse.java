@@ -1,12 +1,10 @@
 package io.wisoft.capstonedesign.domain.information.web.dto;
 
 import io.wisoft.capstonedesign.domain.information.persistence.Information;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
-@Data
-@NoArgsConstructor
+@Getter
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
 public class UpdateInformationResponse {
 

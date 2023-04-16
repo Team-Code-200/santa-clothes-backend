@@ -1,12 +1,10 @@
 package io.wisoft.capstonedesign.domain.donateorder.web.dto;
 
 import jakarta.validation.constraints.NotEmpty;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
-@Data
-@NoArgsConstructor
+@Getter
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
 public class UpdateOrderRequest {
 
@@ -14,15 +12,4 @@ public class UpdateOrderRequest {
     private String text;
 
     private Long orderId;
-
-    public static UpdateOrderRequest newInstance(
-            final String text,
-            final Long orderId
-    ) {
-        UpdateOrderRequest request = new UpdateOrderRequest();
-        request.text = text;
-        request.orderId = orderId;
-
-        return request;
-    }
 }

@@ -1,9 +1,11 @@
 package io.wisoft.capstonedesign.domain.shop.web.dto;
 
 import jakarta.validation.constraints.NotEmpty;
-import lombok.Data;
+import lombok.*;
 
-@Data
+@Getter
+@AllArgsConstructor
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class CreateShopRequest {
 
     @NotEmpty
@@ -17,21 +19,4 @@ public class CreateShopRequest {
     private String body;
 
     private Long userId;
-
-    public static CreateShopRequest newInstance(
-            final String title,
-            final int price,
-            final String image,
-            final String body,
-            final Long userId
-    ) {
-        CreateShopRequest request = new CreateShopRequest();
-        request.title = title;
-        request.price = price;
-        request.image = image;
-        request.body = body;
-        request.userId = userId;
-
-        return request;
-    }
 }
