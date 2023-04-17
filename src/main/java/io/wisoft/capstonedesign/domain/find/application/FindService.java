@@ -30,15 +30,15 @@ public class FindService {
     @Transactional
     public Long join(final CreateFindRequest request) {
 
-        User user = userRepository.findById(request.getUserId())
+        User user = userRepository.findById(request.userId())
                 .orElseThrow(() -> new PostNotFoundException(NOT_FOUND_POST));
 
         Find find = Find.builder()
-                .title(request.getTitle())
-                .image(request.getImage())
-                .text(request.getText())
+                .title(request.title())
+                .image(request.image())
+                .text(request.text())
                 .view(0)
-                .tag(Tag.valueOf(request.getTag()))
+                .tag(Tag.valueOf(request.tag()))
                 .user(user)
                 .build();
 
@@ -90,8 +90,8 @@ public class FindService {
         Find find = findRepository.findById(id)
                 .orElseThrow(() -> new PostNotFoundException(NOT_FOUND_POST));
 
-        validateFind(request.getTitle(), request.getImage(), request.getText(), Tag.valueOf(request.getTag()));
-        find.update(request.getTitle(), request.getImage(), request.getText(), Tag.valueOf(request.getTag()));
+        validateFind(request.title(), request.image(), request.text(), Tag.valueOf(request.tag()));
+        find.update(request.title(), request.image(), request.text(), Tag.valueOf(request.tag()));
     }
 
     private void validateFind(final String title, final String image, final String text, final Tag tag) {

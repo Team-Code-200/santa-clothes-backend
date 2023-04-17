@@ -1,11 +1,4 @@
 package io.wisoft.capstonedesign.domain.usershop.web.dto;
 
-import lombok.*;
-
-@Getter
-@AllArgsConstructor
-@NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class CreateOrderResponse {
-
-    private Long id;
+public record CreateOrderResponse(Long id) {
 }

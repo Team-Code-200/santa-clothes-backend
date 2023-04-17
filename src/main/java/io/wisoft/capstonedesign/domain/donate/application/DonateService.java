@@ -30,15 +30,15 @@ public class DonateService {
     @Transactional
     public Long join(final CreateDonateRequest request) {
 
-        User user = userRepository.findById(request.getUserId())
+        User user = userRepository.findById(request.userId())
                 .orElseThrow(() -> new PostNotFoundException(NOT_FOUND_POST));
 
         Donate donate = Donate.builder()
-                .title(request.getTitle())
-                .image(request.getImage())
-                .text(request.getText())
+                .title(request.title())
+                .image(request.image())
+                .text(request.text())
                 .view(0)
-                .tag(Tag.valueOf(request.getTag()))
+                .tag(Tag.valueOf(request.tag()))
                 .user(user)
                 .build();
 
@@ -90,8 +90,8 @@ public class DonateService {
         Donate donate = donateRepository.findById(id)
                 .orElseThrow(() -> new PostNotFoundException(NOT_FOUND_POST));
 
-        validateDonate(request.getTitle(), request.getImage(), request.getText(), Tag.valueOf(request.getTag()));
-        donate.update(request.getTitle(), request.getImage(), request.getText(), Tag.valueOf(request.getTag()));
+        validateDonate(request.title(), request.image(), request.text(), Tag.valueOf(request.tag()));
+        donate.update(request.title(), request.image(), request.text(), Tag.valueOf(request.tag()));
     }
 
     private void validateDonate(final String title, final String image, final String text, final Tag tag) {

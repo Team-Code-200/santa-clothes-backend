@@ -1,22 +1,6 @@
 package io.wisoft.capstonedesign.domain.find.web.dto;
 
-import jakarta.validation.constraints.NotEmpty;
-import lombok.*;
+import jakarta.validation.constraints.NotBlank;
 
-@Getter
-@AllArgsConstructor
-@NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class CreateFindRequest {
-
-    @NotEmpty
-    private String title;
-
-    private String image;
-
-    @NotEmpty
-    private String text;
-
-    private String tag;
-
-    private Long userId;
+public record CreateFindRequest(@NotBlank String title, String image, @NotBlank String text, String tag, Long userId) {
 }

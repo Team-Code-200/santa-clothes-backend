@@ -128,12 +128,12 @@ public class NaverService {
     private User registerNaverUserIfNeeded(OauthUserInfoDto oauthUserInfo) {
 
         // DB에 중복된 Kakao Id가 있는지 확인
-        String naverId = oauthUserInfo.getOauthId();
+        String naverId = oauthUserInfo.oauthId();
         User naverUser = userRepository.findByOauthId(naverId).orElse(null);
 
         if (naverUser == null) {
 
-            naverUser = User.newInstance(naverId, oauthUserInfo.getEmail(), oauthUserInfo.getProfileImage(), 0, oauthUserInfo.getNickname(), Role.GENERAL);
+            naverUser = User.newInstance(naverId, oauthUserInfo.email(), oauthUserInfo.profileImage(), 0, oauthUserInfo.nickname(), Role.GENERAL);
             userRepository.save(naverUser);
         }
 

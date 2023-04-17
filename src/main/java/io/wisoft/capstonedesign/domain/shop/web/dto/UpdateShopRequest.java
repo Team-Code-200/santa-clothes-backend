@@ -1,23 +1,7 @@
 package io.wisoft.capstonedesign.domain.shop.web.dto;
 
-import jakarta.validation.constraints.NotEmpty;
-import lombok.*;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 
-@Getter
-@NoArgsConstructor(access = AccessLevel.PROTECTED)
-@AllArgsConstructor
-public class UpdateShopRequest {
-
-    @NotEmpty
-    private String title;
-
-    private int price;
-
-    @NotEmpty
-    private String image;
-
-    @NotEmpty
-    private String body;
-
-    private Long shopId;
+public record UpdateShopRequest(@NotBlank String title, @NotNull int price, @NotBlank String image, @NotBlank String body, Long shopId) {
 }

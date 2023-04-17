@@ -38,15 +38,15 @@ public class FindOrderService {
     @Transactional
     public Long save(final CreateOrderRequest request) {
 
-        User user = userRepository.findById(request.getUserId())
+        User user = userRepository.findById(request.userId())
                 .orElseThrow(() -> new UserNotFoundException(NOT_FOUND_ACCOUNT));
-        Information information = informationRepository.findById(request.getInfoId())
+        Information information = informationRepository.findById(request.infoId())
                 .orElseThrow(() -> new InfoNotFoundException(NOT_FOUND_INFO));
-        Find find = findRepository.findById(request.getFindId())
+        Find find = findRepository.findById(request.findId())
                 .orElseThrow(() -> new PostNotFoundException(NOT_FOUND_POST));
 
         FindOrder findOrder = FindOrder.builder()
-                .text(request.getText())
+                .text(request.text())
                 .information(information)
                 .find(find)
                 .user(user)
@@ -92,7 +92,7 @@ public class FindOrderService {
     public void updateBody(final Long id, final UpdateOrderRequest request) {
         FindOrder findOrder = findOrderRepository.findById(id)
                 .orElseThrow(() -> new OrderNotFoundException(NOT_FOUND_ORDER));
-        findOrder.update(request.getText());
+        findOrder.update(request.text());
     }
 
     /**

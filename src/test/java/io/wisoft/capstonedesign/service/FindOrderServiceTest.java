@@ -51,7 +51,7 @@ public class FindOrderServiceTest {
         Long savedId = findOrderService.save(request4);
 
         // then
-        assertEquals(request4.getText(), findOrderService.findById(savedId).getText());
+        assertEquals(request4.text(), findOrderService.findById(savedId).getText());
     }
 
     @Test
@@ -71,7 +71,7 @@ public class FindOrderServiceTest {
         FindOrder savedOrder = findOrderService.findById(savedId);
 
         // then
-        assertEquals(request4.getText(), savedOrder.getText());
+        assertEquals(request4.text(), savedOrder.getText());
     }
 
     @Test(expected = AssertionFailedError.class)
@@ -115,7 +115,7 @@ public class FindOrderServiceTest {
         List<FindOrder> orderDESC = findOrderService.findByUser(userId);
 
         // then
-        assertEquals(request5.getText(), orderDESC.get(0).getText());
+        assertEquals(request5.text(), orderDESC.get(0).getText());
     }
 
     @Test
