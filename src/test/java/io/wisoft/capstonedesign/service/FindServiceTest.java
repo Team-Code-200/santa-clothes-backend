@@ -42,7 +42,7 @@ public class FindServiceTest {
         Long savedId = findService.join(request2);
 
         // then
-        assertEquals(request2.getTitle(), findService.findById(savedId).getTitle());
+        assertEquals(request2.title(), findService.findById(savedId).getTitle());
     }
 
     @Test
@@ -58,7 +58,7 @@ public class FindServiceTest {
         Find savedFind = findService.findById(savedId);
 
         // then
-        assertEquals(request2.getTitle(), savedFind.getTitle());
+        assertEquals(request2.title(), savedFind.getTitle());
     }
 
     @Test(expected = AssertionFailedError.class)
@@ -97,7 +97,7 @@ public class FindServiceTest {
         List<Find> findListDESC = findService.findByCreatedDateDESC();
 
         // then
-        assertEquals(request4.getTitle(), findListDESC.get(0).getTitle());
+        assertEquals(request4.title(), findListDESC.get(0).getTitle());
     }
 
     @Test

@@ -41,7 +41,7 @@ public class InformationServiceTest {
         Long savedId = informationService.save(request2);
 
         // then
-        assertEquals(request2.getAddress(), informationService.findById(savedId).getAddress());
+        assertEquals(request2.address(), informationService.findById(savedId).getAddress());
     }
 
     @Test

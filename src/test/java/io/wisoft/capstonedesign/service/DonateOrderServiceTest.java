@@ -52,7 +52,7 @@ public class DonateOrderServiceTest {
         Long savedId = donateOrderService.save(request4);
 
         // then
-        assertEquals(request4.getText(), donateOrderService.findById(savedId).getText());
+        assertEquals(request4.text(), donateOrderService.findById(savedId).getText());
     }
 
     @Test
@@ -72,7 +72,7 @@ public class DonateOrderServiceTest {
         DonateOrder savedOrder = donateOrderService.findById(savedId);
 
         // then
-        assertEquals(request4.getText(), savedOrder.getText());
+        assertEquals(request4.text(), savedOrder.getText());
     }
 
     @Test(expected = AssertionFailedError.class)
@@ -116,7 +116,7 @@ public class DonateOrderServiceTest {
         List<DonateOrder> orderDESC = donateOrderService.findByUser(userId);
 
         // then
-        assertEquals(request5.getText(), orderDESC.get(0).getText());
+        assertEquals(request5.text(), orderDESC.get(0).getText());
     }
 
     @Test

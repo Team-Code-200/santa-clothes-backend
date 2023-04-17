@@ -41,7 +41,7 @@ public class DonateServiceTest {
         Long savedId = donateService.join(request2);
 
         // then
-        assertEquals(request2.getTitle(), donateService.findById(savedId).getTitle());
+        assertEquals(request2.title(), donateService.findById(savedId).getTitle());
     }
 
     @Test
@@ -57,7 +57,7 @@ public class DonateServiceTest {
         Donate savedDonate = donateService.findById(savedId);
 
         // then
-        assertEquals(request2.getTitle(), savedDonate.getTitle());
+        assertEquals(request2.title(), savedDonate.getTitle());
     }
 
     @Test(expected = AssertionFailedError.class)
@@ -96,7 +96,7 @@ public class DonateServiceTest {
         List<Donate> donateListDESC = donateService.findByCreatedDateDESC();
 
         // then
-        assertEquals(request4.getTitle(), donateListDESC.get(0).getTitle());
+        assertEquals(request4.title(), donateListDESC.get(0).getTitle());
     }
 
     @Test

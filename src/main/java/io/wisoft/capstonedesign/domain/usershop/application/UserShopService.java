@@ -36,15 +36,15 @@ public class UserShopService {
     @Transactional
     public Long save(final CreateOrderRequest request) {
 
-        User user = userRepository.findById(request.getUserId())
+        User user = userRepository.findById(request.userId())
                 .orElseThrow(() -> new UserNotFoundException(NOT_FOUND_ACCOUNT));
-        Information information = informationRepository.findById(request.getInfoId())
+        Information information = informationRepository.findById(request.infoId())
                 .orElseThrow(() -> new InfoNotFoundException(NOT_FOUND_INFO));
-        Shop shop = shopRepository.findById(request.getShopId())
+        Shop shop = shopRepository.findById(request.shopId())
                 .orElseThrow(() -> new PostNotFoundException(NOT_FOUND_POST));
 
         UserShop userShop = UserShop.builder()
-                .text(request.getText())
+                .text(request.text())
                 .user(user)
                 .shop(shop)
                 .information(information)
@@ -88,9 +88,9 @@ public class UserShopService {
      */
     @Transactional
     public void updateBody(final Long id, final UpdateOrderRequest request) {
-        UserShop userShop = userShopRepository.findById(request.getOrderId())
+        UserShop userShop = userShopRepository.findById(request.orderId())
                 .orElseThrow(() -> new OrderNotFoundException(NOT_FOUND_ORDER));
-        userShop.update(request.getText());
+        userShop.update(request.text());
     }
 
     /**

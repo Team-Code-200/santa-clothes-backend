@@ -40,7 +40,7 @@ public class ShopServiceTest {
         Long savedId = shopService.save(request2);
 
         // then
-        assertEquals(request2.getTitle(), shopService.findById(savedId).getTitle());
+        assertEquals(request2.title(), shopService.findById(savedId).getTitle());
     }
 
     @Test
@@ -55,7 +55,7 @@ public class ShopServiceTest {
         shopService.save(request2);
 
         // then
-        assertEquals("라면 한 박스", request2.getTitle());
+        assertEquals("라면 한 박스", request2.title());
     }
 
     @Test
@@ -73,7 +73,7 @@ public class ShopServiceTest {
         List<Shop> shopDESC = shopService.findByCreatedDateDESC();
 
         // then
-        assertEquals(request3.getTitle(), shopDESC.get(0).getTitle());
+        assertEquals(request3.title(), shopDESC.get(0).getTitle());
     }
 
     @Test

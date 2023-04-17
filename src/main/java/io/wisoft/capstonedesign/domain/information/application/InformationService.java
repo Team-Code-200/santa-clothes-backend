@@ -30,13 +30,13 @@ public class InformationService {
     @Transactional
     public Long save(final CreateInformationRequest request) {
 
-        User user = userRepository.findById(request.getUserId())
+        User user = userRepository.findById(request.userId())
                 .orElseThrow(() -> new UserNotFoundException(DUPLICATE_USER));
 
         Information information = Information.builder()
-                .username(request.getUsername())
-                .address(request.getAddress())
-                .phoneNumber(request.getPhoneNumber())
+                .username(request.username())
+                .address(request.address())
+                .phoneNumber(request.phoneNumber())
                 .user(user)
                 .build();
 
@@ -74,8 +74,8 @@ public class InformationService {
         Information information = informationRepository.findById(id)
                 .orElseThrow(() -> new InfoNotFoundException(NOT_FOUND_INFO));
 
-        validateInformation(request.getUsername(), request.getAddress(), request.getPhoneNumber());
-        information.update(request.getUsername(), request.getAddress(), request.getPhoneNumber());
+        validateInformation(request.username(), request.address(), request.phoneNumber());
+        information.update(request.username(), request.address(), request.phoneNumber());
     }
 
     private void validateInformation(final String username, final String address, final String phoneNumber) {

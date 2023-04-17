@@ -1,19 +1,6 @@
 package io.wisoft.capstonedesign.domain.findorder.web.dto;
 
-import jakarta.validation.constraints.NotEmpty;
-import lombok.*;
+import jakarta.validation.constraints.NotBlank;
 
-@Getter
-@AllArgsConstructor
-@NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class CreateOrderRequest {
-
-    @NotEmpty
-    private String text;
-
-    private Long infoId;
-
-    private Long findId;
-
-    private Long userId;
+public record CreateOrderRequest(@NotBlank String text, Long infoId, Long findId, Long userId) {
 }

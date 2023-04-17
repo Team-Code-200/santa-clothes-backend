@@ -128,12 +128,12 @@ public class GoogleService {
     private User registerGoogleUserIfNeeded(OauthUserInfoDto googleUserInfo) {
 
         // DB에 중복된 Kakao Id가 있는지 확인
-        String googleId = googleUserInfo.getOauthId();
+        String googleId = googleUserInfo.oauthId();
         User googleUser = userRepository.findByOauthId(googleId).orElse(null);
 
         if (googleUser == null) {
 
-            googleUser = User.newInstance(googleId, googleUserInfo.getEmail(), googleUserInfo.getProfileImage(), 0, googleUserInfo.getNickname(), Role.GENERAL);
+            googleUser = User.newInstance(googleId, googleUserInfo.email(), googleUserInfo.profileImage(), 0, googleUserInfo.nickname(), Role.GENERAL);
             userRepository.save(googleUser);
         }
 

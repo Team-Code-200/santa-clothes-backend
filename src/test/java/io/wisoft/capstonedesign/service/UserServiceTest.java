@@ -36,7 +36,7 @@ public class UserServiceTest {
         Long saveId = userService.join(request);
 
         // then
-        assertEquals(request.getNickname(), userService.findById(saveId).getNickname());
+        assertEquals(request.nickname(), userService.findById(saveId).getNickname());
     }
 
     @Test(expected = UserDuplicateException.class)
@@ -65,7 +65,7 @@ public class UserServiceTest {
         User savedUser = userService.findById(userId);
 
         // then
-        assertEquals(request.getNickname(), savedUser.getNickname());
+        assertEquals(request.nickname(), savedUser.getNickname());
     }
 
     @Test(expected = AssertionFailedError.class)
@@ -113,6 +113,6 @@ public class UserServiceTest {
         User deletedUser = userService.findById(userId);
 
         // then
-        assertEquals(request.getNickname(), deletedUser.getNickname());
+        assertEquals(request.nickname(), deletedUser.getNickname());
     }
 }

@@ -27,10 +27,10 @@ public class ShopService {
     public Long save(final CreateShopRequest request) {
 
         Shop shop = Shop.builder()
-                .title(request.getTitle())
-                .price(request.getPrice())
-                .image(request.getImage())
-                .body(request.getBody())
+                .title(request.title())
+                .price(request.price())
+                .image(request.image())
+                .body(request.body())
                 .build();
 
         shopRepository.save(shop);
@@ -74,7 +74,7 @@ public class ShopService {
         Shop shop = shopRepository.findById(id)
                 .orElseThrow(() -> new PostNotFoundException(NOT_FOUND_POST));
 
-        shop.update(request.getTitle(), request.getPrice(), request.getImage(), request.getBody());
+        shop.update(request.title(), request.price(), request.image(), request.body());
     }
 
     /**

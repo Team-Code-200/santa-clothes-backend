@@ -30,12 +30,12 @@ public class UserService {
         validateDuplicateUser(request);
 
         User user = User.builder()
-                .oauthId(request.getOauthId())
-                .email(request.getEmail())
-                .profileImage(request.getProfileImage())
-                .point(request.getPoint())
-                .nickname(request.getNickname())
-                .userRole(Role.valueOf(request.getUserRole()))
+                .oauthId(request.oauthId())
+                .email(request.email())
+                .profileImage(request.profileImage())
+                .point(request.point())
+                .nickname(request.nickname())
+                .userRole(Role.valueOf(request.userRole()))
                 .build();
 
         userRepository.save(user);
@@ -46,7 +46,7 @@ public class UserService {
      * 이메일 중복 검사
      */
     private void validateDuplicateUser(final CreateUserRequest request) {
-        List<User> findUsers = userRepository.findByEmail(request.getEmail());
+        List<User> findUsers = userRepository.findByEmail(request.email());
         if (!findUsers.isEmpty()) throw new UserDuplicateException(DUPLICATE_USER);
     }
 
@@ -73,8 +73,8 @@ public class UserService {
         User user = userRepository.findById(userId)
                 .orElseThrow(() -> new UserNotFoundException(NOT_FOUND_ACCOUNT));
 
-        validateNickname(request.getNickname());
-        user.updateNickname(request.getNickname());
+        validateNickname(request.nickname());
+        user.updateNickname(request.nickname());
     }
 
     private void validateNickname(final String nickname) {

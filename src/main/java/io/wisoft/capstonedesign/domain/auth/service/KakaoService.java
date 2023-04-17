@@ -128,7 +128,7 @@ public class KakaoService {
     private User registerKakaoUserIfNeeded(OauthUserInfoDto kakaoUserInfo) {
 
         // DB에 중복된 Kakao Id가 있는지 확인
-        String kakaoId = kakaoUserInfo.getOauthId();
+        String kakaoId = kakaoUserInfo.oauthId();
         User kakaoUser = userRepository.findByOauthId(kakaoId).orElse(null);
 
         if (kakaoUser == null) {
@@ -136,7 +136,7 @@ public class KakaoService {
             // 회원 가입
 //            String nickname = "KAKAO" + UUID.randomUUID().toString().substring(0, 8);
 
-            kakaoUser = User.newInstance(kakaoId, kakaoUserInfo.getEmail(), kakaoUserInfo.getProfileImage(), 0, kakaoUserInfo.getNickname(), Role.GENERAL);
+            kakaoUser = User.newInstance(kakaoId, kakaoUserInfo.email(), kakaoUserInfo.profileImage(), 0, kakaoUserInfo.nickname(), Role.GENERAL);
             userRepository.save(kakaoUser);
         }
 

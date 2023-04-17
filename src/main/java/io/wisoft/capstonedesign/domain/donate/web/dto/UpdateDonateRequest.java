@@ -1,22 +1,6 @@
 package io.wisoft.capstonedesign.domain.donate.web.dto;
 
-import jakarta.validation.constraints.NotEmpty;
-import lombok.*;
+import jakarta.validation.constraints.NotBlank;
 
-@Getter
-@NoArgsConstructor(access = AccessLevel.PROTECTED)
-@AllArgsConstructor
-public class UpdateDonateRequest {
-
-    @NotEmpty
-    private String title;
-
-    private String image;
-
-    @NotEmpty
-    private String text;
-
-    private String tag;
-
-    private Long donateId;
+public record UpdateDonateRequest(@NotBlank String title, String image, @NotBlank String text, String tag, Long donateId) {
 }
