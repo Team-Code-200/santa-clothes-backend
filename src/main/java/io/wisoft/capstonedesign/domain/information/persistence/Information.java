@@ -9,6 +9,7 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -34,6 +35,10 @@ public class Information {
 
     @Column(name = "phone_number", nullable = false)
     private String phoneNumber;
+
+    @Column(name = "created_at", nullable = false)
+    @Temporal(TemporalType.TIMESTAMP)
+    private LocalDateTime createdDate;
 
     @ManyToOne(fetch = LAZY)
     @JoinColumn(name = "user_id", nullable = false)
@@ -62,6 +67,7 @@ public class Information {
         information.username = username;
         information.address = address;
         information.phoneNumber = phoneNumber;
+        information.createdDate = LocalDateTime.now();
         information.setUser(user);
         return information;
     }
