@@ -45,10 +45,10 @@ public class DonateOrderController {
     }
 
     @GetMapping("/api/donate-orders/{id}")
-    public GetOrderDto getOrder(@PathVariable("id") final Long id) {
+    public GetDonateOrderDto getOrder(@PathVariable("id") final Long id) {
 
         DonateOrder findOrder = donateOrderService.findById(id);
-        return new GetOrderDto(findOrder);
+        return new GetDonateOrderDto(findOrder);
     }
 
     @GetMapping("/api/donate-orders/user/{id}")
@@ -56,8 +56,8 @@ public class DonateOrderController {
 
         List<DonateOrder> byUser = donateOrderService.findByUser(userId);
 
-        List<GetOrderDto> collect = byUser.stream()
-                .map(GetOrderDto::new)
+        List<GetDonateOrderDto> collect = byUser.stream()
+                .map(GetDonateOrderDto::new)
                 .collect(Collectors.toList());
 
         return new Result(collect);
