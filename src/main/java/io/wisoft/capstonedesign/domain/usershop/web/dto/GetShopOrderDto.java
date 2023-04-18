@@ -8,7 +8,7 @@ import java.time.LocalDateTime;
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class GetOrderDto {
+public class GetShopOrderDto {
 
     private Long id;
 
@@ -22,7 +22,7 @@ public class GetOrderDto {
 
     private String nickname;
 
-    public GetOrderDto(UserShop userShop) {
+    public GetShopOrderDto(UserShop userShop) {
         this.id = userShop.getId();
         this.createdDate = userShop.getCreatedDate();
         this.text = userShop.getText();

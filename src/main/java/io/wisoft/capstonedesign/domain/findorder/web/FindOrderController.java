@@ -45,10 +45,10 @@ public class FindOrderController {
     }
 
     @GetMapping("/api/find-orders/{id}")
-    public GetOrderDto getOrder(@PathVariable("id") final Long id) {
+    public GetFindOrderDto getOrder(@PathVariable("id") final Long id) {
 
         FindOrder findOrder = findOrderService.findById(id);
-        return new GetOrderDto(findOrder);
+        return new GetFindOrderDto(findOrder);
     }
 
     @GetMapping("/api/find-orders/user/{id}")
@@ -56,8 +56,8 @@ public class FindOrderController {
 
         List<FindOrder> byUser = findOrderService.findByUser(userId);
 
-        List<GetOrderDto> collect = byUser.stream()
-                .map(GetOrderDto::new)
+        List<GetFindOrderDto> collect = byUser.stream()
+                .map(GetFindOrderDto::new)
                 .collect(Collectors.toList());
 
         return new Result(collect);

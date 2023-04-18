@@ -8,7 +8,7 @@ import java.time.LocalDateTime;
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class GetOrderDto {
+public class GetDonateOrderDto {
 
     private Long id;
 
@@ -22,7 +22,7 @@ public class GetOrderDto {
 
     private String nickname;
 
-    public GetOrderDto(DonateOrder donateOrder) {
+    public GetDonateOrderDto(DonateOrder donateOrder) {
         this.id = donateOrder.getId();
         this.sendDate = donateOrder.getSendDate();
         this.text = donateOrder.getText();
