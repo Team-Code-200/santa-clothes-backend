@@ -110,4 +110,14 @@ public class User {
     public void updateNickname(final String nickname) {
         this.nickname = nickname;
     }
+
+    /**
+     * OAuth를 위한 업데이트 로직
+     */
+    public User updateAll(final String nickname, final String email, final String profileImage) {
+        this.nickname = nickname;
+        this.email = email;
+        this.profileImage = profileImage;
+        return this;
+    }
 }
