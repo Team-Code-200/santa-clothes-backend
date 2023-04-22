@@ -45,7 +45,7 @@ public class FindController {
         return new Result(collect);
     }
 
-    @GetMapping("/api/finds/{id}")
+    @GetMapping("/api/finds/details/{id}")
     public GetFindResponse getFind(@PathVariable("id") final Long id) {
 
         Find findFind = findService.findById(id);

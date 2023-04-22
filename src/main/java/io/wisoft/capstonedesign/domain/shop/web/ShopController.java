@@ -44,7 +44,7 @@ public class ShopController {
         return new Result(collect);
     }
 
-    @GetMapping("/api/shops/{id}")
+    @GetMapping("/api/shops/details/{id}")
     public GetShopResponse getShop(@PathVariable("id") final Long id) {
 
         Shop findShop = shopService.findById(id);
