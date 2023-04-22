@@ -45,7 +45,7 @@ public class DonateController {
         return new Result(collect);
     }
 
-    @GetMapping("/api/donates/{id}")
+    @GetMapping("/api/donates/details/{id}")
     public GetDonateResponse getDonate(@PathVariable("id") final Long id) {
 
         Donate findDonate = donateService.findById(id);
