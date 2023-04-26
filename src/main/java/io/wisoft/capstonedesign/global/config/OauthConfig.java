@@ -20,6 +20,7 @@ public class OauthConfig {
 
     @Bean
     public InMemoryProviderRepository inMemoryProviderRepository() {
+        
         Map<String, OauthProvider> providers = OauthAdapter.getOauthProviders(properties);
         return new InMemoryProviderRepository(providers);
     }
