@@ -7,7 +7,7 @@
 </br>
 
 > ### *Santa Clothes?*
-<img width="700" alt="?????????? 2023-04-25 ???? 11 59 31" src="https://user-images.githubusercontent.com/106216912/234495393-1ec7ebaf-458f-493d-ae00-b36d9aada11f.png">
+<img width="700" alt="?????????? 2023-04-25 ???? 11 59 31" src="https://user-images.githubusercontent.com/106216912/234511529-ef903af0-8189-4da5-a410-b90367eec149.png">
 
 *Santa Clothes는 어려운 이웃들에게 도움이 되자는 취지로 만들어진 프로젝트로, 중고 의류  거래 중계 플랫폼 입니다.*
 
@@ -33,8 +33,8 @@
 </br>
 
 > ### *Tech Stack*
-<img src="https://img.shields.io/badge/Java-007396?style=flat&logo=OpenJDK&logoColor=white"/>
+<img src="https://img.shields.io/badge/Java-007396?style=flat&logo=OpenJDK&logoColor=white"/></a>
 <img src="https://img.shields.io/badge/Spring-6DB33F?style=flat&logo=spring&logoColor=white"/></a>
 <img src="https://img.shields.io/badge/Spring Data JPA-6DB33F?style=flat&logo=springboot&logoColor=white"/></a>
 <img src="https://img.shields.io/badge/PostgreSQL-4169E1?style=flat&logo=postgresql&logoColor=white"/></a>
-<img src="https://img.shields.io/badge/Github-181717?style=flat&logo=github&logoColor=white"/>
+<img src="https://img.shields.io/badge/Github-181717?style=flat&logo=github&logoColor=white"/></a>
