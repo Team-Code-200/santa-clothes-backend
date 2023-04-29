@@ -1,5 +1,10 @@
 package io.wisoft.capstonedesign.domain.find.web;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.wisoft.capstonedesign.domain.find.application.FindService;
 import io.wisoft.capstonedesign.domain.find.persistence.Find;
 import io.wisoft.capstonedesign.domain.find.web.dto.*;
@@ -11,12 +16,25 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.stream.Collectors;
 
+@io.swagger.v3.oas.annotations.tags.Tag(name = "찾아볼래요 게시판", description = "게시판 관리 API")
 @RestController
 @RequiredArgsConstructor
 public class FindController {
 
     private final FindService findService;
 
+    @Operation(summary = "게시글 작성")
+    @ApiResponses(value = {
+            @ApiResponse(
+                    responseCode = "200",
+                    content = @Content(schema = @Schema(implementation = CreateFindResponse.class))),
+            @ApiResponse(
+                    responseCode = "400",
+                    content = @Content(schema = @Schema(implementation = Error.class))),
+            @ApiResponse(
+                    responseCode = "404",
+                    content = @Content(schema = @Schema(implementation = Error.class)))
+    })
     @PostMapping("/api/finds/new")
     public CreateFindResponse saveFind(@RequestBody @Valid final CreateFindRequest request) {
 
@@ -24,6 +42,18 @@ public class FindController {
         return new CreateFindResponse(id);
     }
 
+    @Operation(summary = "게시글 수정")
+    @ApiResponses(value = {
+            @ApiResponse(
+                    responseCode = "200",
+                    content = @Content(schema = @Schema(implementation = UpdateFindResponse.class))),
+            @ApiResponse(
+                    responseCode = "400",
+                    content = @Content(schema = @Schema(implementation = Error.class))),
+            @ApiResponse(
+                    responseCode = "404",
+                    content = @Content(schema = @Schema(implementation = Error.class)))
+    })
     @PatchMapping("/api/finds/{id}")
     public UpdateFindResponse updateFind(
             @PathVariable("id") final Long id,
@@ -34,6 +64,15 @@ public class FindController {
         return new UpdateFindResponse(updateFind);
     }
 
+    @Operation(summary = "전체 게시글 목록 조회")
+    @ApiResponses(value = {
+            @ApiResponse(
+                    responseCode = "200",
+                    content = @Content(schema = @Schema(implementation = Result.class))),
+            @ApiResponse(
+                    responseCode = "404",
+                    content = @Content(schema = @Schema(implementation = Error.class)))
+    })
     @GetMapping("/api/finds")
     public Result findFinds() {
         List<Find> findFinds = findService.findByCreatedDateDESC();
@@ -45,6 +84,15 @@ public class FindController {
         return new Result(collect);
     }
 
+    @Operation(summary = "게시글 상세 조회")
+    @ApiResponses(value = {
+            @ApiResponse(
+                    responseCode = "200",
+                    content = @Content(schema = @Schema(implementation = GetFindResponse.class))),
+            @ApiResponse(
+                    responseCode = "404",
+                    content = @Content(schema = @Schema(implementation = Error.class)))
+    })
     @GetMapping("/api/finds/details/{id}")
     public GetFindResponse getFind(@PathVariable("id") final Long id) {
 
@@ -52,6 +100,15 @@ public class FindController {
         return new GetFindResponse(findFind);
     }
 
+    @Operation(summary = "특정 작성자의 게시글 조회")
+    @ApiResponses(value = {
+            @ApiResponse(
+                    responseCode = "200",
+                    content = @Content(schema = @Schema(implementation = Result.class))),
+            @ApiResponse(
+                    responseCode = "404",
+                    content = @Content(schema = @Schema(implementation = Error.class)))
+    })
     @GetMapping("/api/finds/author/{id}")
     public Result getFindsByUser(@PathVariable("id") final Long userId) {
 
@@ -64,6 +121,15 @@ public class FindController {
         return new Result(collect);
     }
 
+    @Operation(summary = "게시글 상의 태그로 조회")
+    @ApiResponses(value = {
+            @ApiResponse(
+                    responseCode = "200",
+                    content = @Content(schema = @Schema(implementation = Result.class))),
+            @ApiResponse(
+                    responseCode = "404",
+                    content = @Content(schema = @Schema(implementation = Error.class)))
+    })
     @GetMapping("/api/finds/top")
     public Result getFindsByTop() {
         List<Find> byTag = findService.findByTag(Tag.TOP);
@@ -75,6 +141,15 @@ public class FindController {
         return new Result(collect);
     }
 
+    @Operation(summary = "게시글 하의 태그로 조회")
+    @ApiResponses(value = {
+            @ApiResponse(
+                    responseCode = "200",
+                    content = @Content(schema = @Schema(implementation = Result.class))),
+            @ApiResponse(
+                    responseCode = "404",
+                    content = @Content(schema = @Schema(implementation = Error.class)))
+    })
     @GetMapping("/api/finds/pants")
     public Result getFindsByPants() {
         List<Find> byTag = findService.findByTag(Tag.PANTS);
@@ -86,6 +161,15 @@ public class FindController {
         return new Result(collect);
     }
 
+    @Operation(summary = "게시글 신발 태그로 조회")
+    @ApiResponses(value = {
+            @ApiResponse(
+                    responseCode = "200",
+                    content = @Content(schema = @Schema(implementation = Result.class))),
+            @ApiResponse(
+                    responseCode = "404",
+                    content = @Content(schema = @Schema(implementation = Error.class)))
+    })
     @GetMapping("/api/finds/shoes")
     public Result getFindsByShoes() {
         List<Find> byTag = findService.findByTag(Tag.SHOES);
@@ -97,6 +181,15 @@ public class FindController {
         return new Result(collect);
     }
 
+    @Operation(summary = "게시글 기타 태그로 조회")
+    @ApiResponses(value = {
+            @ApiResponse(
+                    responseCode = "200",
+                    content = @Content(schema = @Schema(implementation = Result.class))),
+            @ApiResponse(
+                    responseCode = "404",
+                    content = @Content(schema = @Schema(implementation = Error.class)))
+    })
     @GetMapping("/api/finds/etc")
     public Result getFindsByEtc() {
         List<Find> byTag = findService.findByTag(Tag.ETC);
@@ -108,6 +201,18 @@ public class FindController {
         return new Result(collect);
     }
 
+    @Operation(summary = "게시글 삭제")
+    @ApiResponses(value = {
+            @ApiResponse(
+                    responseCode = "200",
+                    content = @Content(schema = @Schema(implementation = DeleteFindResponse.class))),
+            @ApiResponse(
+                    responseCode = "400",
+                    content = @Content(schema = @Schema(implementation = Error.class))),
+            @ApiResponse(
+                    responseCode = "404",
+                    content = @Content(schema = @Schema(implementation = Error.class)))
+    })
     @DeleteMapping("/api/finds/{id}")
     public DeleteFindResponse deleteFind(@PathVariable("id") final Long id) {
 
