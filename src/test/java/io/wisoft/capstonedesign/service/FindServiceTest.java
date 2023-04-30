@@ -8,21 +8,16 @@ import io.wisoft.capstonedesign.domain.user.web.dto.CreateUserRequest;
 import io.wisoft.capstonedesign.global.enumerated.Role;
 import io.wisoft.capstonedesign.global.enumerated.Tag;
 import io.wisoft.capstonedesign.domain.user.application.UserService;
-import io.wisoft.capstonedesign.domain.user.persistence.User;
 import io.wisoft.capstonedesign.global.exception.service.PostNotFoundException;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.opentest4j.AssertionFailedError;
+import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-@RunWith(SpringRunner.class)
 @SpringBootTest
 @Transactional
 public class FindServiceTest {
@@ -61,7 +56,7 @@ public class FindServiceTest {
         assertEquals(request2.title(), savedFind.getTitle());
     }
 
-    @Test(expected = AssertionFailedError.class)
+    @Test
     public void 전체_게시글_조회() throws Exception {
 
         // given
@@ -76,8 +71,7 @@ public class FindServiceTest {
         List<Find> finds = findService.findFinds();
 
         // then
-        assertEquals(3, finds.size());
-        fail("예외가 발생해야 한다!");
+        assertEquals(2, finds.size());
     }
 
     @Test
@@ -140,7 +134,7 @@ public class FindServiceTest {
         System.out.println(updateFind.getView()); // 조회수 확인
     }
 
-    @Test(expected = PostNotFoundException.class)
+    @Test
     public void 게시글_삭제() throws Exception {
 
         // given
@@ -152,9 +146,8 @@ public class FindServiceTest {
         Long findId = findService.join(request2);
 
         findService.deleteFind(findId);
-        Find deletedFind = findService.findById(findId);
 
         // then
-        assertEquals(request2, deletedFind);
+        assertThrows(PostNotFoundException.class, () -> findService.findById(findId));
     }
 }

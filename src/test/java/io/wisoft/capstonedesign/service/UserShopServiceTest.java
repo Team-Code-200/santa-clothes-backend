@@ -10,22 +10,17 @@ import io.wisoft.capstonedesign.domain.information.application.InformationServic
 import io.wisoft.capstonedesign.domain.shop.application.ShopService;
 import io.wisoft.capstonedesign.domain.user.application.UserService;
 import io.wisoft.capstonedesign.domain.usershop.application.UserShopService;
-import io.wisoft.capstonedesign.domain.user.persistence.User;
 import io.wisoft.capstonedesign.domain.usershop.persistence.UserShop;
 import io.wisoft.capstonedesign.global.exception.service.OrderNotFoundException;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.opentest4j.AssertionFailedError;
+import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-@RunWith(SpringRunner.class)
 @SpringBootTest
 @Transactional
 public class UserShopServiceTest {
@@ -55,26 +50,6 @@ public class UserShopServiceTest {
     }
 
     @Test
-    public void 주문내역_조회() throws Exception {
-
-        // given
-        CreateUserRequest request1 = new CreateUserRequest("1", "jinwon@gmail.com", "profile.png", 1000, "jinwon", String.valueOf(Role.GENERAL));
-        CreateShopRequest request2 = new CreateShopRequest("라면 한 박스", 1000, "ramen.jpg", "포인트로 뜨끈한 라면 한 박스 가져가세요!", 1L);
-        CreateInformationRequest request3 = new CreateInformationRequest("윤진원", "대전광역시 유성구", "010-0000-0000", 1L);
-        CreateOrderRequest request4 = new CreateOrderRequest("배송 전 문자 부탁드립니다", 1L, 1L, 1L);
-
-        // when
-        userService.join(request1);
-        shopService.save(request2);
-        informationService.save(request3);
-        Long savedId = userShopService.save(request4);
-        UserShop savedOrder = userShopService.findById(savedId);
-
-        // then
-        assertEquals(request4.text(), savedOrder.getText());
-    }
-
-    @Test(expected = AssertionFailedError.class)
     public void 전체_주문내역_조회() throws Exception {
 
         // given
@@ -93,7 +68,27 @@ public class UserShopServiceTest {
         List<UserShop> shopOrders = userShopService.findShopOrders();
 
         // then
-        assertEquals(3, shopOrders.size());
+        assertEquals(2, shopOrders.size());
+    }
+
+    @Test
+    public void 주문내역_조회() throws Exception {
+
+        // given
+        CreateUserRequest request1 = new CreateUserRequest("1", "jinwon@gmail.com", "profile.png", 1000, "jinwon", String.valueOf(Role.GENERAL));
+        CreateShopRequest request2 = new CreateShopRequest("라면 한 박스", 1000, "ramen.jpg", "포인트로 뜨끈한 라면 한 박스 가져가세요!", 1L);
+        CreateInformationRequest request3 = new CreateInformationRequest("윤진원", "대전광역시 유성구", "010-0000-0000", 1L);
+        CreateOrderRequest request4 = new CreateOrderRequest("배송 전 문자 부탁드립니다", 1L, 1L, 1L);
+
+        // when
+        userService.join(request1);
+        shopService.save(request2);
+        informationService.save(request3);
+        Long savedId = userShopService.save(request4);
+        UserShop savedOrder = userShopService.findById(savedId);
+
+        // then
+        assertEquals(request4.text(), savedOrder.getText());
     }
 
     @Test
@@ -141,7 +136,7 @@ public class UserShopServiceTest {
         assertEquals("경비실에 맡겨주세요", updateOrder.getText());
     }
 
-    @Test(expected = OrderNotFoundException.class)
+    @Test
     public void 주문내역_삭제() throws Exception {
 
         // given
@@ -157,9 +152,8 @@ public class UserShopServiceTest {
         Long savedId = userShopService.save(request4);
 
         userShopService.deleteOrder(savedId);
-        UserShop deleteOrder = userShopService.findById(savedId);
 
         // then
-        assertEquals(request4, deleteOrder);
+        assertThrows(OrderNotFoundException.class, () -> userShopService.findById(savedId));
     }
 }

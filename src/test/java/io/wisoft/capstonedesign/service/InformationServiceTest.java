@@ -7,21 +7,16 @@ import io.wisoft.capstonedesign.domain.information.web.dto.UpdateInformationRequ
 import io.wisoft.capstonedesign.domain.user.web.dto.CreateUserRequest;
 import io.wisoft.capstonedesign.global.enumerated.Role;
 import io.wisoft.capstonedesign.domain.user.application.UserService;
-import io.wisoft.capstonedesign.domain.user.persistence.User;
 import io.wisoft.capstonedesign.global.exception.service.InfoNotFoundException;
-import org.junit.runner.RunWith;
-import org.junit.Test;
-import org.opentest4j.AssertionFailedError;
+import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-@RunWith(SpringRunner.class)
 @SpringBootTest
 @Transactional
 public class InformationServiceTest {
@@ -66,7 +61,7 @@ public class InformationServiceTest {
         assertEquals(2, savedInfo.size());
     }
 
-    @Test(expected = AssertionFailedError.class)
+    @Test
     public void 전체_배송정보_조회() throws Exception {
 
         // given
@@ -85,8 +80,7 @@ public class InformationServiceTest {
         List<Information> informations = informationService.findInformations();
 
         // then
-        assertEquals(2, informations.size());
-        fail("예외가 발생해야 한다!");
+        assertEquals(3, informations.size());
     }
 
     @Test
@@ -108,7 +102,7 @@ public class InformationServiceTest {
         assertEquals("대전광역시 서구", updateInfo.getAddress());
     }
 
-    @Test(expected = InfoNotFoundException.class)
+    @Test
     public void 배송정보_삭제() throws Exception {
 
         // given
@@ -120,9 +114,8 @@ public class InformationServiceTest {
         Long savedId = informationService.save(request2);
 
         informationService.deleteInformation(savedId);
-        Information deleteInfo = informationService.findById(savedId);
 
         // then
-        assertEquals(request2, deleteInfo);
+        assertThrows(InfoNotFoundException.class, () -> informationService.findById(savedId));
     }
 }
