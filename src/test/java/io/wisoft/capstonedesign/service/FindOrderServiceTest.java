@@ -13,19 +13,15 @@ import io.wisoft.capstonedesign.global.enumerated.Tag;
 import io.wisoft.capstonedesign.domain.information.application.InformationService;
 import io.wisoft.capstonedesign.domain.user.application.UserService;
 import io.wisoft.capstonedesign.global.exception.service.OrderNotFoundException;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.opentest4j.AssertionFailedError;
+import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-@RunWith(SpringRunner.class)
 @SpringBootTest
 @Transactional
 public class FindOrderServiceTest {
@@ -74,7 +70,7 @@ public class FindOrderServiceTest {
         assertEquals(request4.text(), savedOrder.getText());
     }
 
-    @Test(expected = AssertionFailedError.class)
+    @Test
     public void 전체_주문내역_조회() throws Exception {
 
         // given
@@ -93,7 +89,7 @@ public class FindOrderServiceTest {
         List<FindOrder> findOrders = findOrderService.findFindOrders();
 
         // then
-        assertEquals(3, findOrders.size());
+        assertEquals(2, findOrders.size());
     }
 
     @Test
@@ -141,7 +137,7 @@ public class FindOrderServiceTest {
         assertEquals("경비실에 맡겨주세요", updateOrder.getText());
     }
 
-    @Test(expected = OrderNotFoundException.class)
+    @Test
     public void 주문내역_삭제() throws Exception {
 
         // given
@@ -157,9 +153,8 @@ public class FindOrderServiceTest {
         Long savedId = findOrderService.save(request4);
 
         findOrderService.deleteOrder(savedId);
-        FindOrder deleteOrder = findOrderService.findById(savedId);
 
         // then
-        assertEquals(request4, deleteOrder);
+        assertThrows(OrderNotFoundException.class, () -> findOrderService.findById(savedId));
     }
 }

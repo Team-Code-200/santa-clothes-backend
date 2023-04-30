@@ -12,21 +12,16 @@ import io.wisoft.capstonedesign.global.enumerated.Role;
 import io.wisoft.capstonedesign.global.enumerated.Tag;
 import io.wisoft.capstonedesign.domain.information.application.InformationService;
 import io.wisoft.capstonedesign.domain.user.application.UserService;
-import io.wisoft.capstonedesign.domain.user.persistence.User;
 import io.wisoft.capstonedesign.global.exception.service.OrderNotFoundException;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.opentest4j.AssertionFailedError;
+import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-@RunWith(SpringRunner.class)
 @SpringBootTest
 @Transactional
 public class DonateOrderServiceTest {
@@ -75,7 +70,7 @@ public class DonateOrderServiceTest {
         assertEquals(request4.text(), savedOrder.getText());
     }
 
-    @Test(expected = AssertionFailedError.class)
+    @Test
     public void 전체_주문내역_조회() throws Exception {
 
         // given
@@ -94,7 +89,7 @@ public class DonateOrderServiceTest {
         List<DonateOrder> donateOrders = donateOrderService.findDonateOrders();
 
         // then
-        assertEquals(3, donateOrders.size());
+        assertEquals(2, donateOrders.size());
     }
 
     @Test
@@ -142,7 +137,7 @@ public class DonateOrderServiceTest {
         assertEquals("경비실에 맡겨주세요", updateOrder.getText());
     }
 
-    @Test(expected = OrderNotFoundException.class)
+    @Test
     public void 주문내역_삭제() throws Exception {
 
         // given
@@ -158,9 +153,8 @@ public class DonateOrderServiceTest {
         Long savedId = donateOrderService.save(request4);
 
         donateOrderService.deleteOrder(savedId);
-        DonateOrder deleteOrder = donateOrderService.findById(savedId);
 
         // then
-        assertEquals(request4, deleteOrder);
+        assertThrows(OrderNotFoundException.class, () -> donateOrderService.findById(savedId));
     }
 }

@@ -7,19 +7,15 @@ import io.wisoft.capstonedesign.domain.user.application.UserService;
 import io.wisoft.capstonedesign.domain.user.persistence.User;
 import io.wisoft.capstonedesign.global.exception.service.UserDuplicateException;
 import io.wisoft.capstonedesign.global.exception.service.UserNotFoundException;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.opentest4j.AssertionFailedError;
+import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-@RunWith(SpringRunner.class)
 @SpringBootTest
 @Transactional
 public class UserServiceTest {
@@ -39,7 +35,7 @@ public class UserServiceTest {
         assertEquals(request.nickname(), userService.findById(saveId).getNickname());
     }
 
-    @Test(expected = UserDuplicateException.class)
+    @Test
     public void 중복_회원_검사() throws Exception {
 
         // given
@@ -48,10 +44,9 @@ public class UserServiceTest {
 
         // when
         userService.join(request1);
-        userService.join(request2);
 
         // then
-        fail("예외가 발생해야 한다!");
+        assertThrows(UserDuplicateException.class, () -> userService.join(request2));
     }
 
     @Test
@@ -68,7 +63,7 @@ public class UserServiceTest {
         assertEquals(request.nickname(), savedUser.getNickname());
     }
 
-    @Test(expected = AssertionFailedError.class)
+    @Test
     public void 전체_회원_조회() throws Exception {
 
         // given
@@ -81,7 +76,7 @@ public class UserServiceTest {
         List<User> users = userService.findUsers();
 
         // then
-        assertEquals(3, users.size());
+        assertEquals(2, users.size());
 
     }
 
@@ -101,7 +96,7 @@ public class UserServiceTest {
         assertEquals("jinony", updateUser.getNickname());
     }
 
-    @Test(expected = UserNotFoundException.class)
+    @Test
     public void 회원_탈퇴() throws Exception {
 
         // given
@@ -110,9 +105,8 @@ public class UserServiceTest {
         // when
         Long userId = userService.join(request);
         userService.deleteUser(userId);
-        User deletedUser = userService.findById(userId);
 
         // then
-        assertEquals(request.nickname(), deletedUser.getNickname());
+        assertThrows(UserNotFoundException.class, () -> userService.findById(userId));
     }
 }
