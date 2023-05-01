@@ -1,14 +1,11 @@
 package io.wisoft.capstonedesign.domain.chatgpt.web;
 
-import io.swagger.v3.oas.annotations.Operation;
-import io.swagger.v3.oas.annotations.media.Content;
-import io.swagger.v3.oas.annotations.media.Schema;
-import io.swagger.v3.oas.annotations.responses.ApiResponse;
-import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import io.wisoft.capstonedesign.domain.chatgpt.application.ChatGptService;
 import io.wisoft.capstonedesign.domain.chatgpt.web.dto.ChatGptRequest;
 import io.wisoft.capstonedesign.domain.chatgpt.web.dto.ChatGptResponse;
+import io.wisoft.capstonedesign.global.annotation.SwaggerApiNotFoundError;
+import io.wisoft.capstonedesign.global.annotation.SwaggerApiSuccess;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -22,15 +19,8 @@ public class ChatGptController {
 
     private final ChatGptService chatGptService;
 
-    @Operation(summary = "ChatGPT 검색 사용")
-    @ApiResponses(value = {
-            @ApiResponse(
-                    responseCode = "200",
-                    content = @Content(schema = @Schema(implementation = ChatGptResponse.class))),
-            @ApiResponse(
-                    responseCode = "404",
-                    content = @Content(schema = @Schema(implementation = Error.class)))
-    })
+    @SwaggerApiSuccess(summary = "ChatGPT 검색", implementation = ChatGptResponse.class)
+    @SwaggerApiNotFoundError
     @GetMapping("/api/make/conversation")
     public ChatGptResponse makeConversation(@RequestBody @Valid ChatGptRequest chatGptRequest) {
 

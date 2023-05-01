@@ -1,13 +1,11 @@
 package io.wisoft.capstonedesign.domain.donate.web;
 
-import io.swagger.v3.oas.annotations.Operation;
-import io.swagger.v3.oas.annotations.media.Content;
-import io.swagger.v3.oas.annotations.media.Schema;
-import io.swagger.v3.oas.annotations.responses.ApiResponse;
-import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.wisoft.capstonedesign.domain.donate.application.DonateService;
 import io.wisoft.capstonedesign.domain.donate.persistence.Donate;
 import io.wisoft.capstonedesign.domain.donate.web.dto.*;
+import io.wisoft.capstonedesign.global.annotation.SwaggerApiError;
+import io.wisoft.capstonedesign.global.annotation.SwaggerApiNotFoundError;
+import io.wisoft.capstonedesign.global.annotation.SwaggerApiSuccess;
 import io.wisoft.capstonedesign.global.enumerated.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -23,18 +21,8 @@ public class DonateController {
 
     private final DonateService donateService;
 
-    @Operation(summary = "게시글 작성")
-    @ApiResponses(value = {
-            @ApiResponse(
-                    responseCode = "200",
-                    content = @Content(schema = @Schema(implementation = CreateDonateResponse.class))),
-            @ApiResponse(
-                    responseCode = "400",
-                    content = @Content(schema = @Schema(implementation = Error.class))),
-            @ApiResponse(
-                    responseCode = "404",
-                    content = @Content(schema = @Schema(implementation = Error.class)))
-    })
+    @SwaggerApiSuccess(summary = "게시글 작성", implementation = CreateDonateResponse.class)
+    @SwaggerApiError
     @PostMapping("/api/donates/new")
     public CreateDonateResponse saveDonate(@RequestBody @Valid final CreateDonateRequest request) {
 
@@ -42,18 +30,8 @@ public class DonateController {
         return new CreateDonateResponse(id);
     }
 
-    @Operation(summary = "게시글 수정")
-    @ApiResponses(value = {
-            @ApiResponse(
-                    responseCode = "200",
-                    content = @Content(schema = @Schema(implementation = UpdateDonateResponse.class))),
-            @ApiResponse(
-                    responseCode = "400",
-                    content = @Content(schema = @Schema(implementation = Error.class))),
-            @ApiResponse(
-                    responseCode = "404",
-                    content = @Content(schema = @Schema(implementation = Error.class)))
-    })
+    @SwaggerApiSuccess(summary = "게시글 수정", implementation = UpdateDonateResponse.class)
+    @SwaggerApiError
     @PatchMapping("/api/donates/{id}")
     public UpdateDonateResponse updateDonate(
             @PathVariable("id") final Long id,
@@ -64,15 +42,8 @@ public class DonateController {
         return new UpdateDonateResponse(updateDonate);
     }
 
-    @Operation(summary = "전체 게시글 목록 조회")
-    @ApiResponses(value = {
-            @ApiResponse(
-                    responseCode = "200",
-                    content = @Content(schema = @Schema(implementation = Result.class))),
-            @ApiResponse(
-                    responseCode = "404",
-                    content = @Content(schema = @Schema(implementation = Error.class)))
-    })
+    @SwaggerApiSuccess(summary = "전체 게시글 목록 조회", implementation = Result.class)
+    @SwaggerApiNotFoundError
     @GetMapping("/api/donates")
     public Result findDonates() {
         List<Donate> findDonates = donateService.findByCreatedDateDESC();
@@ -84,15 +55,8 @@ public class DonateController {
         return new Result(collect);
     }
 
-    @Operation(summary = "게시글 상세 조회")
-    @ApiResponses(value = {
-            @ApiResponse(
-                    responseCode = "200",
-                    content = @Content(schema = @Schema(implementation = GetDonateResponse.class))),
-            @ApiResponse(
-                    responseCode = "404",
-                    content = @Content(schema = @Schema(implementation = Error.class)))
-    })
+    @SwaggerApiSuccess(summary = "게시글 상세 조회", implementation = GetDonateResponse.class)
+    @SwaggerApiNotFoundError
     @GetMapping("/api/donates/details/{id}")
     public GetDonateResponse getDonate(@PathVariable("id") final Long id) {
 
@@ -100,15 +64,8 @@ public class DonateController {
         return new GetDonateResponse(findDonate);
     }
 
-    @Operation(summary = "특정 작성자의 게시글 조회")
-    @ApiResponses(value = {
-            @ApiResponse(
-                    responseCode = "200",
-                    content = @Content(schema = @Schema(implementation = Result.class))),
-            @ApiResponse(
-                    responseCode = "404",
-                    content = @Content(schema = @Schema(implementation = Error.class)))
-    })
+    @SwaggerApiSuccess(summary = "특정 작성자의 게시글 조회", implementation = Result.class)
+    @SwaggerApiNotFoundError
     @GetMapping("/api/donates/author/{id}")
     public Result getDonatesByUser(@PathVariable("id") final Long userId) {
 
@@ -121,15 +78,8 @@ public class DonateController {
         return new Result(collect);
     }
 
-    @Operation(summary = "게시글 상의 태그로 조회")
-    @ApiResponses(value = {
-            @ApiResponse(
-                    responseCode = "200",
-                    content = @Content(schema = @Schema(implementation = Result.class))),
-            @ApiResponse(
-                    responseCode = "404",
-                    content = @Content(schema = @Schema(implementation = Error.class)))
-    })
+    @SwaggerApiSuccess(summary = "게시글 상의 태그로 조회", implementation = Result.class)
+    @SwaggerApiNotFoundError
     @GetMapping("/api/donates/top")
     public Result getDonatesByTop() {
         List<Donate> byTag = donateService.findByTag(Tag.TOP);
@@ -141,15 +91,8 @@ public class DonateController {
         return new Result(collect);
     }
 
-    @Operation(summary = "게시글 하의 태그로 조회")
-    @ApiResponses(value = {
-            @ApiResponse(
-                    responseCode = "200",
-                    content = @Content(schema = @Schema(implementation = Result.class))),
-            @ApiResponse(
-                    responseCode = "404",
-                    content = @Content(schema = @Schema(implementation = Error.class)))
-    })
+    @SwaggerApiSuccess(summary = "게시글 하의 태그로 조회", implementation = Result.class)
+    @SwaggerApiNotFoundError
     @GetMapping("/api/donates/pants")
     public Result getDonatesByPants() {
         List<Donate> byTag = donateService.findByTag(Tag.PANTS);
@@ -161,15 +104,8 @@ public class DonateController {
         return new Result(collect);
     }
 
-    @Operation(summary = "게시글 신발 태그로 조회")
-    @ApiResponses(value = {
-            @ApiResponse(
-                    responseCode = "200",
-                    content = @Content(schema = @Schema(implementation = Result.class))),
-            @ApiResponse(
-                    responseCode = "404",
-                    content = @Content(schema = @Schema(implementation = Error.class)))
-    })
+    @SwaggerApiSuccess(summary = "게시글 신발 태그로 조회", implementation = Result.class)
+    @SwaggerApiNotFoundError
     @GetMapping("/api/donates/shoes")
     public Result getDonatesByShoes() {
         List<Donate> byTag = donateService.findByTag(Tag.SHOES);
@@ -181,15 +117,8 @@ public class DonateController {
         return new Result(collect);
     }
 
-    @Operation(summary = "게시글 기타 태그로 조회")
-    @ApiResponses(value = {
-            @ApiResponse(
-                    responseCode = "200",
-                    content = @Content(schema = @Schema(implementation = Result.class))),
-            @ApiResponse(
-                    responseCode = "404",
-                    content = @Content(schema = @Schema(implementation = Error.class)))
-    })
+    @SwaggerApiSuccess(summary = "게시글 기타 태그로 조회", implementation = Result.class)
+    @SwaggerApiNotFoundError
     @GetMapping("/api/donates/etc")
     public Result getDonatesByEtc() {
         List<Donate> byTag = donateService.findByTag(Tag.ETC);
@@ -201,18 +130,8 @@ public class DonateController {
         return new Result(collect);
     }
 
-    @Operation(summary = "게시글 삭제")
-    @ApiResponses(value = {
-            @ApiResponse(
-                    responseCode = "200",
-                    content = @Content(schema = @Schema(implementation = DeleteDonateResponse.class))),
-            @ApiResponse(
-                    responseCode = "400",
-                    content = @Content(schema = @Schema(implementation = Error.class))),
-            @ApiResponse(
-                    responseCode = "404",
-                    content = @Content(schema = @Schema(implementation = Error.class)))
-    })
+    @SwaggerApiSuccess(summary = "게시글 삭제", implementation = GetDonateResponse.class)
+    @SwaggerApiError
     @DeleteMapping("/api/donates/{id}")
     public DeleteDonateResponse deleteDonate(@PathVariable("id") final Long id) {
 
