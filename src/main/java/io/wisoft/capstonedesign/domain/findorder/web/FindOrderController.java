@@ -1,14 +1,11 @@
 package io.wisoft.capstonedesign.domain.findorder.web;
 
-import io.swagger.v3.oas.annotations.Operation;
-import io.swagger.v3.oas.annotations.media.Content;
-import io.swagger.v3.oas.annotations.media.Schema;
-import io.swagger.v3.oas.annotations.responses.ApiResponse;
-import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import io.wisoft.capstonedesign.domain.findorder.application.FindOrderService;
 import io.wisoft.capstonedesign.domain.findorder.persistence.FindOrder;
 import io.wisoft.capstonedesign.domain.findorder.web.dto.*;
+import io.wisoft.capstonedesign.global.annotation.SwaggerApiError;
+import io.wisoft.capstonedesign.global.annotation.SwaggerApiSuccess;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
@@ -23,18 +20,8 @@ public class FindOrderController {
 
     private final FindOrderService findOrderService;
 
-    @Operation(summary = "주문 생성")
-    @ApiResponses(value = {
-            @ApiResponse(
-                    responseCode = "200",
-                    content = @Content(schema = @Schema(implementation = CreateOrderResponse.class))),
-            @ApiResponse(
-                    responseCode = "400",
-                    content = @Content(schema = @Schema(implementation = Error.class))),
-            @ApiResponse(
-                    responseCode = "404",
-                    content = @Content(schema = @Schema(implementation = Error.class)))
-    })
+    @SwaggerApiSuccess(summary = "주문 생성", implementation = CreateOrderResponse.class)
+    @SwaggerApiError
     @PostMapping("/api/find-orders/new")
     public CreateOrderResponse saveOrder(@RequestBody @Valid final CreateOrderRequest request) {
 
@@ -42,18 +29,8 @@ public class FindOrderController {
         return new CreateOrderResponse(id);
     }
 
-    @Operation(summary = "주문 요청사항 수정")
-    @ApiResponses(value = {
-            @ApiResponse(
-                    responseCode = "200",
-                    content = @Content(schema = @Schema(implementation = UpdateOrderResponse.class))),
-            @ApiResponse(
-                    responseCode = "400",
-                    content = @Content(schema = @Schema(implementation = Error.class))),
-            @ApiResponse(
-                    responseCode = "404",
-                    content = @Content(schema = @Schema(implementation = Error.class)))
-    })
+    @SwaggerApiSuccess(summary = "주문 요청사항 수정", implementation = UpdateOrderResponse.class)
+    @SwaggerApiError
     @PatchMapping("/api/find-orders/{id}")
     public UpdateOrderResponse updateOrder(
             @PathVariable("id") final Long id,
@@ -64,18 +41,8 @@ public class FindOrderController {
         return new UpdateOrderResponse(updateOrder);
     }
 
-    @Operation(summary = "전체 사용자의 주문 내역 목록 조회")
-    @ApiResponses(value = {
-            @ApiResponse(
-                    responseCode = "200",
-                    content = @Content(schema = @Schema(implementation = Result.class))),
-            @ApiResponse(
-                    responseCode = "400",
-                    content = @Content(schema = @Schema(implementation = Error.class))),
-            @ApiResponse(
-                    responseCode = "404",
-                    content = @Content(schema = @Schema(implementation = Error.class)))
-    })
+    @SwaggerApiSuccess(summary = "전체 사용자의 주문 내역 목록 조회", implementation = Result.class)
+    @SwaggerApiError
     @GetMapping("/api/find-orders")
     public Result findOrders() {
         List<FindOrder> findOrders = findOrderService.findByCreatedDateDESC();
@@ -87,18 +54,8 @@ public class FindOrderController {
         return new Result(collect);
     }
 
-    @Operation(summary = "주문 내역 상세 조회")
-    @ApiResponses(value = {
-            @ApiResponse(
-                    responseCode = "200",
-                    content = @Content(schema = @Schema(implementation = GetFindOrderDto.class))),
-            @ApiResponse(
-                    responseCode = "400",
-                    content = @Content(schema = @Schema(implementation = Error.class))),
-            @ApiResponse(
-                    responseCode = "404",
-                    content = @Content(schema = @Schema(implementation = Error.class)))
-    })
+    @SwaggerApiSuccess(summary = "주문 내역 상세 조회", implementation = GetFindOrderDto.class)
+    @SwaggerApiError
     @GetMapping("/api/find-orders/{id}")
     public GetFindOrderDto getOrder(@PathVariable("id") final Long id) {
 
@@ -106,18 +63,8 @@ public class FindOrderController {
         return new GetFindOrderDto(findOrder);
     }
 
-    @Operation(summary = "특정 사용자의 주문 내역 조회")
-    @ApiResponses(value = {
-            @ApiResponse(
-                    responseCode = "200",
-                    content = @Content(schema = @Schema(implementation = Result.class))),
-            @ApiResponse(
-                    responseCode = "400",
-                    content = @Content(schema = @Schema(implementation = Error.class))),
-            @ApiResponse(
-                    responseCode = "404",
-                    content = @Content(schema = @Schema(implementation = Error.class)))
-    })
+    @SwaggerApiSuccess(summary = "특정 사용자의 주문 내역 조회", implementation = Result.class)
+    @SwaggerApiError
     @GetMapping("/api/find-orders/user/{id}")
     public Result getOrderByUser(@PathVariable("id") final Long userId) {
 
@@ -130,18 +77,8 @@ public class FindOrderController {
         return new Result(collect);
     }
 
-    @Operation(summary = "주문 취소")
-    @ApiResponses(value = {
-            @ApiResponse(
-                    responseCode = "200",
-                    content = @Content(schema = @Schema(implementation = DeleteOrderResponse.class))),
-            @ApiResponse(
-                    responseCode = "400",
-                    content = @Content(schema = @Schema(implementation = Error.class))),
-            @ApiResponse(
-                    responseCode = "404",
-                    content = @Content(schema = @Schema(implementation = Error.class)))
-    })
+    @SwaggerApiSuccess(summary = "주문 취소", implementation = DeleteOrderResponse.class)
+    @SwaggerApiError
     @DeleteMapping("/api/find-orders/{id}")
     public DeleteOrderResponse deleteOrder(@PathVariable("id") final Long id) {
 
