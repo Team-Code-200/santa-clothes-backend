@@ -10,6 +10,7 @@ import io.wisoft.capstonedesign.domain.user.persistence.UserRepository;
 import io.wisoft.capstonedesign.global.jwt.JwtTokenProvider;
 import lombok.RequiredArgsConstructor;
 import org.springframework.core.ParameterizedTypeReference;
+import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;
 import org.springframework.util.LinkedMultiValueMap;
@@ -19,14 +20,18 @@ import org.springframework.web.reactive.function.client.WebClient;
 import java.nio.charset.StandardCharsets;
 import java.util.Collections;
 import java.util.Map;
+import java.util.concurrent.TimeUnit;
 
 @Service
 @RequiredArgsConstructor
 public class OauthService {
 
+    private final int LOGIN_EXPIRED_TIME = 24;
+
     private final InMemoryProviderRepository inMemoryProviderRepository;
     private final UserRepository userRepository;
     private final JwtTokenProvider jwtTokenProvider;
+    private final StringRedisTemplate redisTemplate;
 
     public LoginResponse login(final String providerName, final String code) {
 
@@ -40,6 +45,8 @@ public class OauthService {
 
         String accessToken = jwtTokenProvider.createAccessToken(String.valueOf(user.getId()));
         String refreshToken = jwtTokenProvider.createRefreshToken();
+
+        redisTemplate.opsForValue().set(user.getNickname(), refreshToken, LOGIN_EXPIRED_TIME, TimeUnit.HOURS);
 
         return LoginResponse.builder()
                 .id(user.getId())
