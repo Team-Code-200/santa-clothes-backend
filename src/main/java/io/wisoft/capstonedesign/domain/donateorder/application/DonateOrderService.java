@@ -15,6 +15,8 @@ import io.wisoft.capstonedesign.global.exception.service.OrderNotFoundException;
 import io.wisoft.capstonedesign.global.exception.service.PostNotFoundException;
 import io.wisoft.capstonedesign.global.exception.service.UserNotFoundException;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -72,17 +74,17 @@ public class DonateOrderService {
     }
 
     /**
-     * 특정 사용자의 주문 내역 최근순으로 조회 - 기본값
+     * 특정 사용자의 주문 내역 최근순으로 조회
      */
     public List<DonateOrder> findByUser(final Long userId) {
         return donateOrderRepository.findByUser(userId);
     }
 
     /**
-     * 모든 주문 내역 최근순으로 조회
+     * 모든 주문 내역 페이징 및 최근순으로 조회 - 기본값
      */
-    public List<DonateOrder> findByCreatedDateDESC() {
-        return donateOrderRepository.findAllByOrderBySendDateDesc();
+    public Page<DonateOrder> findByCreatedDateDescUsingPaging(final Pageable pageable) {
+        return donateOrderRepository.findAllByOrderBySendDateDesc(pageable);
     }
 
     /**
