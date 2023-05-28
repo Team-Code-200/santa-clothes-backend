@@ -12,11 +12,12 @@ import io.wisoft.capstonedesign.domain.usershop.web.dto.CreateOrderRequest;
 import io.wisoft.capstonedesign.domain.usershop.web.dto.UpdateOrderRequest;
 import io.wisoft.capstonedesign.global.exception.service.*;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-import java.util.Optional;
 
 import static io.wisoft.capstonedesign.global.exception.ErrorCode.*;
 
@@ -70,17 +71,17 @@ public class UserShopService {
     }
 
     /**
-     * 특정 사용자의 주문 내역 최근순으로 조회 - 기본값
+     * 특정 사용자의 주문 내역 최근순으로 조회
      */
     public List<UserShop> findByUser(final Long userId) {
         return userShopRepository.findByUser(userId);
     }
 
     /**
-     * 모든 주문 내역 최근순으로 조회
+     * 모든 주문 내역 페이징 및 최근순으로 조회 - 기본값
      */
-    public List<UserShop> findByCreatedDateDESC() {
-        return userShopRepository.findAllByOrderByCreatedDateDesc();
+    public Page<UserShop> findByCreatedDateDescUsingPaging(final Pageable pageable) {
+        return userShopRepository.findAllByOrderByCreatedDateDesc(pageable);
     }
 
     /**
