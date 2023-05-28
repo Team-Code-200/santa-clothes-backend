@@ -9,6 +9,8 @@ import io.wisoft.capstonedesign.domain.user.persistence.UserRepository;
 import io.wisoft.capstonedesign.global.exception.service.InfoNotFoundException;
 import io.wisoft.capstonedesign.global.exception.service.UserNotFoundException;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -49,6 +51,13 @@ public class InformationService {
      */
     public List<Information> findInformations() {
         return informationRepository.findAll();
+    }
+
+    /**
+     * 모든 사용자의 배송정보 페이징 및 최근순으로 조회 - 기본값
+     */
+    public Page<Information> findByCreatedDateDescUsingPaging(final Pageable pageable) {
+        return informationRepository.findAllByOrderByCreatedDateDesc(pageable);
     }
 
     /**
