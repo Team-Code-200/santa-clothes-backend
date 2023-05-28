@@ -11,6 +11,8 @@ import io.wisoft.capstonedesign.global.exception.service.InfoNotFoundException;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
@@ -81,6 +83,29 @@ public class InformationServiceTest {
 
         // then
         assertEquals(3, informations.size());
+    }
+
+    @Test
+    public void 전체_배송정보_조회_페이징() throws Exception {
+
+        // given
+        CreateUserRequest request1 = new CreateUserRequest("1", "jinwon@gmail.com", "profile.png", 1000, "jinwon", String.valueOf(Role.GENERAL));
+        CreateUserRequest request2 = new CreateUserRequest("2", "donggwon@gmail.com", "profile.png", 1000, "donggwon", String.valueOf(Role.GENERAL));
+        CreateInformationRequest request3 = new CreateInformationRequest("윤진원", "대전광역시 유성구", "010-0000-0000", 1L);
+        CreateInformationRequest request4 = new CreateInformationRequest("윤진원", "대전광역시 유성구", "010-0000-0000", 1L);
+        CreateInformationRequest request5 = new CreateInformationRequest("서동권", "대전광역시 덕명동", "010-1111-1111", 2L);
+        PageRequest request = PageRequest.of(0, 5, Sort.by("createdDate").descending());
+
+        // when
+        userService.join(request1);
+        userService.join(request2);
+        informationService.save(request3);
+        informationService.save(request4);
+        informationService.save(request5);
+        List<Information> informations = informationService.findByCreatedDateDescUsingPaging(request).getContent();
+
+        // then
+        assertEquals(request5.username(), informations.get(0).getUsername());
     }
 
     @Test

@@ -12,6 +12,8 @@ import io.wisoft.capstonedesign.global.exception.service.PostNotFoundException;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
@@ -75,23 +77,24 @@ public class DonateServiceTest {
     }
 
     @Test
-    public void 전체_게시글_최근순_조회() throws Exception {
+    public void 전체_게시글_최근순_조회_페이징() throws Exception {
 
         // given
         CreateUserRequest request1 = new CreateUserRequest("1", "jinwon@gmail.com", "profile.png", 1000, "jinwon", String.valueOf(Role.GENERAL));
         CreateUserRequest request2 = new CreateUserRequest("2", "donggwon@gmail.com", "profile.png", 2000, "donggwon", String.valueOf(Role.GENERAL));
         CreateDonateRequest request3 = new CreateDonateRequest("패딩 나눔합니다", "image.png", "안 입는 패딩 기부해요", String.valueOf(Tag.TOP), 1L);
         CreateDonateRequest request4 = new CreateDonateRequest("바지 나눔합니다", "image.png", "안 입는 바지 기부해요", String.valueOf(Tag.PANTS), 2L);
+        PageRequest request = PageRequest.of(0, 5, Sort.by("createdDate").descending());
 
         // when
         userService.join(request1);
         userService.join(request2);
         donateService.join(request3);
         donateService.join(request4);
-        List<Donate> donateListDESC = donateService.findByCreatedDateDESC();
+        List<Donate> donates = donateService.findByCreatedDateDescUsingPaging(request).getContent();
 
         // then
-        assertEquals(request4.title(), donateListDESC.get(0).getTitle());
+        assertEquals(request4.title(), donates.get(0).getTitle());
     }
 
     @Test

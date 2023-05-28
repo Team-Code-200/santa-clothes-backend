@@ -11,6 +11,8 @@ import io.wisoft.capstonedesign.global.exception.service.PostNotFoundException;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
@@ -73,21 +75,22 @@ public class ShopServiceTest {
     }
 
     @Test
-    public void 물품_최근순_조회() throws Exception {
+    public void 전체물품_최근순_조회() throws Exception {
 
         // given
         CreateUserRequest request1 = new CreateUserRequest("1", "jinwon@gmail.com", "profile.png", 1000, "jinwon", String.valueOf(Role.GENERAL));
         CreateShopRequest request2 = new CreateShopRequest("라면 한 박스", 1000, "ramen.jpg", "포인트로 뜨끈한 라면 한 박스 가져가세요!", 1L);
         CreateShopRequest request3 = new CreateShopRequest("쌀 10kg", 2000, "rice.jpg", "포인트로 든든한 쌀 밥 가져가세요!", 1L);
+        PageRequest request = PageRequest.of(0, 5, Sort.by("createdDate").descending());
 
         // when
         userService.join(request1);
         shopService.save(request2);
         shopService.save(request3);
-        List<Shop> shopDESC = shopService.findByCreatedDateDESC();
+        List<Shop> shops = shopService.findByCreatedDateDescUsingPaging(request).getContent();
 
         // then
-        assertEquals(request3.title(), shopDESC.get(0).getTitle());
+        assertEquals(request3.title(), shops.get(0).getTitle());
     }
 
     @Test
