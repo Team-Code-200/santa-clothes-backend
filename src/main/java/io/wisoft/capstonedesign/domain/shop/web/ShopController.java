@@ -9,6 +9,8 @@ import io.wisoft.capstonedesign.global.annotation.SwaggerApiNotFoundError;
 import io.wisoft.capstonedesign.global.annotation.SwaggerApiSuccess;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -42,17 +44,11 @@ public class ShopController {
         return new UpdateShopResponse(updateShop);
     }
 
-    @SwaggerApiSuccess(summary = "전체 상품 목록 조회", implementation = Result.class)
+    @SwaggerApiSuccess(summary = "전체 상품 목록 조회", implementation = Page.class)
     @SwaggerApiNotFoundError
     @GetMapping("/api/shops")
-    public Result findShops() {
-        List<Shop> findShops = shopService.findShopList();
-
-        List<ShopDto> collect = findShops.stream()
-                .map(ShopDto::new)
-                .collect(Collectors.toList());
-
-        return new Result(collect);
+    public Page<ShopListDto> findShops(final Pageable pageable) {
+        return shopService.findByCreatedDateDescUsingPaging(pageable).map(ShopListDto::new);
     }
 
     @SwaggerApiSuccess(summary = "상품 상세 조회", implementation = GetShopResponse.class)

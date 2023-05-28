@@ -6,6 +6,8 @@ import io.wisoft.capstonedesign.domain.shop.web.dto.CreateShopRequest;
 import io.wisoft.capstonedesign.domain.shop.web.dto.UpdateShopRequest;
 import io.wisoft.capstonedesign.global.exception.service.PostNotFoundException;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -60,10 +62,10 @@ public class ShopService {
     }
 
     /**
-     * 산타샵 물품 최근순으로 조회 - 기본값
+     * 산타샵 물품 페이징 및 최근순으로 조회 - 기본값
      */
-    public List<Shop> findByCreatedDateDESC() {
-        return shopRepository.findAllByOrderByCreatedDateDesc();
+    public Page<Shop> findByCreatedDateDescUsingPaging(final Pageable pageable) {
+        return shopRepository.findAllByOrderByCreatedDateDesc(pageable);
     }
 
     /**

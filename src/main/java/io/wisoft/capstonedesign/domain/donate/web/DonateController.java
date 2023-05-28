@@ -9,6 +9,8 @@ import io.wisoft.capstonedesign.global.annotation.SwaggerApiSuccess;
 import io.wisoft.capstonedesign.global.enumerated.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -42,17 +44,11 @@ public class DonateController {
         return new UpdateDonateResponse(updateDonate);
     }
 
-    @SwaggerApiSuccess(summary = "전체 게시글 목록 조회", implementation = Result.class)
+    @SwaggerApiSuccess(summary = "전체 게시글 목록 조회", implementation = Page.class)
     @SwaggerApiNotFoundError
     @GetMapping("/api/donates")
-    public Result findDonates() {
-        List<Donate> findDonates = donateService.findByCreatedDateDESC();
-
-        List<DonateDto> collect = findDonates.stream()
-                .map(DonateDto::new)
-                .collect(Collectors.toList());
-
-        return new Result(collect);
+    public Page<DonateListDto> findDonates(final Pageable pageable) {
+        return donateService.findByCreatedDateDescUsingPaging(pageable).map(DonateListDto::new);
     }
 
     @SwaggerApiSuccess(summary = "게시글 상세 조회", implementation = GetDonateResponse.class)

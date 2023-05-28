@@ -9,6 +9,8 @@ import io.wisoft.capstonedesign.domain.user.persistence.UserRepository;
 import io.wisoft.capstonedesign.global.enumerated.Tag;
 import io.wisoft.capstonedesign.global.exception.service.PostNotFoundException;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -62,10 +64,10 @@ public class FindService {
     }
 
     /**
-     * 모든 게시글 최근순으로 조회 - 기본값
+     * 모든 게시글 페이징 및 최근순으로 조회 - 기본값
      */
-    public List<Find> findByCreatedDateDESC() {
-        return findRepository.findAllByOrderByCreatedDateDesc();
+    public Page<Find> findByCreatedDateDescUsingPaging(final Pageable pageable) {
+        return findRepository.findAllByOrderByCreatedDateDesc(pageable);
     }
 
     /**

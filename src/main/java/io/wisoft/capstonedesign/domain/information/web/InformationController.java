@@ -8,6 +8,8 @@ import io.wisoft.capstonedesign.global.annotation.SwaggerApiError;
 import io.wisoft.capstonedesign.global.annotation.SwaggerApiSuccess;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -44,14 +46,8 @@ public class InformationController {
     @SwaggerApiSuccess(summary = "전체 사용자의 배송 정보 목록 조회", implementation = Result.class)
     @SwaggerApiError
     @GetMapping("/api/informations")
-    public Result findInformations() {
-        List<Information> findInfos = informationService.findInformations();
-
-        List<InformationDto> collect = findInfos.stream()
-                .map(InformationDto::new)
-                .collect(Collectors.toList());
-
-        return new Result(collect);
+    public Page<InfoListDto> findInformations(final Pageable pageable) {
+        return informationService.findByCreatedDateDescUsingPaging(pageable).map(InfoListDto::new);
     }
 
     @SwaggerApiSuccess(summary = "배송 정보 상세 조회", implementation = GetInfoResponse.class)

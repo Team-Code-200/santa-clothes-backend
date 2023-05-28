@@ -16,6 +16,8 @@ import io.wisoft.capstonedesign.global.exception.service.OrderNotFoundException;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
@@ -90,6 +92,29 @@ public class DonateOrderServiceTest {
 
         // then
         assertEquals(2, donateOrders.size());
+    }
+
+    @Test
+    public void 전체_주문내역_조회_페이징() throws Exception {
+
+        // given
+        CreateUserRequest request1 = new CreateUserRequest("1", "jinwon@gmail.com", "profile.png", 1000, "jinwon", String.valueOf(Role.GENERAL));
+        CreateDonateRequest request2 = new CreateDonateRequest("패딩 나눔합니다", "image.png", "안 입는 패딩 기부해요", String.valueOf(Tag.TOP), 1L);
+        CreateInformationRequest request3 = new CreateInformationRequest("윤진원", "대전광역시 유성구", "010-0000-0000", 1L);
+        CreateOrderRequest request4 = new CreateOrderRequest("배송전 문자주세요", 1L, 1L, 1L);
+        CreateOrderRequest request5 = new CreateOrderRequest("경비실에 맡겨주세요", 1L, 1L, 1L);
+        PageRequest request = PageRequest.of(0, 5, Sort.by("sendDate").descending());
+
+        // when
+        userService.join(request1);
+        donateService.join(request2);
+        informationService.save(request3);
+        donateOrderService.save(request4);
+        donateOrderService.save(request5);
+        List<DonateOrder> donateOrders = donateOrderService.findByCreatedDateDescUsingPaging(request).getContent();
+
+        // then
+        assertEquals(request5.text(), donateOrders.get(0).getText());
     }
 
     @Test
