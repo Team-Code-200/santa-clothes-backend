@@ -8,6 +8,8 @@ import io.wisoft.capstonedesign.global.annotation.SwaggerApiError;
 import io.wisoft.capstonedesign.global.annotation.SwaggerApiSuccess;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -41,17 +43,11 @@ public class FindOrderController {
         return new UpdateOrderResponse(updateOrder);
     }
 
-    @SwaggerApiSuccess(summary = "전체 사용자의 주문 내역 목록 조회", implementation = Result.class)
+    @SwaggerApiSuccess(summary = "전체 사용자의 주문 내역 목록 조회", implementation = Page.class)
     @SwaggerApiError
     @GetMapping("/api/find-orders")
-    public Result findOrders() {
-        List<FindOrder> findOrders = findOrderService.findByCreatedDateDESC();
-
-        List<OrderDto> collect = findOrders.stream()
-                .map(OrderDto::new)
-                .collect(Collectors.toList());
-
-        return new Result(collect);
+    public Page<OrderListDto> findOrders(final Pageable pageable) {
+        return findOrderService.findByCreatedDateDescUsingPaging(pageable).map(OrderListDto::new);
     }
 
     @SwaggerApiSuccess(summary = "주문 내역 상세 조회", implementation = GetFindOrderDto.class)
