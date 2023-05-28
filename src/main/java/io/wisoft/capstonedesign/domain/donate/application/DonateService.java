@@ -9,6 +9,8 @@ import io.wisoft.capstonedesign.global.enumerated.Tag;
 import io.wisoft.capstonedesign.domain.donate.persistence.DonateRepository;
 import io.wisoft.capstonedesign.global.exception.service.PostNotFoundException;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -62,10 +64,10 @@ public class DonateService {
     }
 
     /**
-     * 모든 게시글 최근순으로 조회 - 기본값
+     * 모든 게시글 페이징 및 최근순으로 조회 - 기본값
      */
-    public List<Donate> findByCreatedDateDESC() {
-        return donateRepository.findAllByOrderByCreatedDateDesc();
+    public Page<Donate> findByCreatedDateDescUsingPaging(final Pageable pageable) {
+        return donateRepository.findAllByOrderByCreatedDateDesc(pageable);
     }
 
     /**
