@@ -9,6 +9,8 @@ import io.wisoft.capstonedesign.global.annotation.SwaggerApiSuccess;
 import io.wisoft.capstonedesign.global.enumerated.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -42,17 +44,11 @@ public class FindController {
         return new UpdateFindResponse(updateFind);
     }
 
-    @SwaggerApiSuccess(summary = "전체 게시글 목록 조회", implementation = Result.class)
+    @SwaggerApiSuccess(summary = "전체 게시글 목록 조회", implementation = Page.class)
     @SwaggerApiNotFoundError
     @GetMapping("/api/finds")
-    public Result findFinds() {
-        List<Find> findFinds = findService.findByCreatedDateDESC();
-
-        List<FindDto> collect = findFinds.stream()
-                .map(FindDto::new)
-                .collect(Collectors.toList());
-
-        return new Result(collect);
+    public Page<FindListDto> findFinds(final Pageable pageable) {
+        return findService.findByCreatedDateDescUsingPaging(pageable).map(FindListDto::new);
     }
 
     @SwaggerApiSuccess(summary = "게시글 상세 조회", implementation = GetFindResponse.class)
