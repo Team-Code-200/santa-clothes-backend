@@ -5,6 +5,7 @@ import io.wisoft.capstonedesign.domain.donateorder.persistence.DonateOrder;
 import io.wisoft.capstonedesign.domain.find.persistence.Find;
 import io.wisoft.capstonedesign.domain.findorder.persistence.FindOrder;
 import io.wisoft.capstonedesign.domain.information.persistence.Information;
+import io.wisoft.capstonedesign.domain.payment.persistence.OrderPayment;
 import io.wisoft.capstonedesign.domain.user.persistence.UserMyInfoRepository;
 import io.wisoft.capstonedesign.domain.usershop.persistence.UserShop;
 import lombok.RequiredArgsConstructor;
@@ -60,5 +61,12 @@ public class UserMyInfoService {
      */
     public Page<UserShop> findShopOrdersByIdUsingPaging(final Long userId, final Pageable pageable) {
         return userMyInfoRepository.findShopOrdersByIdUsingPaging(userId, pageable);
+    }
+
+    /**
+     * 자신이 결제한 결제 정보 목록 조회
+     */
+    public Page<OrderPayment> findPaymentsByIdUsingPaging(final Long userId, final Pageable pageable) {
+        return userMyInfoRepository.findPaymentsByIdUsingPaging(userId, pageable);
     }
 }

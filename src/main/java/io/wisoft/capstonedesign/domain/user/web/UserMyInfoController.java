@@ -6,6 +6,8 @@ import io.wisoft.capstonedesign.domain.donateorder.web.dto.GetDonateOrderDto;
 import io.wisoft.capstonedesign.domain.find.web.dto.GetFindResponse;
 import io.wisoft.capstonedesign.domain.findorder.web.dto.GetFindOrderDto;
 import io.wisoft.capstonedesign.domain.information.web.dto.GetInfoResponse;
+import io.wisoft.capstonedesign.domain.payment.persistence.OrderPayment;
+import io.wisoft.capstonedesign.domain.payment.web.dto.GetPaymentDto;
 import io.wisoft.capstonedesign.domain.user.application.UserMyInfoService;
 import io.wisoft.capstonedesign.domain.usershop.web.dto.GetShopOrderDto;
 import io.wisoft.capstonedesign.global.annotation.SwaggerApiError;
@@ -82,5 +84,15 @@ public class UserMyInfoController {
 
         return userMyInfoService.findShopOrdersByIdUsingPaging(userId, pageable)
                 .map(GetShopOrderDto::new);
+    }
+
+    @SwaggerApiSuccess(summary = "마이 페이지 - 결제 정보 조회", implementation = Page.class)
+    @SwaggerApiError
+    @GetMapping("/api/users/{id}/myinfo/payments")
+    public Page<GetPaymentDto> paymentListByUserId(
+            @PathVariable("id") final Long userId, final Pageable pageable) {
+
+        return userMyInfoService.findPaymentsByIdUsingPaging(userId, pageable)
+                .map(GetPaymentDto::new);
     }
 }
