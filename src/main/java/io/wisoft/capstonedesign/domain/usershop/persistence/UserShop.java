@@ -1,22 +1,25 @@
 package io.wisoft.capstonedesign.domain.usershop.persistence;
 
 import io.wisoft.capstonedesign.domain.information.persistence.Information;
+import io.wisoft.capstonedesign.domain.payment.persistence.OrderPayment;
 import io.wisoft.capstonedesign.domain.shop.persistence.Shop;
 import io.wisoft.capstonedesign.domain.user.persistence.User;
 import jakarta.persistence.*;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import java.time.LocalDateTime;
 
+import static jakarta.persistence.CascadeType.*;
 import static jakarta.persistence.FetchType.*;
 import static lombok.AccessLevel.*;
 
 @Entity
 @Table(name = "USER_SHOP")
 @NoArgsConstructor(access = PROTECTED)
-@Getter
+@Getter @Setter
 public class UserShop {
 
     @Id @GeneratedValue
@@ -41,6 +44,9 @@ public class UserShop {
     @ManyToOne(fetch = LAZY)
     @JoinColumn(name = "info_id", nullable = false)
     private Information information;
+
+    @OneToOne(mappedBy = "userShop", fetch = LAZY, cascade = REMOVE)
+    private OrderPayment orderPayment;
 
     /**
      * 정적 생성자 메소드
