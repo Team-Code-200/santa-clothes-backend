@@ -5,6 +5,7 @@ import io.wisoft.capstonedesign.domain.donateorder.persistence.DonateOrder;
 import io.wisoft.capstonedesign.domain.find.persistence.Find;
 import io.wisoft.capstonedesign.domain.findorder.persistence.FindOrder;
 import io.wisoft.capstonedesign.domain.information.persistence.Information;
+import io.wisoft.capstonedesign.domain.payment.persistence.OrderPayment;
 import io.wisoft.capstonedesign.domain.usershop.persistence.UserShop;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -55,4 +56,12 @@ public interface UserMyInfoRepository extends JpaRepository<User, Long> {
             " order by s.createdDate desc",
             countQuery = "select count(s) from UserShop s")
     Page<UserShop> findShopOrdersByIdUsingPaging(@Param("id") final Long userId, final Pageable pageable);
+
+    @Query(value = "select o from OrderPayment o" +
+            " join fetch o.userShop s" +
+            " join fetch s.user u" +
+            " where u.id = :id" +
+            " order by o.createdDate desc",
+            countQuery = "select count(o) from OrderPayment o")
+    Page<OrderPayment> findPaymentsByIdUsingPaging(@Param("id") final Long userId, final Pageable pageable);
 }
