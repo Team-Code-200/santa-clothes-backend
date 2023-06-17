@@ -1,11 +1,16 @@
 package io.wisoft.capstonedesign.global.exception.service;
 
-import io.wisoft.capstonedesign.global.exception.BusinessException;
 import io.wisoft.capstonedesign.global.exception.ErrorCode;
+import lombok.Getter;
 
-public class InfoNotFoundException extends BusinessException {
+@Getter
+public class InfoNotFoundException extends RuntimeException {
 
-    public InfoNotFoundException(ErrorCode errorCode) {
-        super(errorCode);
+    private final ErrorCode errorCode;
+    private final String message;
+
+    public InfoNotFoundException() {
+        this.errorCode = ErrorCode.NOT_FOUND_INFO;
+        this.message = ErrorCode.NOT_FOUND_INFO.getMessage();
     }
 }

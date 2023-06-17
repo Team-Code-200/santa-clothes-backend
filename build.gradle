@@ -34,6 +34,7 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-websocket'
 	implementation 'org.webjars:sockjs-client:1.1.2'
 	implementation 'org.webjars:stomp-websocket:2.3.3-1'
+	implementation 'com.slack.api:slack-api-client:1.29.0'
 	// front 관련
 	implementation 'org.webjars.bower:bootstrap:5.3.0'
 	implementation 'org.webjars.bower:vue:2.6.14'

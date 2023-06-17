@@ -51,7 +51,7 @@ public class ShopService {
      */
     public Shop findById(final Long id) {
         return shopRepository.findById(id)
-                .orElseThrow(() -> new PostNotFoundException(NOT_FOUND_POST));
+                .orElseThrow(PostNotFoundException::new);
     }
 
     /**
@@ -74,7 +74,7 @@ public class ShopService {
     @Transactional
     public void updateAll(final Long id, final UpdateShopRequest request) {
         Shop shop = shopRepository.findById(id)
-                .orElseThrow(() -> new PostNotFoundException(NOT_FOUND_POST));
+                .orElseThrow(PostNotFoundException::new);
 
         shop.update(request.title(), request.price(), request.image(), request.body());
     }
@@ -85,7 +85,7 @@ public class ShopService {
     @Transactional
     public void deleteShop(final Long shopId) {
         Shop shop = shopRepository.findById(shopId)
-                .orElseThrow(() -> new PostNotFoundException(NOT_FOUND_POST));
+                .orElseThrow(PostNotFoundException::new);
         shopRepository.delete(shop);
     }
 }

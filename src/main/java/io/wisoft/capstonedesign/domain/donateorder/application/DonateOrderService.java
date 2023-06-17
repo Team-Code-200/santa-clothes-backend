@@ -41,11 +41,11 @@ public class DonateOrderService {
     public Long save(final CreateOrderRequest request) {
 
         User user = userRepository.findById(request.userId())
-                .orElseThrow(() -> new UserNotFoundException(NOT_FOUND_ACCOUNT));
+                .orElseThrow(UserNotFoundException::new);
         Information information = informationRepository.findById(request.infoId())
-                .orElseThrow(() -> new InfoNotFoundException(NOT_FOUND_INFO));
+                .orElseThrow(InfoNotFoundException::new);
         Donate donate = donateRepository.findById(request.donateId())
-                .orElseThrow(() -> new PostNotFoundException(NOT_FOUND_POST));
+                .orElseThrow(PostNotFoundException::new);
 
         DonateOrder donateOrder = DonateOrder.builder()
                 .text(request.text())
@@ -70,7 +70,7 @@ public class DonateOrderService {
      */
     public DonateOrder findById(final Long id) {
         return donateOrderRepository.findById(id)
-                .orElseThrow(() -> new OrderNotFoundException(NOT_FOUND_ORDER));
+                .orElseThrow(OrderNotFoundException::new);
     }
 
     /**
@@ -93,7 +93,7 @@ public class DonateOrderService {
     @Transactional
     public void updateBody(final Long id, final UpdateOrderRequest request) {
         DonateOrder donateOrder = donateOrderRepository.findById(id)
-                .orElseThrow(() -> new OrderNotFoundException(NOT_FOUND_ORDER));
+                .orElseThrow(OrderNotFoundException::new);
         donateOrder.update(request.text());
     }
 
@@ -103,7 +103,7 @@ public class DonateOrderService {
     @Transactional
     public void deleteOrder(final Long orderId) {
         DonateOrder donateOrder = donateOrderRepository.findById(orderId)
-                .orElseThrow(() -> new OrderNotFoundException(NOT_FOUND_ORDER));
+                .orElseThrow(OrderNotFoundException::new);
         donateOrderRepository.delete(donateOrder);
     }
 }

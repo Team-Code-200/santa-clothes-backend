@@ -13,8 +13,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
-import static io.wisoft.capstonedesign.global.exception.ErrorCode.*;
-
 @Service
 @Transactional(readOnly = true)
 @RequiredArgsConstructor
@@ -47,7 +45,7 @@ public class UserService {
      */
     private void validateDuplicateUser(final CreateUserRequest request) {
         List<User> findUsers = userRepository.findByEmail(request.email());
-        if (!findUsers.isEmpty()) throw new UserDuplicateException(DUPLICATE_USER);
+        if (!findUsers.isEmpty()) throw new UserDuplicateException();
     }
 
     /**
@@ -62,7 +60,7 @@ public class UserService {
      */
     public User findById(final Long userId) {
         return userRepository.findById(userId)
-                .orElseThrow(() -> new UserNotFoundException(NOT_FOUND_ACCOUNT));
+                .orElseThrow(UserNotFoundException::new);
     }
 
     /**
@@ -71,7 +69,7 @@ public class UserService {
     @Transactional
     public void updateNickname(final Long userId, final UpdateUserRequest request) {
         User user = userRepository.findById(userId)
-                .orElseThrow(() -> new UserNotFoundException(NOT_FOUND_ACCOUNT));
+                .orElseThrow(UserNotFoundException::new);
 
         validateNickname(request.nickname());
         user.updateNickname(request.nickname());
@@ -88,7 +86,7 @@ public class UserService {
      */
     @Transactional
     public void deleteUser(final Long userId) {
-        User user = userRepository.findById(userId).orElseThrow(() -> new UserNotFoundException(NOT_FOUND_ACCOUNT));
+        User user = userRepository.findById(userId).orElseThrow(UserNotFoundException::new);
         userRepository.delete(user);
     }
 }

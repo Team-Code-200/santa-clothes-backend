@@ -41,11 +41,11 @@ public class FindOrderService {
     public Long save(final CreateOrderRequest request) {
 
         User user = userRepository.findById(request.userId())
-                .orElseThrow(() -> new UserNotFoundException(NOT_FOUND_ACCOUNT));
+                .orElseThrow(UserNotFoundException::new);
         Information information = informationRepository.findById(request.infoId())
-                .orElseThrow(() -> new InfoNotFoundException(NOT_FOUND_INFO));
+                .orElseThrow(InfoNotFoundException::new);
         Find find = findRepository.findById(request.findId())
-                .orElseThrow(() -> new PostNotFoundException(NOT_FOUND_POST));
+                .orElseThrow(PostNotFoundException::new);
 
         FindOrder findOrder = FindOrder.builder()
                 .text(request.text())
@@ -70,7 +70,7 @@ public class FindOrderService {
      */
     public FindOrder findById(final Long id) {
         return findOrderRepository.findById(id)
-                .orElseThrow(() -> new OrderNotFoundException(NOT_FOUND_ORDER));
+                .orElseThrow(OrderNotFoundException::new);
     }
 
     /**
@@ -93,7 +93,7 @@ public class FindOrderService {
     @Transactional
     public void updateBody(final Long id, final UpdateOrderRequest request) {
         FindOrder findOrder = findOrderRepository.findById(id)
-                .orElseThrow(() -> new OrderNotFoundException(NOT_FOUND_ORDER));
+                .orElseThrow(OrderNotFoundException::new);
         findOrder.update(request.text());
     }
 
@@ -103,7 +103,7 @@ public class FindOrderService {
     @Transactional
     public void deleteOrder(final Long orderId) {
         FindOrder findOrder = findOrderRepository.findById(orderId)
-                .orElseThrow(() -> new OrderNotFoundException(NOT_FOUND_ORDER));
+                .orElseThrow(OrderNotFoundException::new);
         findOrderRepository.delete(findOrder);
     }
 }

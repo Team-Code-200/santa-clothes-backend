@@ -8,6 +8,7 @@ import io.wisoft.capstonedesign.domain.user.persistence.User;
 import io.wisoft.capstonedesign.domain.user.persistence.UserRepository;
 import io.wisoft.capstonedesign.global.enumerated.Tag;
 import io.wisoft.capstonedesign.global.exception.service.PostNotFoundException;
+import io.wisoft.capstonedesign.global.exception.service.UserNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -33,7 +34,7 @@ public class FindService {
     public Long join(final CreateFindRequest request) {
 
         User user = userRepository.findById(request.userId())
-                .orElseThrow(() -> new PostNotFoundException(NOT_FOUND_POST));
+                .orElseThrow(UserNotFoundException::new);
 
         Find find = Find.builder()
                 .title(request.title())
@@ -60,7 +61,7 @@ public class FindService {
      */
     public Find findById(final Long id) {
         return findRepository.findById(id)
-                .orElseThrow(() -> new PostNotFoundException(NOT_FOUND_POST));
+                .orElseThrow(PostNotFoundException::new);
     }
 
     /**
@@ -90,7 +91,7 @@ public class FindService {
     @Transactional
     public void updateAll(final Long id, final UpdateFindRequest request) {
         Find find = findRepository.findById(id)
-                .orElseThrow(() -> new PostNotFoundException(NOT_FOUND_POST));
+                .orElseThrow(PostNotFoundException::new);
 
         validateFind(request.title(), request.image(), request.text(), Tag.valueOf(request.tag()));
         find.update(request.title(), request.image(), request.text(), Tag.valueOf(request.tag()));
@@ -108,7 +109,7 @@ public class FindService {
     @Transactional
     public void deleteFind(final Long findId) {
         Find find = findRepository.findById(findId)
-                .orElseThrow(() -> new PostNotFoundException(NOT_FOUND_POST));
+                .orElseThrow(PostNotFoundException::new);
 
         findRepository.delete(find);
     }
