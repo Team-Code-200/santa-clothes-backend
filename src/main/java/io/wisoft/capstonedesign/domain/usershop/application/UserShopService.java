@@ -38,11 +38,11 @@ public class UserShopService {
     public Long save(final CreateOrderRequest request) {
 
         User user = userRepository.findById(request.userId())
-                .orElseThrow(() -> new UserNotFoundException(NOT_FOUND_ACCOUNT));
+                .orElseThrow(UserNotFoundException::new);
         Information information = informationRepository.findById(request.infoId())
-                .orElseThrow(() -> new InfoNotFoundException(NOT_FOUND_INFO));
+                .orElseThrow(InfoNotFoundException::new);
         Shop shop = shopRepository.findById(request.shopId())
-                .orElseThrow(() -> new PostNotFoundException(NOT_FOUND_POST));
+                .orElseThrow(PostNotFoundException::new);
 
         UserShop userShop = UserShop.builder()
                 .text(request.text())
@@ -67,7 +67,7 @@ public class UserShopService {
      */
     public UserShop findById(final Long id) {
         return userShopRepository.findById(id)
-                .orElseThrow(() -> new OrderNotFoundException(NOT_FOUND_ORDER));
+                .orElseThrow(OrderNotFoundException::new);
     }
 
     /**
@@ -90,7 +90,7 @@ public class UserShopService {
     @Transactional
     public void updateBody(final Long id, final UpdateOrderRequest request) {
         UserShop userShop = userShopRepository.findById(request.orderId())
-                .orElseThrow(() -> new OrderNotFoundException(NOT_FOUND_ORDER));
+                .orElseThrow(OrderNotFoundException::new);
         userShop.update(request.text());
     }
 
@@ -100,7 +100,7 @@ public class UserShopService {
     @Transactional
     public void deleteOrder(final Long orderId) {
         UserShop userShop = userShopRepository.findById(orderId)
-                .orElseThrow(() -> new OrderNotFoundException(NOT_FOUND_ORDER));
+                .orElseThrow(OrderNotFoundException::new);
         userShopRepository.delete(userShop);
     }
 }

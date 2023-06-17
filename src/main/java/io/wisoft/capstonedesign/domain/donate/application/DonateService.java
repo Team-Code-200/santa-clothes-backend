@@ -8,6 +8,7 @@ import io.wisoft.capstonedesign.domain.user.persistence.UserRepository;
 import io.wisoft.capstonedesign.global.enumerated.Tag;
 import io.wisoft.capstonedesign.domain.donate.persistence.DonateRepository;
 import io.wisoft.capstonedesign.global.exception.service.PostNotFoundException;
+import io.wisoft.capstonedesign.global.exception.service.UserNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -33,7 +34,7 @@ public class DonateService {
     public Long join(final CreateDonateRequest request) {
 
         User user = userRepository.findById(request.userId())
-                .orElseThrow(() -> new PostNotFoundException(NOT_FOUND_POST));
+                .orElseThrow(UserNotFoundException::new);
 
         Donate donate = Donate.builder()
                 .title(request.title())
@@ -60,7 +61,7 @@ public class DonateService {
      */
     public Donate findById(final Long id) {
         return donateRepository.findById(id)
-                .orElseThrow(() -> new PostNotFoundException(NOT_FOUND_POST));
+                .orElseThrow(PostNotFoundException::new);
     }
 
     /**
@@ -90,7 +91,7 @@ public class DonateService {
     @Transactional
     public void updateAll(final Long id, final UpdateDonateRequest request) {
         Donate donate = donateRepository.findById(id)
-                .orElseThrow(() -> new PostNotFoundException(NOT_FOUND_POST));
+                .orElseThrow(PostNotFoundException::new);
 
         validateDonate(request.title(), request.image(), request.text(), Tag.valueOf(request.tag()));
         donate.update(request.title(), request.image(), request.text(), Tag.valueOf(request.tag()));
@@ -108,7 +109,7 @@ public class DonateService {
     @Transactional
     public void deleteDonate(final Long donateId) {
         Donate donate = donateRepository.findById(donateId)
-                .orElseThrow(() -> new PostNotFoundException(NOT_FOUND_POST));
+                .orElseThrow(PostNotFoundException::new);
 
         donateRepository.delete(donate);
     }

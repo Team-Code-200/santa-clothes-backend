@@ -5,8 +5,6 @@ import io.wisoft.capstonedesign.domain.donateorder.persistence.DonateOrder;
 import io.wisoft.capstonedesign.domain.find.persistence.Find;
 import io.wisoft.capstonedesign.domain.findorder.persistence.FindOrder;
 import io.wisoft.capstonedesign.domain.information.persistence.Information;
-import io.wisoft.capstonedesign.domain.message.persistence.Message;
-import io.wisoft.capstonedesign.domain.userchat.persistence.UserChat;
 import io.wisoft.capstonedesign.domain.usershop.persistence.UserShop;
 import io.wisoft.capstonedesign.global.enumerated.Role;
 import jakarta.persistence.*;
@@ -63,14 +61,14 @@ public class User {
     @OneToMany(mappedBy = "user", cascade = REMOVE)
     private List<Find> finds = new ArrayList<>();
 
-    @OneToMany(mappedBy = "sender", cascade = REMOVE)
-    private List<Message> messages = new ArrayList<>();
+//    @OneToMany(mappedBy = "sender", cascade = REMOVE)
+//    private List<Message> messages = new ArrayList<>();
 
     @OneToMany(mappedBy = "user", cascade = REMOVE)
     private List<UserShop> userShops = new ArrayList<>();
 
-    @OneToMany(mappedBy = "user", cascade = REMOVE)
-    private List<UserChat> userChats = new ArrayList<>();
+//    @OneToMany(mappedBy = "user", cascade = REMOVE)
+//    private List<UserChat> userChats = new ArrayList<>();
 
     @OneToMany(mappedBy = "user", cascade = REMOVE)
     private List<Information> information = new ArrayList<>();

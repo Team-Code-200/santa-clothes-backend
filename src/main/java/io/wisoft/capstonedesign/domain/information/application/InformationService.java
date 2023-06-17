@@ -33,7 +33,7 @@ public class InformationService {
     public Long save(final CreateInformationRequest request) {
 
         User user = userRepository.findById(request.userId())
-                .orElseThrow(() -> new UserNotFoundException(DUPLICATE_USER));
+                .orElseThrow(UserNotFoundException::new);
 
         Information information = Information.builder()
                 .username(request.username())
@@ -65,7 +65,7 @@ public class InformationService {
      */
     public Information findById(final Long id) {
         return informationRepository.findById(id)
-                .orElseThrow(() -> new InfoNotFoundException(NOT_FOUND_INFO));
+                .orElseThrow(InfoNotFoundException::new);
     }
 
     /**
@@ -81,7 +81,7 @@ public class InformationService {
     @Transactional
     public void updateAll(final Long id, final UpdateInformationRequest request) {
         Information information = informationRepository.findById(id)
-                .orElseThrow(() -> new InfoNotFoundException(NOT_FOUND_INFO));
+                .orElseThrow(InfoNotFoundException::new);
 
         validateInformation(request.username(), request.address(), request.phoneNumber());
         information.update(request.username(), request.address(), request.phoneNumber());
@@ -99,7 +99,7 @@ public class InformationService {
     @Transactional
     public void deleteInformation(final Long informationId) {
         Information information = informationRepository.findById(informationId)
-                .orElseThrow(() -> new InfoNotFoundException(NOT_FOUND_INFO));
+                .orElseThrow(InfoNotFoundException::new);
         informationRepository.delete(information);
     }
 }
