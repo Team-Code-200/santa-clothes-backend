@@ -4,7 +4,10 @@ import io.wisoft.capstonedesign.domain.shop.persistence.Shop;
 import io.wisoft.capstonedesign.domain.shop.persistence.ShopRepository;
 import io.wisoft.capstonedesign.domain.shop.web.dto.CreateShopRequest;
 import io.wisoft.capstonedesign.domain.shop.web.dto.UpdateShopRequest;
+import io.wisoft.capstonedesign.domain.user.persistence.User;
+import io.wisoft.capstonedesign.domain.user.persistence.UserRepository;
 import io.wisoft.capstonedesign.global.exception.service.PostNotFoundException;
+import io.wisoft.capstonedesign.global.exception.service.UserNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -13,20 +16,22 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
-import static io.wisoft.capstonedesign.global.exception.ErrorCode.*;
-
 @Service
 @Transactional(readOnly = true)
 @RequiredArgsConstructor
 public class ShopService {
 
     private final ShopRepository shopRepository;
+    private final UserRepository userRepository;
 
     /**
      * 산타샵 물품 저장
      */
     @Transactional
     public Long save(final CreateShopRequest request) {
+
+        User user = userRepository.findById(request.userId())
+                .orElseThrow(UserNotFoundException::new);
 
         Shop shop = Shop.builder()
                 .title(request.title())
