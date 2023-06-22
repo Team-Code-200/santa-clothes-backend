@@ -4,13 +4,16 @@ import io.wisoft.capstonedesign.domain.information.persistence.Information;
 import io.wisoft.capstonedesign.domain.information.persistence.InformationRepository;
 import io.wisoft.capstonedesign.domain.shop.persistence.Shop;
 import io.wisoft.capstonedesign.domain.shop.persistence.ShopRepository;
-import io.wisoft.capstonedesign.domain.user.persistence.UserRepository;
-import io.wisoft.capstonedesign.domain.usershop.persistence.UserShopRepository;
 import io.wisoft.capstonedesign.domain.user.persistence.User;
+import io.wisoft.capstonedesign.domain.user.persistence.UserRepository;
 import io.wisoft.capstonedesign.domain.usershop.persistence.UserShop;
+import io.wisoft.capstonedesign.domain.usershop.persistence.UserShopRepository;
 import io.wisoft.capstonedesign.domain.usershop.web.dto.CreateOrderRequest;
 import io.wisoft.capstonedesign.domain.usershop.web.dto.UpdateOrderRequest;
-import io.wisoft.capstonedesign.global.exception.service.*;
+import io.wisoft.capstonedesign.global.exception.service.InfoNotFoundException;
+import io.wisoft.capstonedesign.global.exception.service.OrderNotFoundException;
+import io.wisoft.capstonedesign.global.exception.service.PostNotFoundException;
+import io.wisoft.capstonedesign.global.exception.service.UserNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -18,8 +21,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-
-import static io.wisoft.capstonedesign.global.exception.ErrorCode.*;
 
 @Service
 @Transactional(readOnly = true)
@@ -89,7 +90,7 @@ public class UserShopService {
      */
     @Transactional
     public void updateBody(final Long id, final UpdateOrderRequest request) {
-        UserShop userShop = userShopRepository.findById(request.orderId())
+        UserShop userShop = userShopRepository.findById(id)
                 .orElseThrow(OrderNotFoundException::new);
         userShop.update(request.text());
     }
