@@ -2,6 +2,7 @@ plugins {
 	id 'java'
 	id 'org.springframework.boot' version '3.0.3'
 	id 'io.spring.dependency-management' version '1.1.0'
+	id 'jacoco'
 }
 
 group = 'io.wisoft'
@@ -42,10 +43,12 @@ dependencies {
 	implementation 'org.json:json:20230227'
 	implementation 'com.github.iamport:iamport-rest-client-java:0.2.22'
 	testImplementation 'junit:junit:4.13.1'
+	testImplementation 'io.github.autoparams:autoparams:1.1.1'
     compileOnly 'org.projectlombok:lombok'
 	runtimeOnly 'com.h2database:h2'
 	runtimeOnly 'org.postgresql:postgresql'
 	annotationProcessor 'org.projectlombok:lombok'
+	annotationProcessor 'org.springframework.boot:spring-boot-configuration-processor'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 }
 
