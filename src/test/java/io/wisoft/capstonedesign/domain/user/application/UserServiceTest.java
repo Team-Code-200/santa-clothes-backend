@@ -1,6 +1,5 @@
-package io.wisoft.capstonedesign.service;
+package io.wisoft.capstonedesign.domain.user.application;
 
-import io.wisoft.capstonedesign.domain.user.application.UserService;
 import io.wisoft.capstonedesign.domain.user.persistence.User;
 import io.wisoft.capstonedesign.domain.user.web.dto.CreateUserRequest;
 import io.wisoft.capstonedesign.domain.user.web.dto.UpdateUserRequest;

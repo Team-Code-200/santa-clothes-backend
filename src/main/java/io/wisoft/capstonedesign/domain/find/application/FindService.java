@@ -1,7 +1,7 @@
 package io.wisoft.capstonedesign.domain.find.application;
 
-import io.wisoft.capstonedesign.domain.find.persistence.FindRepository;
 import io.wisoft.capstonedesign.domain.find.persistence.Find;
+import io.wisoft.capstonedesign.domain.find.persistence.FindRepository;
 import io.wisoft.capstonedesign.domain.find.web.dto.CreateFindRequest;
 import io.wisoft.capstonedesign.domain.find.web.dto.UpdateFindRequest;
 import io.wisoft.capstonedesign.domain.user.persistence.User;
@@ -16,8 +16,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-
-import static io.wisoft.capstonedesign.global.exception.ErrorCode.*;
 
 @Service
 @Transactional(readOnly = true)
@@ -75,6 +73,8 @@ public class FindService {
      * 특정 사용자의 게시글 조회
      */
     public List<Find> findByUser(final Long userId) {
+
+        userRepository.findById(userId).orElseThrow(UserNotFoundException::new);
         return findRepository.findByUser(userId);
     }
 

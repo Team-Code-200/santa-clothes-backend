@@ -1,12 +1,12 @@
 package io.wisoft.capstonedesign.domain.donate.application;
 
 import io.wisoft.capstonedesign.domain.donate.persistence.Donate;
+import io.wisoft.capstonedesign.domain.donate.persistence.DonateRepository;
 import io.wisoft.capstonedesign.domain.donate.web.dto.CreateDonateRequest;
 import io.wisoft.capstonedesign.domain.donate.web.dto.UpdateDonateRequest;
 import io.wisoft.capstonedesign.domain.user.persistence.User;
 import io.wisoft.capstonedesign.domain.user.persistence.UserRepository;
 import io.wisoft.capstonedesign.global.enumerated.Tag;
-import io.wisoft.capstonedesign.domain.donate.persistence.DonateRepository;
 import io.wisoft.capstonedesign.global.exception.service.PostNotFoundException;
 import io.wisoft.capstonedesign.global.exception.service.UserNotFoundException;
 import lombok.RequiredArgsConstructor;
@@ -16,8 +16,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-
-import static io.wisoft.capstonedesign.global.exception.ErrorCode.*;
 
 @Service
 @Transactional(readOnly = true)
@@ -75,6 +73,8 @@ public class DonateService {
      * 특정 사용자의 게시글 조회
      */
     public List<Donate> findByUser(final Long userId) {
+
+        userRepository.findById(userId).orElseThrow(UserNotFoundException::new);
         return donateRepository.findByUser(userId);
     }
 

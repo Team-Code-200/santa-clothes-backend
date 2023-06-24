@@ -1,17 +1,17 @@
-package io.wisoft.capstonedesign.service;
+package io.wisoft.capstonedesign.domain.findorder.application;
 
-import io.wisoft.capstonedesign.domain.donate.application.DonateService;
-import io.wisoft.capstonedesign.domain.donate.web.dto.CreateDonateRequest;
-import io.wisoft.capstonedesign.domain.donateorder.application.DonateOrderService;
-import io.wisoft.capstonedesign.domain.donateorder.persistence.DonateOrder;
-import io.wisoft.capstonedesign.domain.donateorder.web.dto.CreateOrderRequest;
-import io.wisoft.capstonedesign.domain.donateorder.web.dto.UpdateOrderRequest;
+import io.wisoft.capstonedesign.domain.find.application.FindService;
+import io.wisoft.capstonedesign.domain.find.web.dto.CreateFindRequest;
+import io.wisoft.capstonedesign.domain.findorder.persistence.FindOrder;
+import io.wisoft.capstonedesign.domain.findorder.web.dto.CreateOrderRequest;
+import io.wisoft.capstonedesign.domain.findorder.web.dto.UpdateOrderRequest;
 import io.wisoft.capstonedesign.domain.information.application.InformationService;
 import io.wisoft.capstonedesign.domain.information.web.dto.CreateInformationRequest;
 import io.wisoft.capstonedesign.domain.user.application.UserService;
 import io.wisoft.capstonedesign.domain.user.web.dto.CreateUserRequest;
 import io.wisoft.capstonedesign.global.exception.service.OrderNotFoundException;
 import io.wisoft.capstonedesign.global.exception.service.UserNotFoundException;
+import io.wisoft.capstonedesign.setting.data.DefaultFindOrderData;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
@@ -24,8 +24,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
-import static io.wisoft.capstonedesign.setting.data.DefaultDonateData.createDefaultDonate;
-import static io.wisoft.capstonedesign.setting.data.DefaultDonateOrderData.createDefaultOrder;
+import static io.wisoft.capstonedesign.setting.data.DefaultFindData.createDefaultFind;
 import static io.wisoft.capstonedesign.setting.data.DefaultInfoData.createDefaultInfo;
 import static io.wisoft.capstonedesign.setting.data.DefaultUserData.createDefaultUser;
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -33,11 +32,11 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 @SpringBootTest
 @Transactional
-public class DonateOrderServiceTest {
+public class FindOrderServiceTest {
 
-    @Autowired DonateOrderService donateOrderService;
+    @Autowired FindOrderService findOrderService;
     @Autowired UserService userService;
-    @Autowired DonateService donateService;
+    @Autowired FindService findService;
     @Autowired InformationService informationService;
 
     @Nested
@@ -52,19 +51,19 @@ public class DonateOrderServiceTest {
             CreateUserRequest userRequest = createDefaultUser();
             Long userId = userService.join(userRequest);
 
-            CreateDonateRequest donateRequest = createDefaultDonate(userId);
-            Long donateId = donateService.join(donateRequest);
+            CreateFindRequest findRequest = createDefaultFind(userId);
+            Long findId = findService.join(findRequest);
 
             CreateInformationRequest infoRequest = createDefaultInfo(userId);
             Long infoId = informationService.save(infoRequest);
 
-            CreateOrderRequest orderRequest = createDefaultOrder(infoId, donateId, userId);
+            CreateOrderRequest orderRequest = DefaultFindOrderData.createDefaultOrder(infoId, findId, userId);
 
             // when
-            Long savedId = donateOrderService.save(orderRequest);
+            Long savedId = findOrderService.save(orderRequest);
 
             // then
-            DonateOrder order = donateOrderService.findById(savedId);
+            FindOrder order = findOrderService.findById(savedId);
             assertEquals("배송전 문자주세요", order.getText());
         }
 
@@ -76,18 +75,18 @@ public class DonateOrderServiceTest {
             CreateUserRequest userRequest = createDefaultUser();
             Long userId = userService.join(userRequest);
 
-            CreateDonateRequest donateRequest = createDefaultDonate(userId);
-            Long donateId = donateService.join(donateRequest);
+            CreateFindRequest findRequest = createDefaultFind(userId);
+            Long findId = findService.join(findRequest);
 
             CreateInformationRequest infoRequest = createDefaultInfo(userId);
             Long infoId = informationService.save(infoRequest);
 
-            CreateOrderRequest orderRequest = createDefaultOrder(infoId, donateId, 100L);
+            CreateOrderRequest orderRequest = DefaultFindOrderData.createDefaultOrder(infoId, findId, 100L);
 
             // when
 
             // then
-            assertThrows(UserNotFoundException.class, () -> donateOrderService.save(orderRequest));
+            assertThrows(UserNotFoundException.class, () -> findOrderService.save(orderRequest));
         }
 
         @Test
@@ -98,24 +97,24 @@ public class DonateOrderServiceTest {
             CreateUserRequest userRequest = createDefaultUser();
             Long userId = userService.join(userRequest);
 
-            CreateDonateRequest donateRequest = createDefaultDonate(userId);
-            Long donateId = donateService.join(donateRequest);
+            CreateFindRequest findRequest = createDefaultFind(userId);
+            Long findId = findService.join(findRequest);
 
             CreateInformationRequest infoRequest = createDefaultInfo(userId);
             informationService.save(infoRequest);
 
-            CreateOrderRequest orderRequest = createDefaultOrder(null, donateId, userId);
+            CreateOrderRequest orderRequest = DefaultFindOrderData.createDefaultOrder(null, findId, userId);
 
             // when
 
             // then
-            assertThrows(InvalidDataAccessApiUsageException.class, () -> donateOrderService.save(orderRequest));
+            assertThrows(InvalidDataAccessApiUsageException.class, () -> findOrderService.save(orderRequest));
         }
     }
 
     @Nested
     @DisplayName("주문내역 조회 테스트")
-    class FindOrder {
+    class FindOrders {
 
         @Test
         @DisplayName("주문내역 단건 조회 요청시 한 주문내역이 조회되어야 한다.")
@@ -125,17 +124,17 @@ public class DonateOrderServiceTest {
             CreateUserRequest userRequest = createDefaultUser();
             Long userId = userService.join(userRequest);
 
-            CreateDonateRequest donateRequest = createDefaultDonate(userId);
-            Long donateId = donateService.join(donateRequest);
+            CreateFindRequest findRequest = createDefaultFind(userId);
+            Long findId = findService.join(findRequest);
 
             CreateInformationRequest infoRequest = createDefaultInfo(userId);
             Long infoId = informationService.save(infoRequest);
 
-            CreateOrderRequest orderRequest = createDefaultOrder(infoId, donateId, userId);
-            Long savedId = donateOrderService.save(orderRequest);
+            CreateOrderRequest orderRequest = DefaultFindOrderData.createDefaultOrder(infoId, findId, userId);
+            Long savedId = findOrderService.save(orderRequest);
 
             // when
-            DonateOrder savedOrder = donateOrderService.findById(savedId);
+            FindOrder savedOrder = findOrderService.findById(savedId);
 
             // then
             assertEquals("배송전 문자주세요", savedOrder.getText());
@@ -150,19 +149,19 @@ public class DonateOrderServiceTest {
             CreateUserRequest userRequest = createDefaultUser();
             Long userId = userService.join(userRequest);
 
-            CreateDonateRequest donateRequest = createDefaultDonate(userId);
-            Long donateId = donateService.join(donateRequest);
+            CreateFindRequest findRequest = createDefaultFind(userId);
+            Long findId = findService.join(findRequest);
 
             CreateInformationRequest infoRequest = createDefaultInfo(userId);
             Long infoId = informationService.save(infoRequest);
 
-            CreateOrderRequest orderRequest = createDefaultOrder(infoId, donateId, userId);
-            donateOrderService.save(orderRequest);
+            CreateOrderRequest orderRequest = DefaultFindOrderData.createDefaultOrder(infoId, findId, userId);
+            findOrderService.save(orderRequest);
 
             // when
 
             // then
-            assertThrows(OrderNotFoundException.class, () -> donateOrderService.findById(100L));
+            assertThrows(OrderNotFoundException.class, () -> findOrderService.findById(100L));
         }
 
         @Test
@@ -173,25 +172,25 @@ public class DonateOrderServiceTest {
             CreateUserRequest userRequest = createDefaultUser();
             Long userId = userService.join(userRequest);
 
-            CreateDonateRequest donateRequest = createDefaultDonate(userId);
-            Long donateId = donateService.join(donateRequest);
+            CreateFindRequest findRequest = createDefaultFind(userId);
+            Long findId = findService.join(findRequest);
 
             CreateInformationRequest infoRequest = createDefaultInfo(userId);
             Long infoId = informationService.save(infoRequest);
 
-            CreateOrderRequest orderRequest1 = createDefaultOrder(infoId, donateId, userId);
-            donateOrderService.save(orderRequest1);
+            CreateOrderRequest orderRequest1 = DefaultFindOrderData.createDefaultOrder(infoId, findId, userId);
+            findOrderService.save(orderRequest1);
 
             CreateOrderRequest orderRequest2 = CreateOrderRequest.builder()
                     .text("경비실에 맡겨주세요")
                     .infoId(infoId)
-                    .donateId(donateId)
+                    .findId(findId)
                     .userId(userId)
                     .build();
-            donateOrderService.save(orderRequest2);
+            findOrderService.save(orderRequest2);
 
             // when
-            List<DonateOrder> orders = donateOrderService.findDonateOrders();
+            List<FindOrder> orders = findOrderService.findFindOrders();
 
             // then
             assertEquals(2, orders.size());
@@ -206,26 +205,26 @@ public class DonateOrderServiceTest {
             CreateUserRequest userRequest = createDefaultUser();
             Long userId = userService.join(userRequest);
 
-            CreateDonateRequest donateRequest = createDefaultDonate(userId);
-            Long donateId = donateService.join(donateRequest);
+            CreateFindRequest findRequest = createDefaultFind(userId);
+            Long findId = findService.join(findRequest);
 
             CreateInformationRequest infoRequest = createDefaultInfo(userId);
             Long infoId = informationService.save(infoRequest);
 
-            CreateOrderRequest orderRequest1 = createDefaultOrder(infoId, donateId, userId);
-            donateOrderService.save(orderRequest1);
+            CreateOrderRequest orderRequest1 = DefaultFindOrderData.createDefaultOrder(infoId, findId, userId);
+            findOrderService.save(orderRequest1);
 
             CreateOrderRequest orderRequest2 = CreateOrderRequest.builder()
                     .text("경비실에 맡겨주세요")
                     .infoId(infoId)
-                    .donateId(donateId)
+                    .findId(findId)
                     .userId(userId)
                     .build();
-            donateOrderService.save(orderRequest2);
+            findOrderService.save(orderRequest2);
             PageRequest request = PageRequest.of(0, 5, Sort.by("sendDate").descending());
 
             // when
-            List<DonateOrder> donateOrders = donateOrderService.findByCreatedDateDescUsingPaging(request).getContent();
+            List<FindOrder> donateOrders = findOrderService.findByCreatedDateDescUsingPaging(request).getContent();
 
             // then
             assertEquals("경비실에 맡겨주세요", donateOrders.get(0).getText());
@@ -244,14 +243,14 @@ public class DonateOrderServiceTest {
             CreateUserRequest userRequest = createDefaultUser();
             Long userId = userService.join(userRequest);
 
-            CreateDonateRequest donateRequest = createDefaultDonate(userId);
-            Long donateId = donateService.join(donateRequest);
+            CreateFindRequest findRequest = createDefaultFind(userId);
+            Long findId = findService.join(findRequest);
 
             CreateInformationRequest infoRequest = createDefaultInfo(userId);
             Long infoId = informationService.save(infoRequest);
 
-            CreateOrderRequest orderRequest = createDefaultOrder(infoId, donateId, userId);
-            Long orderId = donateOrderService.save(orderRequest);
+            CreateOrderRequest orderRequest = DefaultFindOrderData.createDefaultOrder(infoId, findId, userId);
+            Long orderId = findOrderService.save(orderRequest);
 
             UpdateOrderRequest updateRequest = UpdateOrderRequest.builder()
                     .text("경비실에 맡겨주세요")
@@ -259,8 +258,8 @@ public class DonateOrderServiceTest {
                     .build();
 
             // when
-            donateOrderService.updateBody(orderId, updateRequest);
-            DonateOrder updateOrder = donateOrderService.findById(orderId);
+            findOrderService.updateBody(orderId, updateRequest);
+            FindOrder updateOrder = findOrderService.findById(orderId);
 
             // then
             assertEquals("경비실에 맡겨주세요", updateOrder.getText());
@@ -274,14 +273,14 @@ public class DonateOrderServiceTest {
             CreateUserRequest userRequest = createDefaultUser();
             Long userId = userService.join(userRequest);
 
-            CreateDonateRequest donateRequest = createDefaultDonate(userId);
-            Long donateId = donateService.join(donateRequest);
+            CreateFindRequest findRequest = createDefaultFind(userId);
+            Long findId = findService.join(findRequest);
 
             CreateInformationRequest infoRequest = createDefaultInfo(userId);
             Long infoId = informationService.save(infoRequest);
 
-            CreateOrderRequest orderRequest = createDefaultOrder(infoId, donateId, userId);
-            Long orderId = donateOrderService.save(orderRequest);
+            CreateOrderRequest orderRequest = DefaultFindOrderData.createDefaultOrder(infoId, findId, userId);
+            Long orderId = findOrderService.save(orderRequest);
 
             UpdateOrderRequest updateRequest = UpdateOrderRequest.builder()
                     .text("경비실에 맡겨주세요")
@@ -291,7 +290,7 @@ public class DonateOrderServiceTest {
             // when
 
             // then
-            assertThrows(OrderNotFoundException.class, () -> donateOrderService.updateBody(100L, updateRequest));
+            assertThrows(OrderNotFoundException.class, () -> findOrderService.updateBody(100L, updateRequest));
         }
     }
 
@@ -307,20 +306,20 @@ public class DonateOrderServiceTest {
             CreateUserRequest userRequest = createDefaultUser();
             Long userId = userService.join(userRequest);
 
-            CreateDonateRequest donateRequest = createDefaultDonate(userId);
-            Long donateId = donateService.join(donateRequest);
+            CreateFindRequest findRequest = createDefaultFind(userId);
+            Long findId = findService.join(findRequest);
 
             CreateInformationRequest infoRequest = createDefaultInfo(userId);
             Long infoId = informationService.save(infoRequest);
 
-            CreateOrderRequest orderRequest = createDefaultOrder(infoId, donateId, userId);
-            Long orderId = donateOrderService.save(orderRequest);
+            CreateOrderRequest orderRequest = DefaultFindOrderData.createDefaultOrder(infoId, findId, userId);
+            Long orderId = findOrderService.save(orderRequest);
 
             // when
-            donateOrderService.deleteOrder(orderId);
+            findOrderService.deleteOrder(orderId);
 
             // then
-            assertThrows(OrderNotFoundException.class, () -> donateOrderService.findById(orderId));
+            assertThrows(OrderNotFoundException.class, () -> findOrderService.findById(orderId));
         }
 
         @Test
@@ -331,19 +330,19 @@ public class DonateOrderServiceTest {
             CreateUserRequest userRequest = createDefaultUser();
             Long userId = userService.join(userRequest);
 
-            CreateDonateRequest donateRequest = createDefaultDonate(userId);
-            Long donateId = donateService.join(donateRequest);
+            CreateFindRequest findRequest = createDefaultFind(userId);
+            Long findId = findService.join(findRequest);
 
             CreateInformationRequest infoRequest = createDefaultInfo(userId);
             Long infoId = informationService.save(infoRequest);
 
-            CreateOrderRequest orderRequest = createDefaultOrder(infoId, donateId, userId);
-            donateOrderService.save(orderRequest);
+            CreateOrderRequest orderRequest = DefaultFindOrderData.createDefaultOrder(infoId, findId, userId);
+            Long orderId = findOrderService.save(orderRequest);
 
             // when
 
             // then
-            assertThrows(OrderNotFoundException.class, () -> donateOrderService.deleteOrder(100L));
+            assertThrows(OrderNotFoundException.class, () -> findOrderService.deleteOrder(100L));
         }
     }
 }

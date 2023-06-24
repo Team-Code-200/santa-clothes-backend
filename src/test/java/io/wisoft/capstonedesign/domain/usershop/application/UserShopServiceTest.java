@@ -1,18 +1,16 @@
-package io.wisoft.capstonedesign.service;
+package io.wisoft.capstonedesign.domain.usershop.application;
 
-import io.wisoft.capstonedesign.domain.find.application.FindService;
-import io.wisoft.capstonedesign.domain.find.web.dto.CreateFindRequest;
-import io.wisoft.capstonedesign.domain.findorder.application.FindOrderService;
-import io.wisoft.capstonedesign.domain.findorder.persistence.FindOrder;
-import io.wisoft.capstonedesign.domain.findorder.web.dto.CreateOrderRequest;
-import io.wisoft.capstonedesign.domain.findorder.web.dto.UpdateOrderRequest;
 import io.wisoft.capstonedesign.domain.information.application.InformationService;
 import io.wisoft.capstonedesign.domain.information.web.dto.CreateInformationRequest;
+import io.wisoft.capstonedesign.domain.shop.application.ShopService;
+import io.wisoft.capstonedesign.domain.shop.web.dto.CreateShopRequest;
 import io.wisoft.capstonedesign.domain.user.application.UserService;
 import io.wisoft.capstonedesign.domain.user.web.dto.CreateUserRequest;
+import io.wisoft.capstonedesign.domain.usershop.persistence.UserShop;
+import io.wisoft.capstonedesign.domain.usershop.web.dto.CreateOrderRequest;
+import io.wisoft.capstonedesign.domain.usershop.web.dto.UpdateOrderRequest;
 import io.wisoft.capstonedesign.global.exception.service.OrderNotFoundException;
 import io.wisoft.capstonedesign.global.exception.service.UserNotFoundException;
-import io.wisoft.capstonedesign.setting.data.DefaultFindOrderData;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
@@ -25,47 +23,48 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
-import static io.wisoft.capstonedesign.setting.data.DefaultFindData.createDefaultFind;
 import static io.wisoft.capstonedesign.setting.data.DefaultInfoData.createDefaultInfo;
+import static io.wisoft.capstonedesign.setting.data.DefaultShopData.createDefaultShop;
+import static io.wisoft.capstonedesign.setting.data.DefaultShopOrderData.createDefaultOrder;
 import static io.wisoft.capstonedesign.setting.data.DefaultUserData.createDefaultUser;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 @SpringBootTest
 @Transactional
-public class FindOrderServiceTest {
+public class UserShopServiceTest {
 
-    @Autowired FindOrderService findOrderService;
+    @Autowired UserShopService userShopService;
     @Autowired UserService userService;
-    @Autowired FindService findService;
+    @Autowired ShopService shopService;
     @Autowired InformationService informationService;
 
     @Nested
-    @DisplayName("주문내역 생성 테스트")
+    @DisplayName("산타샵 주문내역 생성 테스트")
     class CreateOrder {
 
         @Test
-        @DisplayName("주문내역 생성시 정상적으로 주문이 되어야 한다.")
+        @DisplayName("산타샵 주문내역 생성시 정상적으로 주문이 되어야 한다.")
         void create_order() {
 
             // given
             CreateUserRequest userRequest = createDefaultUser();
             Long userId = userService.join(userRequest);
 
-            CreateFindRequest findRequest = createDefaultFind(userId);
-            Long findId = findService.join(findRequest);
+            CreateShopRequest shopRequest = createDefaultShop(userId);
+            Long shopId = shopService.save(shopRequest);
 
             CreateInformationRequest infoRequest = createDefaultInfo(userId);
             Long infoId = informationService.save(infoRequest);
 
-            CreateOrderRequest orderRequest = DefaultFindOrderData.createDefaultOrder(infoId, findId, userId);
+            CreateOrderRequest orderRequest = createDefaultOrder(infoId, shopId, userId);
 
             // when
-            Long savedId = findOrderService.save(orderRequest);
+            Long savedId = userShopService.save(orderRequest);
 
             // then
-            FindOrder order = findOrderService.findById(savedId);
-            assertEquals("배송전 문자주세요", order.getText());
+            UserShop order = userShopService.findById(savedId);
+            assertEquals("배송 전 문자 부탁드립니다", order.getText());
         }
 
         @Test
@@ -76,18 +75,18 @@ public class FindOrderServiceTest {
             CreateUserRequest userRequest = createDefaultUser();
             Long userId = userService.join(userRequest);
 
-            CreateFindRequest findRequest = createDefaultFind(userId);
-            Long findId = findService.join(findRequest);
+            CreateShopRequest shopRequest = createDefaultShop(userId);
+            Long shopId = shopService.save(shopRequest);
 
             CreateInformationRequest infoRequest = createDefaultInfo(userId);
             Long infoId = informationService.save(infoRequest);
 
-            CreateOrderRequest orderRequest = DefaultFindOrderData.createDefaultOrder(infoId, findId, 100L);
+            CreateOrderRequest orderRequest = createDefaultOrder(infoId, shopId, 100L);
 
             // when
 
             // then
-            assertThrows(UserNotFoundException.class, () -> findOrderService.save(orderRequest));
+            assertThrows(UserNotFoundException.class, () -> userShopService.save(orderRequest));
         }
 
         @Test
@@ -98,24 +97,24 @@ public class FindOrderServiceTest {
             CreateUserRequest userRequest = createDefaultUser();
             Long userId = userService.join(userRequest);
 
-            CreateFindRequest findRequest = createDefaultFind(userId);
-            Long findId = findService.join(findRequest);
+            CreateShopRequest shopRequest = createDefaultShop(userId);
+            Long shopId = shopService.save(shopRequest);
 
             CreateInformationRequest infoRequest = createDefaultInfo(userId);
             informationService.save(infoRequest);
 
-            CreateOrderRequest orderRequest = DefaultFindOrderData.createDefaultOrder(null, findId, userId);
+            CreateOrderRequest orderRequest = createDefaultOrder(null, shopId, userId);
 
             // when
 
             // then
-            assertThrows(InvalidDataAccessApiUsageException.class, () -> findOrderService.save(orderRequest));
+            assertThrows(InvalidDataAccessApiUsageException.class, () -> userShopService.save(orderRequest));
         }
     }
 
     @Nested
-    @DisplayName("주문내역 조회 테스트")
-    class FindOrders {
+    @DisplayName("산타샵 주문내역 조회 테스트")
+    class FindOrder {
 
         @Test
         @DisplayName("주문내역 단건 조회 요청시 한 주문내역이 조회되어야 한다.")
@@ -125,20 +124,20 @@ public class FindOrderServiceTest {
             CreateUserRequest userRequest = createDefaultUser();
             Long userId = userService.join(userRequest);
 
-            CreateFindRequest findRequest = createDefaultFind(userId);
-            Long findId = findService.join(findRequest);
+            CreateShopRequest shopRequest = createDefaultShop(userId);
+            Long shopId = shopService.save(shopRequest);
 
             CreateInformationRequest infoRequest = createDefaultInfo(userId);
             Long infoId = informationService.save(infoRequest);
 
-            CreateOrderRequest orderRequest = DefaultFindOrderData.createDefaultOrder(infoId, findId, userId);
-            Long savedId = findOrderService.save(orderRequest);
+            CreateOrderRequest orderRequest = createDefaultOrder(infoId, shopId, userId);
+            Long savedId = userShopService.save(orderRequest);
 
             // when
-            FindOrder savedOrder = findOrderService.findById(savedId);
+            UserShop savedOrder = userShopService.findById(savedId);
 
             // then
-            assertEquals("배송전 문자주세요", savedOrder.getText());
+            assertEquals("배송 전 문자 부탁드립니다", savedOrder.getText());
             assertEquals(infoId, savedOrder.getInformation().getId());
         }
 
@@ -150,19 +149,19 @@ public class FindOrderServiceTest {
             CreateUserRequest userRequest = createDefaultUser();
             Long userId = userService.join(userRequest);
 
-            CreateFindRequest findRequest = createDefaultFind(userId);
-            Long findId = findService.join(findRequest);
+            CreateShopRequest shopRequest = createDefaultShop(userId);
+            Long shopId = shopService.save(shopRequest);
 
             CreateInformationRequest infoRequest = createDefaultInfo(userId);
             Long infoId = informationService.save(infoRequest);
 
-            CreateOrderRequest orderRequest = DefaultFindOrderData.createDefaultOrder(infoId, findId, userId);
-            findOrderService.save(orderRequest);
+            CreateOrderRequest orderRequest = createDefaultOrder(infoId, shopId, userId);
+            userShopService.save(orderRequest);
 
             // when
 
             // then
-            assertThrows(OrderNotFoundException.class, () -> findOrderService.findById(100L));
+            assertThrows(OrderNotFoundException.class, () -> userShopService.findById(100L));
         }
 
         @Test
@@ -173,29 +172,29 @@ public class FindOrderServiceTest {
             CreateUserRequest userRequest = createDefaultUser();
             Long userId = userService.join(userRequest);
 
-            CreateFindRequest findRequest = createDefaultFind(userId);
-            Long findId = findService.join(findRequest);
+            CreateShopRequest shopRequest = createDefaultShop(userId);
+            Long shopId = shopService.save(shopRequest);
 
             CreateInformationRequest infoRequest = createDefaultInfo(userId);
             Long infoId = informationService.save(infoRequest);
 
-            CreateOrderRequest orderRequest1 = DefaultFindOrderData.createDefaultOrder(infoId, findId, userId);
-            findOrderService.save(orderRequest1);
+            CreateOrderRequest orderRequest1 = createDefaultOrder(infoId, shopId, userId);
+            userShopService.save(orderRequest1);
 
             CreateOrderRequest orderRequest2 = CreateOrderRequest.builder()
                     .text("경비실에 맡겨주세요")
                     .infoId(infoId)
-                    .findId(findId)
+                    .shopId(shopId)
                     .userId(userId)
                     .build();
-            findOrderService.save(orderRequest2);
+            userShopService.save(orderRequest2);
 
             // when
-            List<FindOrder> orders = findOrderService.findFindOrders();
+            List<UserShop> shopOrders = userShopService.findShopOrders();
 
             // then
-            assertEquals(2, orders.size());
-            assertEquals("경비실에 맡겨주세요", orders.get(1).getText());
+            assertEquals(2, shopOrders.size());
+            assertEquals("경비실에 맡겨주세요", shopOrders.get(1).getText());
         }
 
         @Test
@@ -206,34 +205,34 @@ public class FindOrderServiceTest {
             CreateUserRequest userRequest = createDefaultUser();
             Long userId = userService.join(userRequest);
 
-            CreateFindRequest findRequest = createDefaultFind(userId);
-            Long findId = findService.join(findRequest);
+            CreateShopRequest shopRequest = createDefaultShop(userId);
+            Long shopId = shopService.save(shopRequest);
 
             CreateInformationRequest infoRequest = createDefaultInfo(userId);
             Long infoId = informationService.save(infoRequest);
 
-            CreateOrderRequest orderRequest1 = DefaultFindOrderData.createDefaultOrder(infoId, findId, userId);
-            findOrderService.save(orderRequest1);
+            CreateOrderRequest orderRequest1 = createDefaultOrder(infoId, shopId, userId);
+            userShopService.save(orderRequest1);
 
             CreateOrderRequest orderRequest2 = CreateOrderRequest.builder()
                     .text("경비실에 맡겨주세요")
                     .infoId(infoId)
-                    .findId(findId)
+                    .shopId(shopId)
                     .userId(userId)
                     .build();
-            findOrderService.save(orderRequest2);
-            PageRequest request = PageRequest.of(0, 5, Sort.by("sendDate").descending());
+            userShopService.save(orderRequest2);
+            PageRequest request = PageRequest.of(0, 5, Sort.by("createdDate").descending());
 
             // when
-            List<FindOrder> donateOrders = findOrderService.findByCreatedDateDescUsingPaging(request).getContent();
+            List<UserShop> shops = userShopService.findByCreatedDateDescUsingPaging(request).getContent();
 
             // then
-            assertEquals("경비실에 맡겨주세요", donateOrders.get(0).getText());
+            assertEquals("경비실에 맡겨주세요", shops.get(0).getText());
         }
     }
 
     @Nested
-    @DisplayName("주문내역 수정 테스트")
+    @DisplayName("산타샵 주문내역 수정 테스트")
     class UpdateOrder {
 
         @Test
@@ -244,23 +243,23 @@ public class FindOrderServiceTest {
             CreateUserRequest userRequest = createDefaultUser();
             Long userId = userService.join(userRequest);
 
-            CreateFindRequest findRequest = createDefaultFind(userId);
-            Long findId = findService.join(findRequest);
+            CreateShopRequest shopRequest = createDefaultShop(userId);
+            Long shopId = shopService.save(shopRequest);
 
             CreateInformationRequest infoRequest = createDefaultInfo(userId);
             Long infoId = informationService.save(infoRequest);
 
-            CreateOrderRequest orderRequest = DefaultFindOrderData.createDefaultOrder(infoId, findId, userId);
-            Long orderId = findOrderService.save(orderRequest);
+            CreateOrderRequest orderRequest = createDefaultOrder(infoId, shopId, userId);
+            Long savedId = userShopService.save(orderRequest);
 
             UpdateOrderRequest updateRequest = UpdateOrderRequest.builder()
                     .text("경비실에 맡겨주세요")
-                    .orderId(orderId)
+                    .orderId(savedId)
                     .build();
 
             // when
-            findOrderService.updateBody(orderId, updateRequest);
-            FindOrder updateOrder = findOrderService.findById(orderId);
+            userShopService.updateBody(savedId, updateRequest);
+            UserShop updateOrder = userShopService.findById(savedId);
 
             // then
             assertEquals("경비실에 맡겨주세요", updateOrder.getText());
@@ -274,29 +273,29 @@ public class FindOrderServiceTest {
             CreateUserRequest userRequest = createDefaultUser();
             Long userId = userService.join(userRequest);
 
-            CreateFindRequest findRequest = createDefaultFind(userId);
-            Long findId = findService.join(findRequest);
+            CreateShopRequest shopRequest = createDefaultShop(userId);
+            Long shopId = shopService.save(shopRequest);
 
             CreateInformationRequest infoRequest = createDefaultInfo(userId);
             Long infoId = informationService.save(infoRequest);
 
-            CreateOrderRequest orderRequest = DefaultFindOrderData.createDefaultOrder(infoId, findId, userId);
-            Long orderId = findOrderService.save(orderRequest);
+            CreateOrderRequest orderRequest = createDefaultOrder(infoId, shopId, userId);
+            Long savedId = userShopService.save(orderRequest);
 
             UpdateOrderRequest updateRequest = UpdateOrderRequest.builder()
                     .text("경비실에 맡겨주세요")
-                    .orderId(orderId)
+                    .orderId(savedId)
                     .build();
 
             // when
 
             // then
-            assertThrows(OrderNotFoundException.class, () -> findOrderService.updateBody(100L, updateRequest));
+            assertThrows(OrderNotFoundException.class, () -> userShopService.updateBody(100L, updateRequest));
         }
     }
 
     @Nested
-    @DisplayName("주문내역 삭제 테스트")
+    @DisplayName("산타샵 주문내역 삭제 테스트")
     class DeleteOrder {
 
         @Test
@@ -307,20 +306,20 @@ public class FindOrderServiceTest {
             CreateUserRequest userRequest = createDefaultUser();
             Long userId = userService.join(userRequest);
 
-            CreateFindRequest findRequest = createDefaultFind(userId);
-            Long findId = findService.join(findRequest);
+            CreateShopRequest shopRequest = createDefaultShop(userId);
+            Long shopId = shopService.save(shopRequest);
 
             CreateInformationRequest infoRequest = createDefaultInfo(userId);
             Long infoId = informationService.save(infoRequest);
 
-            CreateOrderRequest orderRequest = DefaultFindOrderData.createDefaultOrder(infoId, findId, userId);
-            Long orderId = findOrderService.save(orderRequest);
+            CreateOrderRequest orderRequest = createDefaultOrder(infoId, shopId, userId);
+            Long savedId = userShopService.save(orderRequest);
 
             // when
-            findOrderService.deleteOrder(orderId);
+            userShopService.deleteOrder(savedId);
 
             // then
-            assertThrows(OrderNotFoundException.class, () -> findOrderService.findById(orderId));
+            assertThrows(OrderNotFoundException.class, () -> userShopService.findById(savedId));
         }
 
         @Test
@@ -331,19 +330,19 @@ public class FindOrderServiceTest {
             CreateUserRequest userRequest = createDefaultUser();
             Long userId = userService.join(userRequest);
 
-            CreateFindRequest findRequest = createDefaultFind(userId);
-            Long findId = findService.join(findRequest);
+            CreateShopRequest shopRequest = createDefaultShop(userId);
+            Long shopId = shopService.save(shopRequest);
 
             CreateInformationRequest infoRequest = createDefaultInfo(userId);
             Long infoId = informationService.save(infoRequest);
 
-            CreateOrderRequest orderRequest = DefaultFindOrderData.createDefaultOrder(infoId, findId, userId);
-            Long orderId = findOrderService.save(orderRequest);
+            CreateOrderRequest orderRequest = createDefaultOrder(infoId, shopId, userId);
+            userShopService.save(orderRequest);
 
             // when
 
             // then
-            assertThrows(OrderNotFoundException.class, () -> findOrderService.deleteOrder(100L));
+            assertThrows(OrderNotFoundException.class, () -> userShopService.deleteOrder(100L));
         }
     }
 }

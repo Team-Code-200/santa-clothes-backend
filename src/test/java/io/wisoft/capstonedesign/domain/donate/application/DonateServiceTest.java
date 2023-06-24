@@ -1,6 +1,5 @@
-package io.wisoft.capstonedesign.service;
+package io.wisoft.capstonedesign.domain.donate.application;
 
-import io.wisoft.capstonedesign.domain.donate.application.DonateService;
 import io.wisoft.capstonedesign.domain.donate.persistence.Donate;
 import io.wisoft.capstonedesign.domain.donate.web.dto.CreateDonateRequest;
 import io.wisoft.capstonedesign.domain.donate.web.dto.UpdateDonateRequest;

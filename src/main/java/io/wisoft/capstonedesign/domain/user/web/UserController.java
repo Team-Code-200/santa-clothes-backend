@@ -57,7 +57,7 @@ public class UserController {
 
     @SwaggerApiSuccess(summary = "회원 정보 조회", implementation = GetUserResponse.class)
     @SwaggerApiError
-    @GetMapping("/api/users/{id}")
+    @GetMapping("/api/users/details/{id}")
     public GetUserResponse getUser(@PathVariable("id") final Long id) {
 
         User findUser = userService.findById(id);

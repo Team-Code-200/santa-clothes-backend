@@ -20,6 +20,7 @@ public class WebMvcConfig implements WebMvcConfigurer {
 
         registry.addInterceptor(bearerAuthInterceptor)
                 .addPathPatterns("/api/users/**")
+                .excludePathPatterns("/api/users/details/{id}")
 
                 .addPathPatterns("/api/donates/new")
                 .addPathPatterns("/api/donates/{id}")
@@ -29,7 +30,7 @@ public class WebMvcConfig implements WebMvcConfigurer {
                 .excludePathPatterns("/api/donates/etc")
 
                 .addPathPatterns("/api/finds/new")
-                .addPathPatterns("/api/find/{id}")
+                .addPathPatterns("/api/finds/{id}")
                 .excludePathPatterns("/api/finds/top")
                 .excludePathPatterns("/api/finds/pants")
                 .excludePathPatterns("/api/finds/shoes")
