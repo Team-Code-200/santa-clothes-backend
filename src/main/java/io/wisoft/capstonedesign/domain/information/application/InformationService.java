@@ -1,10 +1,10 @@
 package io.wisoft.capstonedesign.domain.information.application;
 
 import io.wisoft.capstonedesign.domain.information.persistence.Information;
+import io.wisoft.capstonedesign.domain.information.persistence.InformationRepository;
 import io.wisoft.capstonedesign.domain.information.web.dto.CreateInformationRequest;
 import io.wisoft.capstonedesign.domain.information.web.dto.UpdateInformationRequest;
 import io.wisoft.capstonedesign.domain.user.persistence.User;
-import io.wisoft.capstonedesign.domain.information.persistence.InformationRepository;
 import io.wisoft.capstonedesign.domain.user.persistence.UserRepository;
 import io.wisoft.capstonedesign.global.exception.service.InfoNotFoundException;
 import io.wisoft.capstonedesign.global.exception.service.UserNotFoundException;
@@ -15,8 +15,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-
-import static io.wisoft.capstonedesign.global.exception.ErrorCode.*;
 
 @Service
 @Transactional(readOnly = true)
@@ -72,6 +70,8 @@ public class InformationService {
      * 특정 사용자의 배송 정보 조회
      */
     public List<Information> findByUser(final Long userId) {
+
+        userRepository.findById(userId).orElseThrow(UserNotFoundException::new);
         return informationRepository.findByUser(userId);
     }
 
