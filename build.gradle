@@ -1,8 +1,8 @@
 plugins {
-	id 'java'
-	id 'org.springframework.boot' version '3.0.3'
-	id 'io.spring.dependency-management' version '1.1.0'
-	id 'jacoco'
+    id 'java'
+    id 'org.springframework.boot' version '3.0.3'
+    id 'io.spring.dependency-management' version '1.1.0'
+    id 'jacoco'
 }
 
 group = 'io.wisoft'
@@ -10,48 +10,65 @@ version = '0.0.1-SNAPSHOT'
 sourceCompatibility = '17'
 
 configurations {
-	compileOnly {
-		extendsFrom annotationProcessor
-	}
+    compileOnly {
+        extendsFrom annotationProcessor
+    }
 }
 
 repositories {
-	maven { url 'https://jitpack.io' }
-	mavenCentral()
+    maven { url 'https://jitpack.io' }
+    mavenCentral()
 }
 
 dependencies {
-	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
-	implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
-	implementation 'org.springframework.boot:spring-boot-starter-validation'
-	implementation 'org.springframework.boot:spring-boot-starter-web'
-	implementation 'org.springframework.boot:spring-boot-starter-webflux'
-	implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:2.1.0'
-	implementation group: 'com.theokanning.openai-gpt3-java', name: 'client', version: '0.9.0'
-	implementation 'io.jsonwebtoken:jjwt:0.9.1'
-	implementation 'javax.xml.bind:jaxb-api:2.3.1'
-	implementation 'io.netty:netty-resolver-dns-native-macos:4.1.89.Final:osx-aarch_64'
-	implementation 'org.springframework.boot:spring-boot-starter-data-redis'
-	implementation 'org.springframework.boot:spring-boot-starter-websocket'
-	implementation 'org.webjars:sockjs-client:1.1.2'
-	implementation 'org.webjars:stomp-websocket:2.3.3-1'
-	implementation 'com.slack.api:slack-api-client:1.29.0'
-	// front 관련
-	implementation 'org.webjars.bower:bootstrap:5.3.0'
-	implementation 'org.webjars.bower:vue:2.6.14'
-	implementation 'org.webjars.bower:axios:0.21.1'
-	implementation 'org.json:json:20230227'
-	implementation 'com.github.iamport:iamport-rest-client-java:0.2.22'
-	testImplementation 'junit:junit:4.13.1'
-	testImplementation 'io.github.autoparams:autoparams:1.1.1'
+    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+    implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
+    implementation 'org.springframework.boot:spring-boot-starter-validation'
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+    implementation 'org.springframework.boot:spring-boot-starter-webflux'
+    implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:2.1.0'
+    implementation group: 'com.theokanning.openai-gpt3-java', name: 'client', version: '0.9.0'
+    implementation 'io.jsonwebtoken:jjwt:0.9.1'
+    implementation 'javax.xml.bind:jaxb-api:2.3.1'
+    implementation 'io.netty:netty-resolver-dns-native-macos:4.1.89.Final:osx-aarch_64'
+    implementation 'org.springframework.boot:spring-boot-starter-data-redis'
+    implementation 'org.springframework.boot:spring-boot-starter-websocket'
+    implementation 'org.webjars:sockjs-client:1.1.2'
+    implementation 'org.webjars:stomp-websocket:2.3.3-1'
+    implementation 'com.slack.api:slack-api-client:1.29.0'
+    // front 관련
+    implementation 'org.webjars.bower:bootstrap:5.3.0'
+    implementation 'org.webjars.bower:vue:2.6.14'
+    implementation 'org.webjars.bower:axios:0.21.1'
+    implementation 'org.json:json:20230227'
+    implementation 'com.github.iamport:iamport-rest-client-java:0.2.22'
+    testImplementation 'junit:junit:4.13.1'
+    testImplementation 'io.github.autoparams:autoparams:1.1.1'
     compileOnly 'org.projectlombok:lombok'
-	runtimeOnly 'com.h2database:h2'
-	runtimeOnly 'org.postgresql:postgresql'
-	annotationProcessor 'org.projectlombok:lombok'
-	annotationProcessor 'org.springframework.boot:spring-boot-configuration-processor'
-	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    runtimeOnly 'com.h2database:h2'
+    runtimeOnly 'org.postgresql:postgresql'
+    annotationProcessor 'org.projectlombok:lombok'
+    annotationProcessor 'org.springframework.boot:spring-boot-configuration-processor'
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
 }
 
 tasks.named('test') {
-	useJUnitPlatform()
+    useJUnitPlatform()
+}
+
+jacocoTestReport {
+    dependsOn test // tests are required to run before generating the report
+
+    afterEvaluate {
+        classDirectories.setFrom(files(classDirectories.files.collect {
+            fileTree(dir: it, exclude: [
+                    "**/auth/*",
+                    "**/dto/*",
+                    "**/chat/*",
+                    "**/chatgpt/*",
+                    "**/payment/*",
+                    "**/global/*"
+            ])
+        }))
+    }
 }
