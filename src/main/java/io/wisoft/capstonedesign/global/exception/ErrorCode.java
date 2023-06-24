@@ -14,6 +14,9 @@ public enum ErrorCode {
     NOT_FOUND_INFO("I001", "배송 정보를 찾을 수 없습니다.", HttpStatus.NOT_FOUND),
     NOT_FOUND_ORDER("O001", "주문 내역을 찾을 수 없습니다.", HttpStatus.NOT_FOUND),
 
+    // TOKEN -> 토큰 관련 예외
+    NOT_EXIST_TOKEN("T001", "토큰이 존재하지 않습니다.", HttpStatus.UNAUTHORIZED),
+
     // DUPLICATE -> 중복 예외
     DUPLICATE_USER("A002", "이미 존재하는 회원입니다.", HttpStatus.CONFLICT),
 

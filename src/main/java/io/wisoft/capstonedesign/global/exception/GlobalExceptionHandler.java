@@ -85,6 +85,16 @@ public class GlobalExceptionHandler {
     }
 
     /**
+     * 로그인이 필요한 기능에 토큰 부재시 발생하는 예외
+     */
+    @ExceptionHandler(NotExistTokenException.class)
+    public ResponseEntity<ErrorResponse> handleNotExistTokenException(final NotExistTokenException exception, final HttpServletRequest request) {
+
+        createLogAndSendAsync(exception, request);
+        return getErrorResponse(exception.getErrorCode());
+    }
+
+    /**
      * 콘솔 에러 로그 생성 및 스레드풀을 사용하여 예외 메시지를 비동기로 Slack에 전달
      */
     private void createLogAndSendAsync(final RuntimeException exception, final HttpServletRequest request) {
