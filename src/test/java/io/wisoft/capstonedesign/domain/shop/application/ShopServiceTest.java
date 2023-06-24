@@ -1,6 +1,5 @@
-package io.wisoft.capstonedesign.service;
+package io.wisoft.capstonedesign.domain.shop.application;
 
-import io.wisoft.capstonedesign.domain.shop.application.ShopService;
 import io.wisoft.capstonedesign.domain.shop.persistence.Shop;
 import io.wisoft.capstonedesign.domain.shop.web.dto.CreateShopRequest;
 import io.wisoft.capstonedesign.domain.shop.web.dto.UpdateShopRequest;

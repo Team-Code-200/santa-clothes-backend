@@ -1,4 +1,4 @@
-package io.wisoft.capstonedesign.service;
+package io.wisoft.capstonedesign.domain.usershop.application;
 
 import io.wisoft.capstonedesign.domain.information.application.InformationService;
 import io.wisoft.capstonedesign.domain.information.web.dto.CreateInformationRequest;
@@ -6,7 +6,6 @@ import io.wisoft.capstonedesign.domain.shop.application.ShopService;
 import io.wisoft.capstonedesign.domain.shop.web.dto.CreateShopRequest;
 import io.wisoft.capstonedesign.domain.user.application.UserService;
 import io.wisoft.capstonedesign.domain.user.web.dto.CreateUserRequest;
-import io.wisoft.capstonedesign.domain.usershop.application.UserShopService;
 import io.wisoft.capstonedesign.domain.usershop.persistence.UserShop;
 import io.wisoft.capstonedesign.domain.usershop.web.dto.CreateOrderRequest;
 import io.wisoft.capstonedesign.domain.usershop.web.dto.UpdateOrderRequest;

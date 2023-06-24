@@ -1,8 +1,7 @@
-package io.wisoft.capstonedesign.service;
+package io.wisoft.capstonedesign.domain.findorder.application;
 
 import io.wisoft.capstonedesign.domain.find.application.FindService;
 import io.wisoft.capstonedesign.domain.find.web.dto.CreateFindRequest;
-import io.wisoft.capstonedesign.domain.findorder.application.FindOrderService;
 import io.wisoft.capstonedesign.domain.findorder.persistence.FindOrder;
 import io.wisoft.capstonedesign.domain.findorder.web.dto.CreateOrderRequest;
 import io.wisoft.capstonedesign.domain.findorder.web.dto.UpdateOrderRequest;

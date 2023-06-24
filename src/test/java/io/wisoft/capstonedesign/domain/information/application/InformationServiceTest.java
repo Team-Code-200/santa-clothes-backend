@@ -1,6 +1,5 @@
-package io.wisoft.capstonedesign.service;
+package io.wisoft.capstonedesign.domain.information.application;
 
-import io.wisoft.capstonedesign.domain.information.application.InformationService;
 import io.wisoft.capstonedesign.domain.information.persistence.Information;
 import io.wisoft.capstonedesign.domain.information.web.dto.CreateInformationRequest;
 import io.wisoft.capstonedesign.domain.information.web.dto.UpdateInformationRequest;
@@ -22,7 +21,8 @@ import java.util.List;
 
 import static io.wisoft.capstonedesign.setting.data.DefaultInfoData.createDefaultInfo;
 import static io.wisoft.capstonedesign.setting.data.DefaultUserData.createDefaultUser;
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 @SpringBootTest
 @Transactional

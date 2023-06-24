@@ -1,6 +1,5 @@
-package io.wisoft.capstonedesign.service;
+package io.wisoft.capstonedesign.domain.find.application;
 
-import io.wisoft.capstonedesign.domain.find.application.FindService;
 import io.wisoft.capstonedesign.domain.find.persistence.Find;
 import io.wisoft.capstonedesign.domain.find.web.dto.CreateFindRequest;
 import io.wisoft.capstonedesign.domain.find.web.dto.UpdateFindRequest;

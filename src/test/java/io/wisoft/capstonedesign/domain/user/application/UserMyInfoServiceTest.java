@@ -1,4 +1,4 @@
-package io.wisoft.capstonedesign.service;
+package io.wisoft.capstonedesign.domain.user.application;
 
 import io.wisoft.capstonedesign.domain.donate.application.DonateService;
 import io.wisoft.capstonedesign.domain.donate.persistence.Donate;
@@ -16,8 +16,6 @@ import io.wisoft.capstonedesign.domain.information.persistence.Information;
 import io.wisoft.capstonedesign.domain.information.web.dto.CreateInformationRequest;
 import io.wisoft.capstonedesign.domain.shop.application.ShopService;
 import io.wisoft.capstonedesign.domain.shop.web.dto.CreateShopRequest;
-import io.wisoft.capstonedesign.domain.user.application.UserMyInfoService;
-import io.wisoft.capstonedesign.domain.user.application.UserService;
 import io.wisoft.capstonedesign.domain.user.web.dto.CreateUserRequest;
 import io.wisoft.capstonedesign.domain.usershop.application.UserShopService;
 import io.wisoft.capstonedesign.domain.usershop.persistence.UserShop;
