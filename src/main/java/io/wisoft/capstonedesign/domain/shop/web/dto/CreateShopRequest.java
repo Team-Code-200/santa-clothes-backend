@@ -5,5 +5,5 @@ import jakarta.validation.constraints.NotNull;
 import lombok.Builder;
 
 @Builder
-public record CreateShopRequest(@NotBlank String title, @NotNull int price, @NotBlank String image, String body, Long userId) {
+public record CreateShopRequest(@NotBlank String title, @NotNull int price, @NotBlank String image, @NotBlank String body, Long userId) {
 }
