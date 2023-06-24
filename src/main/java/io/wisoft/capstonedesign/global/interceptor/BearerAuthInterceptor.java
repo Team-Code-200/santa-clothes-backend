@@ -1,12 +1,11 @@
 package io.wisoft.capstonedesign.global.interceptor;
 
-import io.wisoft.capstonedesign.domain.user.persistence.UserRepository;
+import io.wisoft.capstonedesign.global.exception.service.NotExistTokenException;
 import io.wisoft.capstonedesign.global.jwt.AuthorizationExtractor;
 import io.wisoft.capstonedesign.global.jwt.JwtTokenProvider;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
 import org.springframework.web.servlet.HandlerInterceptor;
@@ -29,7 +28,7 @@ public class BearerAuthInterceptor implements HandlerInterceptor {
         String token = extractor.extract(request, "Bearer");
 
         if (StringUtils.isEmpty(token)) {
-            throw new IllegalArgumentException("토큰이 존재하지 않습니다.");
+            throw new NotExistTokenException();
         }
 
         String name = jwtTokenProvider.getPayload(token);
