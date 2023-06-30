@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.core.task.TaskExecutor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
@@ -25,6 +26,16 @@ public class GlobalExceptionHandler {
     }
 
     /**
+     * 필수로 요구되는 파라미터 누락시 발생하는 예외
+     */
+    @ExceptionHandler(MethodArgumentNotValidException.class)
+    public ResponseEntity<ErrorResponse> handleMethodArgumentNotValidException(final HttpServletRequest request) {
+
+        createLogAndSendAsync(new InvalidArgumentException(), request);
+        return getErrorResponse(new InvalidArgumentException().getErrorCode());
+    }
+
+    /**
      * 회원 엔티티 부재시 발생하는 예외
      */
     @ExceptionHandler(UserNotFoundException.class)
@@ -38,7 +49,7 @@ public class GlobalExceptionHandler {
      * 게시물(산타샵 물품) 엔티티 부재시 발생하는 예외
      */
     @ExceptionHandler(PostNotFoundException.class)
-    public ResponseEntity<ErrorResponse> handlePostNotFoundException(final PostNotFoundException exception,final HttpServletRequest request) {
+    public ResponseEntity<ErrorResponse> handlePostNotFoundException(final PostNotFoundException exception, final HttpServletRequest request) {
 
         createLogAndSendAsync(exception, request);
         return getErrorResponse(exception.getErrorCode());
@@ -97,7 +108,7 @@ public class GlobalExceptionHandler {
     /**
      * 콘솔 에러 로그 생성 및 스레드풀을 사용하여 예외 메시지를 비동기로 Slack에 전달
      */
-    private void createLogAndSendAsync(final RuntimeException exception, final HttpServletRequest request) {
+    private void createLogAndSendAsync(final Exception exception, final HttpServletRequest request) {
 
         log.error("Exception:{}, {}, {} \n",
                 exception.toString(),
