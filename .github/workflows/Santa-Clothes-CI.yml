@@ -28,10 +28,65 @@ jobs:
       with:
         java-version: '17'
         distribution: 'temurin'
-    - name: Build with Gradle
-      uses: gradle/gradle-build-action@67421db6bd0bf253fb4bd25b31ebb98943c375e1
-      with:
-        arguments: build
+        
+    - name: run docker-compose
+      run:
+        cd ./src/main/resources
+        touch ./docker-compose.yml
+        echo "${{ secrets.DOCKER_COMPOSE }}" >> ./docker-compose.yml
+        cat ./docker-compose.yml
+      
+    - name: make application.yml
+      run:
+        cd ./src/main/resources
+        touch ./application.yml
+        echo "${{ secrets.APPLICATION }}" >> ./application.yml
+        cat ./application.yml
+        
+    - name: make application-chatgpt.yml
+      run:
+        cd ./src/main/resources
+        touch ./application-chatgpt.yml
+        echo "${{ secrets.APPLICATION_CHATGPT }}" >> ./application-chatgpt.yml
+        cat ./application-chatgpt.yml
+        
+    - name: make application-iamport.yml
+      run:
+        cd ./src/main/resources
+        touch ./application-iamport.yml
+        echo "${{ secrets.APPLICATION_IAMPORT }}" >> ./application-iamport.yml
+        cat ./application-iamport.yml
+        
+    - name: make application-jwt.yml
+      run:
+        cd ./src/main/resources
+        touch ./application-jwt.yml
+        echo "${{ secrets.APPLICATION_JWT }}" >> ./application-jwt.yml
+        cat ./application-jwt.yml
     
+    - name: make application-oauth.yml
+      run:
+        cd ./src/main/resources
+        touch ./application-oauth.yml
+        echo "${{ secrets.APPLICATION_OAUTH }}" >> ./application-oauth.yml
+        cat ./application-oauth.yml
+    
+    - name: make application-slack.yml
+      run:
+        cd ./src/main/resources
+        touch ./application-slack.yml
+        echo "${{ secrets.APPLICATION_SLACK }}" >> ./application-slack.yml
+        cat ./application-slack.yml
+        
+    - name: make application.yml
+      run:
+        cd ./src/test/resources
+        touch ./application.yml
+        echo "${{ secrets.TEST_APPLICATION }}" >> ./application.yml
+        cat ./application.yml
+        
+    - name: Grand execute permisson for gradlew
+      run: chmod +x gradlew
+      
     - name: Build with Gradle
-      run: ./gradlew build -x test
+      run: ./gradlew build
