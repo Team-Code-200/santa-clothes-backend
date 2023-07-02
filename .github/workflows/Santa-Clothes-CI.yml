@@ -30,56 +30,56 @@ jobs:
         distribution: 'temurin'
         
     - name: run docker-compose
-      run:
+      run: |
         cd ./src/main/resources
         touch ./docker-compose.yml
         echo "${{ secrets.DOCKER_COMPOSE }}" >> ./docker-compose.yml
         cat ./docker-compose.yml
       
     - name: make application.yml
-      run:
+      run: |
         cd ./src/main/resources
         touch ./application.yml
         echo "${{ secrets.APPLICATION }}" >> ./application.yml
         cat ./application.yml
         
     - name: make application-chatgpt.yml
-      run:
+      run: |
         cd ./src/main/resources
         touch ./application-chatgpt.yml
         echo "${{ secrets.APPLICATION_CHATGPT }}" >> ./application-chatgpt.yml
         cat ./application-chatgpt.yml
         
     - name: make application-iamport.yml
-      run:
+      run: |
         cd ./src/main/resources
         touch ./application-iamport.yml
         echo "${{ secrets.APPLICATION_IAMPORT }}" >> ./application-iamport.yml
         cat ./application-iamport.yml
         
     - name: make application-jwt.yml
-      run:
+      run: |
         cd ./src/main/resources
         touch ./application-jwt.yml
         echo "${{ secrets.APPLICATION_JWT }}" >> ./application-jwt.yml
         cat ./application-jwt.yml
     
     - name: make application-oauth.yml
-      run:
+      run: |
         cd ./src/main/resources
         touch ./application-oauth.yml
         echo "${{ secrets.APPLICATION_OAUTH }}" >> ./application-oauth.yml
         cat ./application-oauth.yml
     
     - name: make application-slack.yml
-      run:
+      run: |
         cd ./src/main/resources
         touch ./application-slack.yml
         echo "${{ secrets.APPLICATION_SLACK }}" >> ./application-slack.yml
         cat ./application-slack.yml
         
     - name: make application.yml
-      run:
+      run: |
         cd ./src/test/resources
         touch ./application.yml
         echo "${{ secrets.TEST_APPLICATION }}" >> ./application.yml
