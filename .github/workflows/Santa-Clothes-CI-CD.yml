@@ -127,6 +127,7 @@ jobs:
     
     - name: make room.html
       run: |
+        mkdir ./src/main/resources/templates
         mkdir ./src/main/resources/templates/chat
         cd ./src/main/resources/templates/chat
         touch ./room.html
