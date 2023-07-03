@@ -15,7 +15,13 @@
 HELP.md
 lombok.config
 
-*.yml
+*application.yml*
+*application-chatgpt.yml*
+*application-iamport.yml*
+*application-jwt.yml*
+*application-oauth.yml*
+*application-slack.yml*
+*docker-compose.yml*
 *.html
 
 # AWS User-specific
