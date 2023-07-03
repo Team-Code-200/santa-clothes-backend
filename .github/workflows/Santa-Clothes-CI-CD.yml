@@ -124,6 +124,27 @@ jobs:
         touch ./application-slack.yml
         echo "${{ secrets.APPLICATION_SLACK }}" >> ./application-slack.yml
         cat ./application-slack.yml
+    
+    - name: make room.html
+      run: |
+        cd ./src/main/resources/templates/chat
+        touch ./room.html
+        echo "${{ secrets.ROOM }}" >> ./room.html
+        cat ./room.html
+        
+    - name: make roomDetail.html
+      run: |
+        cd ./src/main/resources/templates/chat
+        touch ./roomDetail.html
+        echo "${{ secrets.ROOM_DETAIL }}" >> ./roomDetail.html
+        cat ./roomDetail.html
+        
+    - name: make index.html
+      run: |
+        cd ./src/main/resources/templates
+        touch ./index.html
+        echo "${{ secrets.INDEX }}" >> ./index.html
+        cat ./index.html
         
     - name: Grand execute permisson for gradlew
       run: chmod +x gradlew
