@@ -36,70 +36,10 @@ public class GlobalExceptionHandler {
     }
 
     /**
-     * 회원 엔티티 부재시 발생하는 예외
+     * 비즈니스 요구사항에서 발생하는 모든 예외
      */
-    @ExceptionHandler(UserNotFoundException.class)
-    public ResponseEntity<ErrorResponse> handleUserNotFoundException(final UserNotFoundException exception, final HttpServletRequest request) {
-
-        createLogAndSendAsync(exception, request);
-        return getErrorResponse(exception.getErrorCode());
-    }
-
-    /**
-     * 게시물(산타샵 물품) 엔티티 부재시 발생하는 예외
-     */
-    @ExceptionHandler(PostNotFoundException.class)
-    public ResponseEntity<ErrorResponse> handlePostNotFoundException(final PostNotFoundException exception, final HttpServletRequest request) {
-
-        createLogAndSendAsync(exception, request);
-        return getErrorResponse(exception.getErrorCode());
-    }
-
-    /**
-     * 배송 정보 엔티티 부재시 발생하는 예외
-     */
-    @ExceptionHandler(InfoNotFoundException.class)
-    public ResponseEntity<ErrorResponse> handleInfoNotFoundException(final InfoNotFoundException exception, final HttpServletRequest request) {
-
-        createLogAndSendAsync(exception, request);
-        return getErrorResponse(exception.getErrorCode());
-    }
-
-    /**
-     * 주문 정보 엔티티 부재시 발생하는 예외
-     */
-    @ExceptionHandler(OrderNotFoundException.class)
-    public ResponseEntity<ErrorResponse> handleOrderNotFoundException(final OrderNotFoundException exception, final HttpServletRequest request) {
-
-        createLogAndSendAsync(exception, request);
-        return getErrorResponse(exception.getErrorCode());
-    }
-
-    /**
-     * 회원 중복시 발생하는 예외
-     */
-    @ExceptionHandler(UserDuplicateException.class)
-    public ResponseEntity<ErrorResponse> handleUserDuplicateException(final UserDuplicateException exception, final HttpServletRequest request) {
-
-        createLogAndSendAsync(exception, request);
-        return getErrorResponse(exception.getErrorCode());
-    }
-
-    /**
-     * 잘못된 접근시(권한 X) 발생하는 예외
-     */
-    @ExceptionHandler(UnAuthorizedAccessException.class)
-    public ResponseEntity<ErrorResponse> handleUnAuthorizedAccessException(final UnAuthorizedAccessException exception, final HttpServletRequest request) {
-
-        createLogAndSendAsync(exception, request);
-        return getErrorResponse(exception.getErrorCode());
-    }
-
-    /**
-     * 로그인이 필요한 기능에 토큰 부재시 발생하는 예외
-     */
-    @ExceptionHandler(NotExistTokenException.class)
-    public ResponseEntity<ErrorResponse> handleNotExistTokenException(final NotExistTokenException exception, final HttpServletRequest request) {
+    @ExceptionHandler(BusinessException.class)
+    public ResponseEntity<ErrorResponse> handleBusinessException(final BusinessException exception, final HttpServletRequest request) {
 
         createLogAndSendAsync(exception, request);
         return getErrorResponse(exception.getErrorCode());

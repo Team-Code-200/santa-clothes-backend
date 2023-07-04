@@ -1,16 +1,18 @@
 package io.wisoft.capstonedesign.global.exception.service;
 
+import io.wisoft.capstonedesign.global.exception.BusinessException;
 import io.wisoft.capstonedesign.global.exception.ErrorCode;
 import lombok.Getter;
 
 @Getter
-public class OrderNotFoundException extends RuntimeException {
-
-    private final ErrorCode errorCode;
-    private final String message;
+public class OrderNotFoundException extends BusinessException {
 
     public OrderNotFoundException() {
-        this.errorCode = ErrorCode.NOT_FOUND_ORDER;
-        this.message = ErrorCode.NOT_FOUND_ORDER.getMessage();
+        super(ErrorCode.NOT_FOUND_ORDER.getMessage());
+    }
+
+    @Override
+    public ErrorCode getErrorCode() {
+        return ErrorCode.NOT_FOUND_ORDER;
     }
 }

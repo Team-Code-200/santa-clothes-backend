@@ -1,5 +1,6 @@
 package io.wisoft.capstonedesign.global.exception;
 
+import lombok.Builder;
 import lombok.Getter;
 import org.springframework.http.HttpStatus;
 
@@ -10,6 +11,7 @@ public class ErrorResponse {
     private final String errorCode;
     private final String message;
 
+    @Builder
     public ErrorResponse(final ErrorCode errorCode) {
         this.httpStatus = errorCode.getHttpStatus();
         this.errorCode = errorCode.getCode();

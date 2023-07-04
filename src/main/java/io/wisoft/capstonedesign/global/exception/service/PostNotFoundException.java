@@ -1,16 +1,18 @@
 package io.wisoft.capstonedesign.global.exception.service;
 
+import io.wisoft.capstonedesign.global.exception.BusinessException;
 import io.wisoft.capstonedesign.global.exception.ErrorCode;
 import lombok.Getter;
 
 @Getter
-public class PostNotFoundException extends RuntimeException {
-
-    private final ErrorCode errorCode;
-    private final String message;
+public class PostNotFoundException extends BusinessException {
 
     public PostNotFoundException() {
-        this.errorCode = ErrorCode.NOT_FOUND_POST;
-        this.message = ErrorCode.NOT_FOUND_POST.getMessage();
+        super(ErrorCode.NOT_FOUND_POST.getMessage());
+    }
+
+    @Override
+    public ErrorCode getErrorCode() {
+        return ErrorCode.NOT_FOUND_POST;
     }
 }
