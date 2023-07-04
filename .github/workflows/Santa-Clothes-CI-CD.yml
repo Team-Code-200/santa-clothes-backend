@@ -38,49 +38,49 @@ jobs:
         cd ./src/main/resources
         touch ./docker-compose.yml
         echo "${{ secrets.DOCKER_COMPOSE }}" >> ./docker-compose.yml
-        cat ./docker-compose.yml
+        cat ./docker-compose.yml | base64 --decode
       
     - name: make application.yml
       run: |
         cd ./src/main/resources
         touch ./application.yml
         echo "${{ secrets.APPLICATION }}" >> ./application.yml
-        cat ./application.yml
+        cat ./application.yml | base64 --decode
         
     - name: make application-chatgpt.yml
       run: |
         cd ./src/main/resources
         touch ./application-chatgpt.yml
         echo "${{ secrets.APPLICATION_CHATGPT }}" >> ./application-chatgpt.yml
-        cat ./application-chatgpt.yml
+        cat ./application-chatgpt.yml | base64 --decode
         
     - name: make application-iamport.yml
       run: |
         cd ./src/main/resources
         touch ./application-iamport.yml
         echo "${{ secrets.APPLICATION_IAMPORT }}" >> ./application-iamport.yml
-        cat ./application-iamport.yml
+        cat ./application-iamport.yml | base64 --decode
         
     - name: make application-jwt.yml
       run: |
         cd ./src/main/resources
         touch ./application-jwt.yml
         echo "${{ secrets.APPLICATION_JWT }}" >> ./application-jwt.yml
-        cat ./application-jwt.yml
+        cat ./application-jwt.yml | base64 --decode
     
     - name: make application-oauth.yml
       run: |
         cd ./src/main/resources
         touch ./application-oauth.yml
         echo "${{ secrets.APPLICATION_OAUTH }}" >> ./application-oauth.yml
-        cat ./application-oauth.yml
+        cat ./application-oauth.yml | base64 --decode
     
     - name: make application-slack.yml
       run: |
         cd ./src/main/resources
         touch ./application-slack.yml
         echo "${{ secrets.APPLICATION_SLACK }}" >> ./application-slack.yml
-        cat ./application-slack.yml
+        cat ./application-slack.yml | base64 --decode
         
     - name: make application.yml
       run: |
@@ -88,42 +88,42 @@ jobs:
         cd ./src/test/resources
         touch ./application.yml
         echo "${{ secrets.TEST_APPLICATION }}" >> ./application.yml
-        cat ./application.yml
+        cat ./application.yml | base64 --decode
         
     - name: make application-chatgpt.yml
       run: |
         cd ./src/test/resources
         touch ./application-chatgpt.yml
         echo "${{ secrets.APPLICATION_CHATGPT }}" >> ./application-chatgpt.yml
-        cat ./application-chatgpt.yml
+        cat ./application-chatgpt.yml | base64 --decode
         
     - name: make application-iamport.yml
       run: |
         cd ./src/test/resources
         touch ./application-iamport.yml
         echo "${{ secrets.APPLICATION_IAMPORT }}" >> ./application-iamport.yml
-        cat ./application-iamport.yml
+        cat ./application-iamport.yml | base64 --decode
         
     - name: make application-jwt.yml
       run: |
         cd ./src/test/resources
         touch ./application-jwt.yml
         echo "${{ secrets.APPLICATION_JWT }}" >> ./application-jwt.yml
-        cat ./application-jwt.yml
+        cat ./application-jwt.yml | base64 --decode
     
     - name: make application-oauth.yml
       run: |
         cd ./src/test/resources
         touch ./application-oauth.yml
         echo "${{ secrets.APPLICATION_OAUTH }}" >> ./application-oauth.yml
-        cat ./application-oauth.yml
+        cat ./application-oauth.yml | base64 --decode
     
     - name: make application-slack.yml
       run: |
         cd ./src/test/resources
         touch ./application-slack.yml
         echo "${{ secrets.APPLICATION_SLACK }}" >> ./application-slack.yml
-        cat ./application-slack.yml
+        cat ./application-slack.yml | base64 --decode
     
     - name: make room.html
       run: |
@@ -132,21 +132,21 @@ jobs:
         cd ./src/main/resources/templates/chat
         touch ./room.html
         echo "${{ secrets.ROOM }}" >> ./room.html
-        cat ./room.html
+        cat ./room.html | base64 --decode
         
     - name: make roomDetail.html
       run: |
         cd ./src/main/resources/templates/chat
         touch ./roomDetail.html
         echo "${{ secrets.ROOM_DETAIL }}" >> ./roomDetail.html
-        cat ./roomDetail.html
+        cat ./roomDetail.html | base64 --decode
         
     - name: make index.html
       run: |
         cd ./src/main/resources/templates
         touch ./index.html
         echo "${{ secrets.INDEX }}" >> ./index.html
-        cat ./index.html
+        cat ./index.html | base64 --decode
         
     - name: Grand execute permisson for gradlew
       run: chmod +x gradlew
