@@ -1,5 +1,7 @@
 package io.wisoft.capstonedesign.domain.information.application;
 
+import io.wisoft.capstonedesign.domain.address.application.AddressService;
+import io.wisoft.capstonedesign.domain.address.persistence.Address;
 import io.wisoft.capstonedesign.domain.information.persistence.Information;
 import io.wisoft.capstonedesign.domain.information.persistence.InformationRepository;
 import io.wisoft.capstonedesign.domain.information.web.dto.CreateInformationRequest;
@@ -23,6 +25,7 @@ public class InformationService {
 
     private final InformationRepository informationRepository;
     private final UserRepository userRepository;
+    private final AddressService addressService;
 
     /**
      * 배송 정보 저장
@@ -33,12 +36,15 @@ public class InformationService {
         User user = userRepository.findById(request.userId())
                 .orElseThrow(UserNotFoundException::new);
 
+        final String translatedAddress = translateAddressToString(request.address());
+
         Information information = Information.builder()
                 .username(request.username())
-                .address(request.address())
+                .address(translatedAddress)
                 .phoneNumber(request.phoneNumber())
                 .user(user)
                 .build();
+
 
         informationRepository.save(information);
         return information.getId();
@@ -102,4 +108,10 @@ public class InformationService {
                 .orElseThrow(InfoNotFoundException::new);
         informationRepository.delete(information);
     }
+
+    @Transactional
+    public String translateAddressToString(final Address address) {
+        return String.join("", address.getDetailAddress(), address.getExtraAddress(), address.getPostAddress(), address.getPostcode());
+    }
+
 }
