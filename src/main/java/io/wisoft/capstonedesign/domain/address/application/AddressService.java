@@ -15,7 +15,7 @@ public class AddressService {
     @Transactional
     public Long join(final CreateAddressRequest request) {
 
-        Address address = Address.builder()
+        final Address address = Address.builder()
                 .postcode(request.postcode())
                 .postAddress(request.postAddress())
                 .detailAddress(request.detailAddress())

@@ -95,7 +95,6 @@ class InformationControllerTest {
 
             CreateInformationRequest infoRequest = CreateInformationRequest.builder()
                     .username("윤진원")
-                    .address("")
                     .phoneNumber(null)
                     .build();
             String json = objectMapper.writeValueAsString(infoRequest);
@@ -202,7 +201,6 @@ class InformationControllerTest {
 
             CreateInformationRequest infoRequest2 = CreateInformationRequest.builder()
                     .username("윤진원")
-                    .address("대전광역시 서구")
                     .phoneNumber("010-0000-0000")
                     .userId(userId)
                     .build();
@@ -210,7 +208,6 @@ class InformationControllerTest {
 
             CreateInformationRequest infoRequest3 = CreateInformationRequest.builder()
                     .username("서동권")
-                    .address("대전광역시 서구")
                     .phoneNumber("010-0000-0000")
                     .userId(userId2)
                     .build();

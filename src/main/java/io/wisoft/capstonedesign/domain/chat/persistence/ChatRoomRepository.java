@@ -36,16 +36,16 @@ public class ChatRoomRepository {
         return opsHashChatRoom.values(CHAT_ROOM);
     }
 
-    public ChatRoom findRoomById(String id) {
+    public ChatRoom findRoomById(final String id) {
         return opsHashChatRoom.get(CHAT_ROOM, id);
     }
 
     /**
      * 채팅방 생성 : 서버 간 채팅방 공유 및 저장을 위해 redis hash에 저장
      */
-    public ChatRoom createChatRoom(String name) {
+    public ChatRoom createChatRoom(final String name) {
 
-        ChatRoom chatRoom = ChatRoom.create(name);
+        final ChatRoom chatRoom = ChatRoom.create(name);
         opsHashChatRoom.put(CHAT_ROOM, chatRoom.getRoomId(), chatRoom);
 
         return chatRoom;

@@ -8,7 +8,6 @@ public class DefaultInfoData {
 
         return CreateInformationRequest.builder()
                 .username("윤진원")
-                .address("대전광역시 유성구")
                 .phoneNumber("010-0000-0000")
                 .userId(userId)
                 .build();

@@ -10,8 +10,8 @@ public enum OauthAttributes {
         @Override
         public UserProfile of(final Map<String, Object> attributes) {
 
-            Map<String, Object> kakaoAccount = (Map<String, Object>) attributes.get("kakao_account");
-            Map<String, Object> profile = (Map<String, Object>) kakaoAccount.get("profile");
+            final Map<String, Object> kakaoAccount = (Map<String, Object>) attributes.get("kakao_account");
+            final Map<String, Object> profile = (Map<String, Object>) kakaoAccount.get("profile");
 
             return UserProfile.builder()
                     .oauthId(String.valueOf(attributes.get("id")))
@@ -27,7 +27,7 @@ public enum OauthAttributes {
         @Override
         public UserProfile of(final Map<String, Object> attributes) {
 
-            Map<String, Object> response = (Map<String, Object>) attributes.get("response");
+            final Map<String, Object> response = (Map<String, Object>) attributes.get("response");
 
             return UserProfile.builder()
                     .oauthId((String) (response.get("id")))

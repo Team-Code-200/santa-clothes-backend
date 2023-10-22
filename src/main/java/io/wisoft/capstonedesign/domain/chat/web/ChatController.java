@@ -24,7 +24,7 @@ public class ChatController {
      * WebSocket : "/pub/chat/message"로 들어오는 메시징을 처리
      */
     @MessageMapping("/chat/message")
-    public void message(ChatMessage message) {
+    public void message(final ChatMessage message) {
 
         if (ChatMessage.MessageType.ENTER.equals(message.getType())) {
             chatRoomRepository.enterChatRoom(message.getRoomId());
