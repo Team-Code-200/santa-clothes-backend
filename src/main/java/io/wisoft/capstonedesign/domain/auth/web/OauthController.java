@@ -20,9 +20,9 @@ public class OauthController {
     @SwaggerApiNotFoundError
     @GetMapping("/api/oauth/{provider}")
     public ResponseEntity<LoginResponse> login(
-            final @PathVariable String provider, final @RequestParam String code) {
+            @PathVariable final String provider, @RequestParam final String code) {
 
-        LoginResponse loginResponse = oauthService.login(provider, code);
+        final LoginResponse loginResponse = oauthService.login(provider, code);
         return ResponseEntity.ok().body(loginResponse);
     }
 }

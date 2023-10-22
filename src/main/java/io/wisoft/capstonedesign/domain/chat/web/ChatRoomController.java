@@ -29,19 +29,19 @@ public class ChatRoomController {
 
     @PostMapping("/room")
     @ResponseBody
-    public ChatRoom createRoom(@RequestParam String name) {
+    public ChatRoom createRoom(@RequestParam final String name) {
         return chatRoomRepository.createChatRoom(name);
     }
 
     @GetMapping("/room/enter/{roomId}")
-    public String roomDetail(Model model, @PathVariable String roomId) {
+    public String roomDetail(final Model model, @PathVariable final String roomId) {
         model.addAttribute("roomId", roomId);
         return "chat/roomDetail";
     }
 
     @GetMapping("/room/{roomId}")
     @ResponseBody
-    public ChatRoom roomInfo(@PathVariable String roomId) {
+    public ChatRoom roomInfo(@PathVariable final String roomId) {
         return chatRoomRepository.findRoomById(roomId);
     }
 }

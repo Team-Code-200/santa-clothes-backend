@@ -161,7 +161,6 @@ public class UserMyInfoServiceTest {
 
             CreateInformationRequest infoRequest2 = CreateInformationRequest.builder()
                     .username("서동권")
-                    .address("대전광역시 서구")
                     .phoneNumber("010-0000-0000")
                     .userId(userId2)
                     .build();
@@ -211,7 +210,6 @@ public class UserMyInfoServiceTest {
 
             CreateInformationRequest infoRequest2 = CreateInformationRequest.builder()
                     .username("서동권")
-                    .address("대전광역시 서구")
                     .phoneNumber("010-0000-0000")
                     .userId(userId2)
                     .build();
@@ -273,7 +271,6 @@ public class UserMyInfoServiceTest {
 
             CreateInformationRequest infoRequest2 = CreateInformationRequest.builder()
                     .username("서동권")
-                    .address("대전광역시 서구")
                     .phoneNumber("010-0000-0000")
                     .userId(userId2)
                     .build();
@@ -334,7 +331,6 @@ public class UserMyInfoServiceTest {
 
             CreateInformationRequest infoRequest2 = CreateInformationRequest.builder()
                     .username("서동권")
-                    .address("대전광역시 서구")
                     .phoneNumber("010-0000-0000")
                     .userId(userId2)
                     .build();

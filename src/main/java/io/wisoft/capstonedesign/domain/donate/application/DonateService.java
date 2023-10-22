@@ -31,10 +31,10 @@ public class DonateService {
     @Transactional
     public Long join(final CreateDonateRequest request) {
 
-        User user = userRepository.findById(request.userId())
+        final User user = userRepository.findById(request.userId())
                 .orElseThrow(UserNotFoundException::new);
 
-        Donate donate = Donate.builder()
+        final Donate donate = Donate.builder()
                 .title(request.title())
                 .image(request.image())
                 .text(request.text())

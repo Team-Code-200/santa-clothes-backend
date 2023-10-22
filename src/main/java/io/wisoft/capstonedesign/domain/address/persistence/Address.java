@@ -35,7 +35,7 @@ public class Address {
             final String detailAddress,
             final String extraAddress
     ) {
-        Address address = new Address();
+        final Address address = new Address();
         address.postcode = postcode;
         address.postAddress = postAddress;
         address.detailAddress = detailAddress;

@@ -22,7 +22,7 @@ public class ChatMessageRepository {
         opsHashMessage = redisTemplate.opsForHash();
     }
 
-    public ChatMessage saveMessage(ChatMessage message) {
+    public ChatMessage saveMessage(final ChatMessage message) {
 
         opsHashMessage.put(CHAT_MESSAGE, message.getSender(), message);
         return message;

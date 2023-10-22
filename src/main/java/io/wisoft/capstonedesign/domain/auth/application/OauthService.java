@@ -35,16 +35,16 @@ public class OauthService {
 
     public LoginResponse login(final String providerName, final String code) {
 
-        OauthProvider provider = inMemoryProviderRepository.findByProviderName(providerName);
+        final OauthProvider provider = inMemoryProviderRepository.findByProviderName(providerName);
 
-        OauthTokenResponse tokenResponse = getToken(code, provider);
+        final OauthTokenResponse tokenResponse = getToken(code, provider);
 
-        UserProfile userProfile = getUserProfile(providerName, tokenResponse, provider);
+        final UserProfile userProfile = getUserProfile(providerName, tokenResponse, provider);
 
-        User user = saveOrUpdate(userProfile);
+        final User user = saveOrUpdate(userProfile);
 
-        String accessToken = jwtTokenProvider.createAccessToken(String.valueOf(user.getId()));
-        String refreshToken = jwtTokenProvider.createRefreshToken();
+        final String accessToken = jwtTokenProvider.createAccessToken(String.valueOf(user.getId()));
+        final String refreshToken = jwtTokenProvider.createRefreshToken();
 
         redisTemplate.opsForValue().set(user.getNickname(), refreshToken, LOGIN_EXPIRED_TIME, TimeUnit.HOURS);
 
@@ -63,7 +63,7 @@ public class OauthService {
 
     private User saveOrUpdate(final UserProfile userProfile) {
 
-        User user = userRepository.findByOauthId(userProfile.getOauthId())
+        final User user = userRepository.findByOauthId(userProfile.getOauthId())
                 .map(entity -> entity.updateAll(
                         userProfile.getNickname(), userProfile.getEmail(), userProfile.getProfileImage()))
                 .orElseGet(userProfile::toUser);
@@ -73,7 +73,7 @@ public class OauthService {
 
     private UserProfile getUserProfile(final String providerName, final OauthTokenResponse tokenResponse, final OauthProvider provider) {
 
-        Map<String, Object> userAttributes = getUserAttributes(provider, tokenResponse);
+        final Map<String, Object> userAttributes = getUserAttributes(provider, tokenResponse);
         return OauthAttributes.extract(providerName, userAttributes);
     }
 
@@ -106,7 +106,7 @@ public class OauthService {
 
     private MultiValueMap<String, String> tokenRequest(final String code, final OauthProvider provider) {
 
-        MultiValueMap<String, String> formData = new LinkedMultiValueMap<>();
+        final MultiValueMap<String, String> formData = new LinkedMultiValueMap<>();
         formData.add("client_id", provider.getClientId());
         formData.add("client_secret", provider.getClientSecret());
         formData.add("code", code);

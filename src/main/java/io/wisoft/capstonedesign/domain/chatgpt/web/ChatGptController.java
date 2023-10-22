@@ -22,9 +22,9 @@ public class ChatGptController {
     @SwaggerApiSuccess(summary = "ChatGPT 검색", implementation = ChatGptResponse.class)
     @SwaggerApiNotFoundError
     @GetMapping("/api/make/conversation")
-    public ChatGptResponse makeConversation(@RequestBody @Valid ChatGptRequest chatGptRequest) {
+    public ChatGptResponse makeConversation(@RequestBody @Valid final ChatGptRequest chatGptRequest) {
 
-        ChatGptResponse chatGptResponse = chatGptService.getConversation(chatGptRequest);
+        final ChatGptResponse chatGptResponse = chatGptService.getConversation(chatGptRequest);
 
         return chatGptResponse;
     }

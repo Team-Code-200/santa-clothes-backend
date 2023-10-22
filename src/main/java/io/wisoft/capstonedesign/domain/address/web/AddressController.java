@@ -13,7 +13,7 @@ public class AddressController {
 
     private final AddressService addressService;
 
-    public AddressController(AddressService addressService) {
+    public AddressController(final AddressService addressService) {
         this.addressService = addressService;
     }
 
@@ -29,7 +29,7 @@ public class AddressController {
     }
 
     @PostMapping("/api/submit/new")
-    public String submitForm(@ModelAttribute @Valid CreateAddressRequest request) {
+    public String submitForm(@ModelAttribute @Valid final CreateAddressRequest request) {
         addressService.join(request);
         return "submit";
     }
