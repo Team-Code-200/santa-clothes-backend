@@ -1,6 +1,7 @@
 package io.wisoft.capstonedesign.domain.donateorder.web;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import io.wisoft.capstonedesign.domain.address.persistence.Address;
 import io.wisoft.capstonedesign.domain.donate.application.DonateService;
 import io.wisoft.capstonedesign.domain.donate.web.dto.CreateDonateRequest;
 import io.wisoft.capstonedesign.domain.donateorder.application.DonateOrderService;
@@ -160,13 +161,14 @@ class DonateOrderControllerTest {
             CreateOrderRequest orderRequest = createDefaultOrder(infoId, donateId, userId);
             Long savedId = donateOrderService.save(orderRequest);
 
+            System.out.println("dddd"+jsonPath("$.address"));
             // expected
             mockMvc.perform(get("/api/donate-orders/{id}", savedId)
                             .contentType(APPLICATION_JSON)
                             .header("Authorization", "bearer " + accessToken))
                     .andExpect(status().isOk())
                     .andExpect(jsonPath("$.text").value("배송전 문자주세요"))
-                    .andExpect(jsonPath("$.address").value(infoRequest.address()))
+                    .andExpect(jsonPath("$.address").value("한밭대학교 wisoftN5-503대전광역시 유성구 동서대로 12534159"))
                     .andDo(print());
         }
 

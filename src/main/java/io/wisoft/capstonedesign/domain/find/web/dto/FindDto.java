@@ -9,6 +9,7 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class FindDto {
+    private Long id;
 
     private String title;
 
@@ -19,6 +20,7 @@ public class FindDto {
     private LocalDateTime createdDate;
 
     public FindDto(Find find) {
+        this.id = find.getId();
         this.title = find.getTitle();
         this.tag = String.valueOf(find.getTag());
         this.nickname = find.getUser().getNickname();

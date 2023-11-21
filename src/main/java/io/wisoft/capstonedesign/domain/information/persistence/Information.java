@@ -1,5 +1,6 @@
 package io.wisoft.capstonedesign.domain.information.persistence;
 
+import io.wisoft.capstonedesign.domain.address.persistence.Address;
 import io.wisoft.capstonedesign.domain.usershop.persistence.UserShop;
 import io.wisoft.capstonedesign.domain.donateorder.persistence.DonateOrder;
 import io.wisoft.capstonedesign.domain.findorder.persistence.FindOrder;
@@ -23,7 +24,8 @@ import static lombok.AccessLevel.*;
 @Getter
 public class Information {
 
-    @Id @GeneratedValue
+    @Id
+    @GeneratedValue
     @Column(name = "id")
     private Long id;
 

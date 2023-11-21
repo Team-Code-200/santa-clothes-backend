@@ -10,6 +10,7 @@ import java.time.LocalDateTime;
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class DonateListDto {
+    private Long id;
 
     private String title;
 
@@ -21,7 +22,8 @@ public class DonateListDto {
 
     private String user;
 
-    public DonateListDto(Donate donate) {
+    public DonateListDto(final Donate donate) {
+        this.id = donate.getId();
         this.title = donate.getTitle();
         this.createdDate = donate.getCreatedDate();
         this.view = donate.getView();

@@ -10,6 +10,7 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class DonateDto {
+    private Long id;
 
     private String title;
 
@@ -19,7 +20,8 @@ public class DonateDto {
 
     private LocalDateTime createdDate;
 
-    public DonateDto(Donate donate) {
+    public DonateDto(final Donate donate) {
+        this.id = donate.getId();
         this.title = donate.getTitle();
         this.tag = String.valueOf(donate.getTag());
         this.nickname = donate.getUser().getNickname();

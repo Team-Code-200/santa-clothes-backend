@@ -44,4 +44,8 @@ public class Address {
         return address;
     }
 
+    public static String translateAddressToString(final Address address) {
+        return String.join("", address.getDetailAddress(), address.getExtraAddress(), address.getPostAddress(), address.getPostcode());
+    }
+
 }

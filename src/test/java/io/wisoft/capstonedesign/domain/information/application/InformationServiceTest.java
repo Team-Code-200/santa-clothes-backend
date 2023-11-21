@@ -1,5 +1,6 @@
 package io.wisoft.capstonedesign.domain.information.application;
 
+import io.wisoft.capstonedesign.domain.address.persistence.Address;
 import io.wisoft.capstonedesign.domain.information.persistence.Information;
 import io.wisoft.capstonedesign.domain.information.web.dto.CreateInformationRequest;
 import io.wisoft.capstonedesign.domain.information.web.dto.UpdateInformationRequest;
@@ -50,7 +51,7 @@ public class InformationServiceTest {
 
             // then
             Information information = informationService.findById(savedId);
-            assertEquals("대전광역시 유성구", information.getAddress());
+            assertEquals("한밭대학교 wisoftN5-503대전광역시 유성구 동서대로 12534159", information.getAddress());
         }
 
         @Test
@@ -90,7 +91,7 @@ public class InformationServiceTest {
 
             // then
             assertEquals("윤진원", savedInfo.getUsername());
-            assertEquals("대전광역시 유성구", savedInfo.getAddress());
+            assertEquals("한밭대학교 wisoftN5-503대전광역시 유성구 동서대로 12534159", savedInfo.getAddress());
         }
 
         @Test
@@ -133,6 +134,7 @@ public class InformationServiceTest {
 
             CreateInformationRequest infoRequest2 = CreateInformationRequest.builder()
                     .username("윤진원")
+                    .address(Address.translateAddressToString(Address.createAddress("34159","대전광역시 유성구 동서대로 125","한밭대학교 wisoft","N5-503")))
                     .phoneNumber("010-0000-0000")
                     .userId(userId)
                     .build();
@@ -140,6 +142,7 @@ public class InformationServiceTest {
 
             CreateInformationRequest infoRequest3 = CreateInformationRequest.builder()
                     .username("서동권")
+                    .address(Address.translateAddressToString(Address.createAddress("34159","대전광역시 유성구 동서대로 125","한밭대학교 wisoft","N5-503")))
                     .phoneNumber("010-0000-0000")
                     .userId(userId2)
                     .build();
@@ -165,6 +168,7 @@ public class InformationServiceTest {
 
             CreateInformationRequest infoRequest2 = CreateInformationRequest.builder()
                     .username("윤진원")
+                    .address(Address.translateAddressToString(Address.createAddress("34159","대전광역시 유성구 동서대로 125","한밭대학교 wisoft","N5-503")))
                     .phoneNumber("010-0000-0000")
                     .userId(userId)
                     .build();
@@ -175,7 +179,7 @@ public class InformationServiceTest {
 
             // then
             assertEquals(2, informations.size());
-            assertEquals("대전광역시 유성구", informations.get(0).getAddress());
+            assertEquals("한밭대학교 wisoftN5-503대전광역시 유성구 동서대로 12534159", informations.get(0).getAddress());
         }
 
         @Test
@@ -192,6 +196,7 @@ public class InformationServiceTest {
             CreateInformationRequest infoRequest2 = CreateInformationRequest.builder()
                     .username("윤진원")
                     .phoneNumber("010-0000-0000")
+                    .address(Address.translateAddressToString(Address.createAddress("34159","대전광역시 유성구 동서대로 125","한밭대학교 wisoft","N5-503")))
                     .userId(userId)
                     .build();
             informationService.save(infoRequest2);
@@ -201,7 +206,7 @@ public class InformationServiceTest {
             List<Information> informationList = informationService.findByCreatedDateDescUsingPaging(request).getContent();
 
             // then
-            assertEquals("대전광역시 서구", informationList.get(0).getAddress());
+            assertEquals("한밭대학교 wisoftN5-503대전광역시 유성구 동서대로 12534159", informationList.get(0).getAddress());
         }
     }
 
@@ -222,17 +227,21 @@ public class InformationServiceTest {
 
             UpdateInformationRequest updateRequest = UpdateInformationRequest.builder()
                     .username("윤진원")
-                    .address("대전광역시 서구")
+                    .address(Address.translateAddressToString(Address.createAddress("34159","대전광역시 유성구 동서대로 125","한밭대학교 wisoft","N5-503")))
                     .phoneNumber("010-0000-0000")
                     .infoId(savedId)
                     .build();
 
             // when
             informationService.updateAll(savedId, updateRequest);
+            System.out.println("updateRequest.address() = " + updateRequest.address());
             Information updateInfo = informationService.findById(savedId);
+            System.out.println("updateInfo.getAddress() = " + updateInfo.getAddress());
 
             // then
-            assertEquals("대전광역시 서구", updateInfo.getAddress());
+            // then
+            assertEquals("한밭대학교 wisoftN5-503대전광역시 유성구 동서대로 12534159", updateInfo.getAddress());
+
         }
 
         @Test
@@ -248,7 +257,7 @@ public class InformationServiceTest {
 
             UpdateInformationRequest updateRequest = UpdateInformationRequest.builder()
                     .username("윤진원")
-                    .address("대전광역시 서구")
+                    .address(String.valueOf(Address.createAddress("34159","대전광역시 유성구 동서대로 125","한밭대학교 wisoft","N5-503")))
                     .phoneNumber("010-0000-0000")
                     .infoId(savedId)
                     .build();
