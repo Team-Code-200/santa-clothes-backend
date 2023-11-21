@@ -166,7 +166,7 @@ class FindOrderControllerTest {
                             .header("Authorization", "bearer " + accessToken))
                     .andExpect(status().isOk())
                     .andExpect(jsonPath("$.text").value("배송전 문자주세요"))
-                    .andExpect(jsonPath("$.address").value(infoRequest.address()))
+                    .andExpect(jsonPath("$.address").value("한밭대학교 wisoftN5-503대전광역시 유성구 동서대로 12534159"))
                     .andDo(print());
         }
 

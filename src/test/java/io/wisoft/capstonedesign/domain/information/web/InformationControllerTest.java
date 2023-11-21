@@ -1,6 +1,7 @@
 package io.wisoft.capstonedesign.domain.information.web;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import io.wisoft.capstonedesign.domain.address.persistence.Address;
 import io.wisoft.capstonedesign.domain.information.application.InformationService;
 import io.wisoft.capstonedesign.domain.information.web.dto.CreateInformationRequest;
 import io.wisoft.capstonedesign.domain.information.web.dto.UpdateInformationRequest;
@@ -132,7 +133,7 @@ class InformationControllerTest {
                             .header("Authorization", "bearer " + accessToken))
                     .andExpect(status().isOk())
                     .andExpect(jsonPath("$.username").value("윤진원"))
-                    .andExpect(jsonPath("$.address").value("대전광역시 유성구"))
+                    .andExpect(jsonPath("$.address").value("한밭대학교 wisoftN5-503대전광역시 유성구 동서대로 12534159"))
                     .andDo(print());
         }
 
@@ -201,6 +202,7 @@ class InformationControllerTest {
 
             CreateInformationRequest infoRequest2 = CreateInformationRequest.builder()
                     .username("윤진원")
+                    .address(Address.translateAddressToString(Address.createAddress("34159","대전광역시 유성구 동서대로 125","한밭대학교 wisoft","N5-503")))
                     .phoneNumber("010-0000-0000")
                     .userId(userId)
                     .build();
@@ -208,6 +210,7 @@ class InformationControllerTest {
 
             CreateInformationRequest infoRequest3 = CreateInformationRequest.builder()
                     .username("서동권")
+                    .address(Address.translateAddressToString(Address.createAddress("34159","대전광역시 유성구 동서대로 125","한밭대학교 wisoft","N5-503")))
                     .phoneNumber("010-0000-0000")
                     .userId(userId2)
                     .build();
@@ -288,7 +291,7 @@ class InformationControllerTest {
 
             UpdateInformationRequest updateRequest = UpdateInformationRequest.builder()
                     .username("지노니")
-                    .address("대전광역시 서구")
+                    .address(Address.translateAddressToString(Address.createAddress("34159","대전광역시 유성구 동서대로 125","한밭대학교 wisoft","N5-503")))
                     .phoneNumber("010-0000-0000")
                     .build();
 
@@ -300,7 +303,7 @@ class InformationControllerTest {
                             .header("Authorization", "bearer " + accessToken)
                             .content(json))
                     .andExpect(status().isOk())
-                    .andExpect(jsonPath("$.address").value("대전광역시 서구"))
+                    .andExpect(jsonPath("$.address").value("한밭대학교 wisoftN5-503대전광역시 유성구 동서대로 12534159"))
                     .andDo(print());
         }
 
@@ -319,7 +322,7 @@ class InformationControllerTest {
 
             UpdateInformationRequest updateRequest = UpdateInformationRequest.builder()
                     .username("지노니")
-                    .address("대전광역시 서구")
+                    .address(String.valueOf(Address.createAddress("34159","대전광역시 유성구 동서대로 125","한밭대학교 wisoft","N5-503")))
                     .phoneNumber("010-0000-0000")
                     .build();
 
@@ -377,7 +380,7 @@ class InformationControllerTest {
 
             UpdateInformationRequest updateRequest = UpdateInformationRequest.builder()
                     .username("지노니")
-                    .address("대전광역시 서구")
+                    .address(String.valueOf(Address.createAddress("34159","대전광역시 유성구 동서대로 125","한밭대학교 wisoft","N5-503")))
                     .phoneNumber("010-0000-0000")
                     .build();
 

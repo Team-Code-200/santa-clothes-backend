@@ -10,6 +10,7 @@ import java.time.LocalDateTime;
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class FindListDto {
+    private Long id;
 
     private String title;
 
@@ -21,7 +22,8 @@ public class FindListDto {
 
     private String user;
 
-    public FindListDto(Find find) {
+    public FindListDto(final Find find) {
+        this.id = find.getId();
         this.title = find.getTitle();
         this.createdDate = find.getCreatedDate();
         this.view = find.getView();

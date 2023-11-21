@@ -36,11 +36,9 @@ public class InformationService {
         User user = userRepository.findById(request.userId())
                 .orElseThrow(UserNotFoundException::new);
 
-        final String translatedAddress = translateAddressToString(request.address());
-
         Information information = Information.builder()
                 .username(request.username())
-                .address(translatedAddress)
+                .address(request.address())
                 .phoneNumber(request.phoneNumber())
                 .user(user)
                 .build();

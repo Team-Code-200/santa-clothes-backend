@@ -1,5 +1,6 @@
 package io.wisoft.capstonedesign.domain.user.application;
 
+import io.wisoft.capstonedesign.domain.address.persistence.Address;
 import io.wisoft.capstonedesign.domain.donate.application.DonateService;
 import io.wisoft.capstonedesign.domain.donate.persistence.Donate;
 import io.wisoft.capstonedesign.domain.donate.web.dto.CreateDonateRequest;
@@ -161,6 +162,7 @@ public class UserMyInfoServiceTest {
 
             CreateInformationRequest infoRequest2 = CreateInformationRequest.builder()
                     .username("서동권")
+                    .address(Address.translateAddressToString(Address.createAddress("34159","대전광역시 유성구 동서대로 125","한밭대학교 wisoft","N5-503")))
                     .phoneNumber("010-0000-0000")
                     .userId(userId2)
                     .build();
@@ -172,7 +174,7 @@ public class UserMyInfoServiceTest {
             List<Information> infos = userMyInfoService.findInfosByIdUsingPaging(userId, request).getContent();
 
             // then
-            assertEquals("대전광역시 유성구", infos.get(0).getAddress());
+            assertEquals("한밭대학교 wisoftN5-503대전광역시 유성구 동서대로 12534159", infos.get(0).getAddress());
         }
 
         @Test
@@ -210,6 +212,7 @@ public class UserMyInfoServiceTest {
 
             CreateInformationRequest infoRequest2 = CreateInformationRequest.builder()
                     .username("서동권")
+                    .address(Address.translateAddressToString(Address.createAddress("34159","대전광역시 유성구 동서대로 125","한밭대학교 wisoft","N5-503")))
                     .phoneNumber("010-0000-0000")
                     .userId(userId2)
                     .build();
@@ -271,6 +274,7 @@ public class UserMyInfoServiceTest {
 
             CreateInformationRequest infoRequest2 = CreateInformationRequest.builder()
                     .username("서동권")
+                    .address(Address.translateAddressToString(Address.createAddress("34159","대전광역시 유성구 동서대로 125","한밭대학교 wisoft","N5-503")))
                     .phoneNumber("010-0000-0000")
                     .userId(userId2)
                     .build();
@@ -331,6 +335,7 @@ public class UserMyInfoServiceTest {
 
             CreateInformationRequest infoRequest2 = CreateInformationRequest.builder()
                     .username("서동권")
+                    .address(Address.translateAddressToString(Address.createAddress("34159","대전광역시 유성구 동서대로 125","한밭대학교 wisoft","N5-503")))
                     .phoneNumber("010-0000-0000")
                     .userId(userId2)
                     .build();
