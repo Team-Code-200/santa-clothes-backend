@@ -2,6 +2,7 @@ package io.wisoft.capstonedesign.domain.address.web;
 
 import io.wisoft.capstonedesign.domain.address.application.AddressService;
 import io.wisoft.capstonedesign.domain.address.web.dto.CreateAddressRequest;
+import io.wisoft.capstonedesign.domain.address.web.dto.CreateAddressResponse;
 import jakarta.validation.Valid;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -17,21 +18,10 @@ public class AddressController {
         this.addressService = addressService;
     }
 
-
-    @GetMapping("/api/address")
-    public String showAddressSearchForm() {
-        return "address";
-    }
-
-    @GetMapping("/api/submit")
-    public String showSubmitForm() {
-        return "submit";
-    }
-
     @PostMapping("/api/submit/new")
-    public String submitForm(@ModelAttribute @Valid final CreateAddressRequest request) {
-        addressService.join(request);
-        return "submit";
+    public CreateAddressResponse submitForm(@ModelAttribute @Valid final CreateAddressRequest request) {
+        Long id = addressService.join(request);
+        return new CreateAddressResponse(id);
     }
 
 }
